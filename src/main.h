@@ -2,6 +2,8 @@
 
 #include <stdbool.h>
 #include <assert.h>
+#include <stdio.h>
+#include <string.h>
 
 typedef enum {
     TON,   // 东风

@@ -1,31 +1,79 @@
 #include "AgariChecker.h"
 
-bool SeparateTile(Hand Hands) {
+bool isAgari(Status *status) {
+    Hand Hands = Statistics(status);  //统计牌数
+    Hand temp;
+
+    if (CheckKokushimusou(Hands)) {
+        return true;
+    }
+
+    if (CheckChiitoitsu(Hands)) {
+        return true;
+    }
+
+    for (int i = 0; i <= 3; i++) {
+        for (int j = 1; j <= 9; j++) {
+            if (Hands.matrix[i][j] >= 2) {
+                temp = Hands;
+                temp.matrix[i][j] -= 2; //雀头
+                switch (i) {
+                    case 0:
+                        temp.m_num -= 2;
+                        break;
+                    case 1:
+                        temp.p_num -= 2;
+                        break;
+                    case 2:
+                        temp.s_num -= 2;
+                        break;
+                    case 3:
+                        temp.z_num -= 2;
+                        break;
+                    default:;
+                }
+                if (SeparateTile(temp, status, 0) == 1) {
+                    if (strstr(status->discardTile, status->currentTile) == NULL) {
+                        return true;
+                    } else return false;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+bool SeparateTile(Hand Hands, Status *status, int count) {
+    count++;
+    Hand temp;
     if (Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num == 0) {
         return true;
     } else {
         for (int a = 0; a <= 3; a++) {
             for (int b = 1; b <= 9; b++) {
                 if (Hands.matrix[a][b] >= 3) {
-                    Hands.matrix[a][b] -= 3;
+                    temp = Hands;
+                    temp.matrix[a][b] -= 3;
                     switch (a) {
                         case 0:
-                            Hands.m_num -= 3;
+                            temp.m_num -= 3;
                             break;
                         case 1:
-                            Hands.p_num -= 3;
+                            temp.p_num -= 3;
                             break;
                         case 2:
-                            Hands.s_num -= 3;
+                            temp.s_num -= 3;
                             break;
                         case 3:
-                            Hands.z_num -= 3;
+                            temp.z_num -= 3;
                             break;
                         default:;
-                    }
-                    if (SeparateTile(Hands) == 1) {
+                    }  //记录牌数
+
+                    if (SeparateTile(temp, status, count) == 1) {
                         return true;
-                    }
+                    }  //判断剩下的牌
                 }
             }
         }   //刻子
@@ -33,12 +81,25 @@ bool SeparateTile(Hand Hands) {
         for (int a = 0; a <= 2; a++) {
             for (int b = 1; b <= 7; b++) {
                 if (Hands.matrix[a][b] >= 1 && Hands.matrix[a][b + 1] >= 1 && Hands.matrix[a][b + 2] >= 1) {
-                    Hands.matrix[a][b]--;
-                    Hands.matrix[a][b + 1]--;
-                    Hands.matrix[a][b + 2]--;
-                    if (SeparateTile(Hands) == 1) {
+                    temp = Hands;
+                    temp.matrix[a][b]--;
+                    temp.matrix[a][b + 1]--;
+                    temp.matrix[a][b + 2]--;
+                    switch (a) {
+                        case 0:
+                            temp.m_num -= 3;
+                            break;
+                        case 1:
+                            temp.p_num -= 3;
+                            break;
+                        case 2:
+                            temp.s_num -= 3;
+                            break;
+                        default:;
+                    }  //记录牌数
+                    if (SeparateTile(temp, status, count) == 1) {
                         return true;
-                    }
+                    }  //判断剩下的牌
                 }
             }
         }   //顺子
@@ -47,9 +108,7 @@ bool SeparateTile(Hand Hands) {
     }
 }
 
-bool isAgari(Status *status) {
-    Hand temp;
-
+Hand Statistics(Status *status) {
     Hand Hands = {
             .matrix = {0},
             .m_num = 0,
@@ -58,73 +117,72 @@ bool isAgari(Status *status) {
             .z_num = 0,
     };
 
-    if (status->currentTile[1] == 'm') {
-        Hands.matrix[0][status->currentTile[0]]++;
-        Hands.m_num++;
-    } else if (status->currentTile[1] == 'p') {
-        Hands.matrix[1][status->currentTile[0]]++;
-        Hands.p_num++;
-    } else if (status->handTile[1] == 's') {
-        Hands.matrix[2][status->currentTile[0]]++;
-        Hands.s_num++;
-    } else if (status->handTile[1] == 'z') {
-        Hands.matrix[3][status->currentTile[0]]++;
-        Hands.z_num++;
+    switch (status->currentTile[1]) {
+        case 'm':
+            Hands.matrix[0][status->currentTile[0] - 48]++;
+            Hands.m_num++;
+            break;
+        case 'p':
+            Hands.matrix[1][status->currentTile[0] - 48]++;
+            Hands.p_num++;
+            break;
+        case 's':
+            Hands.matrix[2][status->currentTile[0] - 48]++;
+            Hands.s_num++;
+            break;
+        case 'z':
+            Hands.matrix[3][status->currentTile[0] - 48]++;
+            Hands.z_num++;
+            break;
+        default:;
     }
 
     for (int i = 0; i < 15 && status->handTile[2 * i] != '\0'; i++) {
-        if (status->handTile[2 * i + 1] == 'm') {
-            Hands.matrix[0][status->handTile[2 * i]]++;
-            Hands.m_num++;
-        } else if (status->handTile[2 * i + 1] == 'p') {
-            Hands.matrix[1][status->handTile[2 * i]]++;
-            Hands.p_num++;
-        } else if (status->handTile[2 * i + 1] == 's') {
-            Hands.matrix[2][status->handTile[2 * i]]++;
-            Hands.s_num++;
-        } else if (status->handTile[2 * i + 1] == 'z') {
-            Hands.matrix[3][status->handTile[2 * i]]++;
-            Hands.z_num++;
-        }
-
         switch (status->handTile[2 * i + 1]) {
             case 'm':
-                Hands.matrix[0][status->handTile[2 * i]]++;
+                Hands.matrix[0][status->handTile[2 * i] - 48]++;
                 Hands.m_num++;
                 break;
             case 'p':
-                Hands.matrix[1][status->handTile[2 * i]]++;
+                Hands.matrix[1][status->handTile[2 * i] - 48]++;
                 Hands.p_num++;
                 break;
             case 's':
-                Hands.matrix[2][status->handTile[2 * i]]++;
+                Hands.matrix[2][status->handTile[2 * i] - 48]++;
                 Hands.s_num++;
                 break;
             case 'z':
-                Hands.matrix[3][status->handTile[2 * i]]++;
+                Hands.matrix[3][status->handTile[2 * i] - 48]++;
                 Hands.z_num++;
                 break;
             default:;
         }
     }
 
-
-    for (int i = 0; i <= 3; i++) {
+    for (int i = 0; i <= 2; i++) {
         Hands.matrix[i][5] += Hands.matrix[i][0];
-        Hands.matrix[i][0] = 0;
-    }
+    }  //转换赤宝牌
 
+    return Hands;
+}
+
+bool CheckKokushimusou(Hand Hands) {
+    if (Hands.matrix[0][1] >= 1 && Hands.matrix[0][9] >= 1 && Hands.matrix[1][1] >= 1 && Hands.matrix[1][9] >= 1 \
+    && Hands.matrix[2][1] >= 1 && Hands.matrix[2][9] >= 1 && Hands.matrix[3][1] >= 1 && Hands.matrix[3][2] >= 1 \
+    && Hands.matrix[3][3] >= 1 && Hands.matrix[3][4] >= 1 && Hands.matrix[3][5] >= 1 && Hands.matrix[3][6] >= 1 \
+    && Hands.matrix[3][7] >= 1) {
+        return true;
+    }
+    else return false;
+}
+
+bool CheckChiitoitsu(Hand Hands) {
     for (int i = 0; i <= 3; i++) {
         for (int j = 1; j <= 9; j++) {
-            if (Hands.matrix[i][j] >= 2) {
-                temp = Hands;
-                temp.matrix[i][j] -= 2; //雀头
-                if (SeparateTile(temp) == 1) {
-                    return true;
-                }
+            if (Hands.matrix[i][j] != 0 && Hands.matrix[i][j] != 2) {
+                return false;
             }
         }
     }
-
-    return false;
+    return true;
 }
