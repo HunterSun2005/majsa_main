@@ -54,7 +54,36 @@ bool isJunchantaiyaochuu(Status *status);   //判断是否是纯全带幺九（�
 
 bool isJunchantaiyaochuuF(Status *status);   //判断是否是纯全带幺九（副露）
 
-
 bool isHonitsu(Status *status);     //判断是否是混一色（门清）
 
 bool isHonitsuF(Status *status);    //判断是否是混一色（副露）
+
+bool isChinitsu(Status *status);    //判断是否是清一色（门清）
+
+bool isChinitsuF(Status *status);   //判断是否是清一色（副露）
+
+bool isDaisangen(Status *status);   //判断是否是大三元
+
+bool isSuuankou(Status *status);    //判断是否是四暗刻
+
+bool isTsuuiisou(Status *status);   //判断是否是字一色
+
+bool isRyuuiisou(Status *status);   //判断是否是绿一色
+
+bool isChinroutou(Status *status);   //判断是否是清老头
+
+bool isKokushimusou(Status *status);   //判断是否是国士无双
+
+bool isShousuushi(Status *status);   //判断是否是小四喜
+
+bool isSuukantsu(Status *status);   //判断是否是四杠子
+
+bool isChuurenpoutou(Status *status);   //判断是否是九莲宝灯
+
+bool isSuuankoutanki(Status *status);   //判断是否是四暗刻单骑
+
+bool isKokushijuusanmenmachi(Status *status);   //判断是否是国士无双十三面
+
+bool isChuurenkyuumenmachi(Status *status);     //判断是否是纯正九莲宝灯
+
+bool isDaisuushi(Status *status);     //判断是否是大四喜

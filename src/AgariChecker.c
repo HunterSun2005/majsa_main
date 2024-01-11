@@ -126,13 +126,8 @@ bool SeparateTile(Hand Hands, Status *status, int count) {
 }
 
 Hand Statistics(Status *status) {
-    Hand Hands = {
-            .matrix = {0},
-            .m_num = 0,
-            .p_num = 0,
-            .s_num = 0,
-            .z_num = 0,
-    };
+    Hand Hands;
+    memset(&Hands, 0, sizeof(Hands));
 
     switch (status->currentTile[1]) {
         case 'm':

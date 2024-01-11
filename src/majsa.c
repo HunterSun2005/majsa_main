@@ -5,6 +5,7 @@ Group HandGroupTile[6] = {};
 
 Result *majsa(Status *status) {
     Result *result = malloc(20 * sizeof(*result));  //初始化
+    memset(result, 0, sizeof(*result));
 
     if (isAgari(status)) {
         memcpy(result->yaku, checkYaku(status), sizeof(result->yaku));  //导入役种
