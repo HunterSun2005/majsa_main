@@ -1,5 +1,8 @@
 #include "AgariChecker.h"
 
+extern char Pair[4];
+extern Group HandGroupTile[6];
+
 bool isAgari(Status *status) {
     Hand Hands = Statistics(status);  //统计牌数
     Hand temp;
@@ -17,25 +20,28 @@ bool isAgari(Status *status) {
             if (Hands.matrix[i][j] >= 2) {
                 temp = Hands;
                 temp.matrix[i][j] -= 2; //雀头
+                Pair[0] = (char) (j + 48);  //记录雀头
                 switch (i) {
                     case 0:
                         temp.m_num -= 2;
+                        Pair[1] = 'm';
                         break;
                     case 1:
                         temp.p_num -= 2;
+                        Pair[1] = 'p';
                         break;
                     case 2:
                         temp.s_num -= 2;
+                        Pair[1] = 's';
                         break;
                     case 3:
                         temp.z_num -= 2;
+                        Pair[1] = 'z';
                         break;
                     default:;
                 }
                 if (SeparateTile(temp, status, 0) == 1) {
-                    if (strstr(status->discardTile, status->currentTile) == NULL) {
-                        return true;
-                    } else return false;
+                    return true;
                 }
             }
         }
@@ -54,19 +60,25 @@ bool SeparateTile(Hand Hands, Status *status, int count) {
             for (int b = 1; b <= 9; b++) {
                 if (Hands.matrix[a][b] >= 3) {
                     temp = Hands;
+                    HandGroupTile[count - 1].type = Koutsu;
+                    HandGroupTile[count - 1].tile[0] = (char) (b + 48);
                     temp.matrix[a][b] -= 3;
                     switch (a) {
                         case 0:
                             temp.m_num -= 3;
+                            HandGroupTile[count - 1].tile[1] = 'm';
                             break;
                         case 1:
                             temp.p_num -= 3;
+                            HandGroupTile[count - 1].tile[1] = 'p';
                             break;
                         case 2:
                             temp.s_num -= 3;
+                            HandGroupTile[count - 1].tile[1] = 's';
                             break;
                         case 3:
                             temp.z_num -= 3;
+                            HandGroupTile[count - 1].tile[1] = 'z';
                             break;
                         default:;
                     }  //记录牌数
@@ -85,15 +97,20 @@ bool SeparateTile(Hand Hands, Status *status, int count) {
                     temp.matrix[a][b]--;
                     temp.matrix[a][b + 1]--;
                     temp.matrix[a][b + 2]--;
+                    HandGroupTile[count - 1].type = Shuntsu;
+                    HandGroupTile[count - 1].tile[0] = (char) (b + 48);
                     switch (a) {
                         case 0:
                             temp.m_num -= 3;
+                            HandGroupTile[count - 1].tile[1] = 'm';
                             break;
                         case 1:
                             temp.p_num -= 3;
+                            HandGroupTile[count - 1].tile[1] = 'p';
                             break;
                         case 2:
                             temp.s_num -= 3;
+                            HandGroupTile[count - 1].tile[1] = 's';
                             break;
                         default:;
                     }  //记录牌数
@@ -167,13 +184,12 @@ Hand Statistics(Status *status) {
 }
 
 bool CheckKokushimusou(Hand Hands) {
-    if (Hands.matrix[0][1] >= 1 && Hands.matrix[0][9] >= 1 && Hands.matrix[1][1] >= 1 && Hands.matrix[1][9] >= 1 \
-    && Hands.matrix[2][1] >= 1 && Hands.matrix[2][9] >= 1 && Hands.matrix[3][1] >= 1 && Hands.matrix[3][2] >= 1 \
-    && Hands.matrix[3][3] >= 1 && Hands.matrix[3][4] >= 1 && Hands.matrix[3][5] >= 1 && Hands.matrix[3][6] >= 1 \
-    && Hands.matrix[3][7] >= 1) {
+    if (Hands.matrix[0][1] >= 1 && Hands.matrix[0][9] >= 1 && Hands.matrix[1][1] >= 1 && Hands.matrix[1][9] >= 1 &&
+        Hands.matrix[2][1] >= 1 && Hands.matrix[2][9] >= 1 && Hands.matrix[3][1] >= 1 && Hands.matrix[3][2] >= 1 &&
+        Hands.matrix[3][3] >= 1 && Hands.matrix[3][4] >= 1 && Hands.matrix[3][5] >= 1 && Hands.matrix[3][6] >= 1 &&
+        Hands.matrix[3][7] >= 1) {
         return true;
-    }
-    else return false;
+    } else return false;
 }
 
 bool CheckChiitoitsu(Hand Hands) {
