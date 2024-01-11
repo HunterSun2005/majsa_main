@@ -16,6 +16,8 @@ Yaku *checkYaku(Status *status);    // 检测所满足的所有役种（若包�
 
 AllHand StatisticsAll(Status *status);  //统计所有牌数
 
+bool isMenzenchintsumo(Status *status);   //判断是否是门前清自摸和
+
 bool isPinhu(Status *status);       //判断是否是平胡
 
 bool isIipeikou(Status *status);    //判断是否是一杯口
@@ -36,7 +38,7 @@ bool isChiitoitsu(Status *status);  //判断是否是七对子
 
 bool isHonchantaiyaochuu(Status *status);   //判断是否是混全带幺九（门清）
 
-bool isHonchantaiyaochuuF(Status *status);   //判断是否是混全带幺九（副露）
+bool isHonchantaiyaochuuF(Status *status);  //判断是否是混全带幺九（副露）
 
 bool isIkkitsuukan(Status *status);     //判断是否是一气通贯（门清）
 
@@ -45,6 +47,12 @@ bool isIkkitsuukanF(Status *status);    //判断是否是一气通贯（副露�
 bool isSanshokudoujun(Status *status);  //判断是否是三色同顺（门清）
 
 bool isSanshokudoujunF(Status *status);  //判断是否是三色同顺（副露）
+
+bool isRyanpeikou(Status *status);      //判断是否是两杯口
+
+bool isJunchantaiyaochuu(Status *status);   //判断是否是纯全带幺九（门清）
+
+bool isJunchantaiyaochuuF(Status *status);   //判断是否是纯全带幺九（副露）
 
 
 bool isHonitsu(Status *status);     //判断是否是混一色（门清）

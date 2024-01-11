@@ -19,7 +19,7 @@ Yaku *checkYaku(Status *status) {
         yaku[count] = Ippatsu;
         count++;
     }   //一发
-    if (strlen(status->handTile) == 26 && status->currentPlayer == JICHA) {
+    if (isMenzenchintsumo(status)) {
         yaku[count] = Menzenchintsumo;
         count++;
     }
@@ -121,6 +121,30 @@ Yaku *checkYaku(Status *status) {
         }
     }
 
+    {
+        if (isSanshokudoujun(status)) {
+            yaku[count] = Sanshokudoujun;
+            count++;
+        } else if (isSanshokudoujunF(status)) {
+            yaku[count] = SanshokudoujunF;
+            count++;
+        }
+    }
+
+    if (isRyanpeikou(status)) {
+        yaku[count] = Ryanpeikou;
+        count++;
+    }
+
+    {
+        if (isJunchantaiyaochuu(status)) {
+            yaku[count] = Junchantaiyaochuu;
+            count++;
+        } else if (isJunchantaiyaochuuF(status)) {
+            yaku[count] = JunchantaiyaochuuF;
+            count++;
+        }
+    }
 
     {
         if (isHonitsu(status)) {
@@ -187,8 +211,8 @@ AllHand StatisticsAll(Status *status) {
         }
     }   //手牌
 
-    for (int i = 0; i < 19; i++) {
-        for (int j = 0; j <= 10 && status->groupTile[i].tile[2 * j + 1] != 0; j++) {
+    for (int i = 0; i < 4 - HandGroupLen; i++) {
+        for (int j = 0; j <= 2 && status->groupTile[i].tile[2 * j + 1] != 0; j++) {
             switch (status->groupTile[i].tile[2 * j + 1]) {
                 case 'm':
                     hands.matrix[0][status->groupTile[i].tile[2 * j] - 48]++;
@@ -216,6 +240,18 @@ AllHand StatisticsAll(Status *status) {
     }  //转换赤宝牌
 
     return hands;
+}
+
+bool isMenzenchintsumo(Status *status) {
+    for (int i = 0; i < 4 - HandGroupLen; i++) {
+        if (status->groupTile[i].type != Ankan) {
+            return false;
+        }
+    }
+    if (status->currentPlayer == JICHA) {
+        return true;
+    } else return false;
+
 }
 
 bool isPinhu(Status *status) {
@@ -455,15 +491,12 @@ bool isHonchantaiyaochuu(Status *status) {
                 }
             }
             for (int i = 0; i < 4 - HandGroupLen; i++) {
-                if (status->groupTile[i].type == Koutsu || status->groupTile[i].type == Kantsu ||
-                    status->groupTile[i].type == Shuntsu) {
+                if (status->groupTile[i].type != Ankan) {
                     return false;
-                } else if (status->groupTile[i].type == Ankan) {
-                    if (status->groupTile[i].tile[1] == 'm' || status->groupTile[i].tile[1] == 'p' ||
-                        status->groupTile[i].tile[1] == 's') {
-                        if (status->groupTile[i].tile[0] != '1' && status->groupTile[i].tile[0] != '9') {
-                            return false;
-                        }
+                } else if (status->groupTile[i].tile[1] == 'm' || status->groupTile[i].tile[1] == 'p' || \
+                status->groupTile[i].tile[1] == 's') {
+                    if (status->groupTile[i].tile[0] != '1' && status->groupTile[i].tile[0] != '9') {
+                        return false;
                     }
                 }
             }
@@ -625,25 +658,6 @@ bool isSanshokudoujun(Status *status) {
             }
         }
     }
-    for (int i = 0; i < 4 - HandGroupLen; i++) {
-        if (status->groupTile[i].type == Shuntsu) {
-            switch (status->groupTile[i].tile[1]) {
-                case 'm':
-                    matrix[0][status->groupTile[i].tile[0] - 48]++;
-                    break;
-                case 'p':
-                    matrix[1][status->groupTile[i].tile[0] - 48]++;
-                    break;
-                case 's':
-                    matrix[2][status->groupTile[i].tile[0] - 48]++;
-                    break;
-                case 'z':
-                    matrix[3][status->groupTile[i].tile[0] - 48]++;
-                    break;
-                default:;
-            }
-        }
-    }
 
     for (int i = 0; i <= 2; i++) {
         matrix[i][5] += matrix[i][0];
@@ -705,6 +719,112 @@ bool isSanshokudoujunF(Status *status) {
 
     for (int i = 1; i <= 7; i++) {
         if (matrix[0][i] >= 1 && matrix[1][i] >= 1 && matrix[2][i] >= 1) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isRyanpeikou(Status *status) {
+    if (HandGroupLen == 4) {
+        int matrix[4][10] = {0};
+
+        for (int i = 0; i < HandGroupLen; i++) {
+            if (HandGroupTile[i].type == Shuntsu) {
+                switch (HandGroupTile[i].tile[1]) {
+                    case 'm':
+                        matrix[0][HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 'p':
+                        matrix[1][HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 's':
+                        matrix[2][HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 'z':
+                        matrix[3][HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    default:;
+                }
+            }
+        }
+
+        for (int i = 0; i <= 2; i++) {
+            matrix[i][5] += matrix[i][0];
+        }  //转换赤宝牌
+
+        for (int i = 1; i <= 7; i++) {
+            if (matrix[0][i] != 0 && matrix[0][i] != 2) {
+                return false;
+            }
+        }
+
+        return true;
+    } else return false;
+}
+
+bool isJunchantaiyaochuu(Status *status) {
+    if ((Pair[0] == '1' || Pair[0] == '9') && (Pair[1] == 'm' || Pair[0] == 'p' || Pair[0] == 's')) {
+        if (isToitoihou(status) == false) {
+            for (int i = 0; i < HandGroupLen; i++) {
+                if (HandGroupTile[i].type == Shuntsu && HandGroupTile[i].tile[0] != '1' && \
+                    HandGroupTile[i].tile[0] != '7') {
+                    return false;
+                } else if (HandGroupTile[i].type == Koutsu) {
+                    if (HandGroupTile[i].tile[1] == 'z') {
+                        return false;
+                    } else if (HandGroupTile[i].tile[0] != '1' && HandGroupTile[i].tile[0] != '9') {
+                        return false;
+                    }
+                }
+            }
+            for (int i = 0; i < 4 - HandGroupLen; i++) {
+                if (status->groupTile[i].type != Ankan) {
+                    return false;
+                } else {
+                    if (status->groupTile[i].tile[1] == 'z') {
+                        return false;
+                    } else if (status->groupTile[i].tile[0] != '1' && status->groupTile[i].tile[0] != '9') {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+    }
+    return false;
+}
+
+bool isJunchantaiyaochuuF(Status *status) {
+    if ((Pair[0] == '1' || Pair[0] == '9') && (Pair[1] == 'm' || Pair[0] == 'p' || Pair[0] == 's')) {
+        if (isToitoihou(status) == false) {
+            for (int i = 0; i < HandGroupLen; i++) {
+                if (HandGroupTile[i].type == Shuntsu && HandGroupTile[i].tile[0] != '1' && \
+                    HandGroupTile[i].tile[0] != '7') {
+                    return false;
+                } else if (HandGroupTile[i].type == Koutsu) {
+                    if (HandGroupTile[i].tile[1] == 'z') {
+                        return false;
+                    } else if (HandGroupTile[i].tile[0] != '1' && HandGroupTile[i].tile[0] != '9') {
+                        return false;
+                    }
+                }
+            }
+            for (int i = 0; i < 4 - HandGroupLen; i++) {
+                if (status->groupTile[i].type == Shuntsu && status->groupTile[i].tile[0] != '1' && \
+                    status->groupTile[i].tile[0] != '7') {
+                    return false;
+                } else if (status->groupTile[i].type == Ankan || status->groupTile[i].type == Koutsu || \
+                status->groupTile[i].type == Kantsu) {
+                    if (status->groupTile[i].tile[1] == 'z') {
+                        return false;
+                    } else if (status->groupTile[i].tile[0] != '1' && status->groupTile[i].tile[0] != '9') {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
     }
