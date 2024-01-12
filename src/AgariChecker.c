@@ -48,14 +48,14 @@ Possible *isAgari(Status *status) {
                     default:;
                 }
 
-                SeparateTile(temp, status, 0, Possibles);
+                SeparateTile(temp, status, 0, Possibles, 0, 1, 0, 1);
             }
         }
     }
     return Possibles;
 }
 
-void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
+void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles, int a1, int b1, int a2, int b2) {
     count++;
     Hand temp;
     if (count > 5) {
@@ -67,8 +67,8 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
         CountSituation++;
         return;
     } else {
-        for (int a = 0; a <= 3; a++) {
-            for (int b = 1; b <= 9; b++) {
+        for (int a = a1; a <= 3; a++) {
+            for (int b = b1; b <= 9; b++) {
                 if (Hands.matrix[a][b] >= 3) {
                     temp = Hands;
                     Possibles->Situations[CountSituation].HandGroupTile[count - 1].type = Koutsu;
@@ -94,13 +94,13 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
                         default:;
                     }  //记录牌数
 
-                    SeparateTile(temp, status, count, Possibles);  //判断剩下的牌
+                    SeparateTile(temp, status, count, Possibles, a, b, a2, b2);  //判断剩下的牌
                 }
             }
         }   //刻子
 
-        for (int a = 0; a <= 2; a++) {
-            for (int b = 1; b <= 7; b++) {
+        for (int a = a2; a <= 2; a++) {
+            for (int b = b2; b <= 7; b++) {
                 if (Hands.matrix[a][b] >= 1 && Hands.matrix[a][b + 1] >= 1 && Hands.matrix[a][b + 2] >= 1) {
                     temp = Hands;
                     temp.matrix[a][b]--;
@@ -124,7 +124,7 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
                         default:;
                     }  //记录牌数
 
-                    SeparateTile(temp, status, count, Possibles);    //判断剩下的牌
+                    SeparateTile(temp, status, count, Possibles, a1, b1, a, b);    //判断剩下的牌
                 }
             }
         }   //顺子
