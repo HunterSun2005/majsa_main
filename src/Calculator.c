@@ -61,9 +61,7 @@ int calHan(Status *status, Yaku *yaku, Possible *Possibles) {
 
 int calFu(Status *status, int Han, Possible *Possibles, int number) {
     int Fu = 20;
-    if (Han < 0 || Han >= 13) {
-        return 0;
-    } else if (CheckChiitoitsu(status, Possibles->HandTiles, Possibles)) {
+    if (!isRyanpeikou(status) && CheckChiitoitsu(status, Possibles->HandTiles, Possibles)) {
         return 25;
     } else if (isPinhu(status) && status->currentPlayer == JICHA) {
         return 20;
@@ -322,9 +320,10 @@ int Count19MK(Status *status, Possible *Possibles, int number) {
 
     for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
         if (status->groupTile[i].type == Koutsu &&
-            (status->groupTile[i].tile[0] == '1' || \
-            status->groupTile[i].tile[0] == '9' || \
-            status->groupTile[i].tile[1] == 'z')) {
+            (
+                    status->groupTile[i].tile[0] == '1' ||
+                    status->groupTile[i].tile[0] == '9' ||
+                    status->groupTile[i].tile[1] == 'z')) {
             count++;
         }
     }
@@ -335,9 +334,10 @@ int Count19AK(Status *status, Possible *Possibles, int number) {
     int count = 0;
     for (int i = 0; i < Possibles->HandGroupLen; i++) {
         if (Possibles->Situations[number].HandGroupTile[i].type == Koutsu &&
-            (Possibles->Situations[number].HandGroupTile[i].tile[0] == '1' || \
-            Possibles->Situations[number].HandGroupTile[i].tile[0] == '9' || \
-            Possibles->Situations[number].HandGroupTile[i].tile[1] == 'z')) {
+            (
+                    Possibles->Situations[number].HandGroupTile[i].tile[0] == '1' ||
+                    Possibles->Situations[number].HandGroupTile[i].tile[0] == '9' ||
+                    Possibles->Situations[number].HandGroupTile[i].tile[1] == 'z')) {
             count++;
         }
     }
@@ -347,10 +347,11 @@ int Count19AK(Status *status, Possible *Possibles, int number) {
 int Count19MG(Status *status, Possible *Possibles, int number) {
     int count = 0;
     for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-        if (status->groupTile[i].type == Kantsu && \
-        (status->groupTile[i].tile[0] == '1' || \
-        status->groupTile[i].tile[0] == '9' || \
-        status->groupTile[i].tile[1] == 'z')) {
+        if (status->groupTile[i].type == Kantsu &&
+            (
+                    status->groupTile[i].tile[0] == '1' ||
+                    status->groupTile[i].tile[0] == '9' ||
+                    status->groupTile[i].tile[1] == 'z')) {
             count++;
         }
     }
@@ -360,10 +361,11 @@ int Count19MG(Status *status, Possible *Possibles, int number) {
 int Count19AG(Status *status, Possible *Possibles, int number) {
     int count = 0;
     for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-        if (status->groupTile[i].type == Ankan && \
-        (status->groupTile[i].tile[0] == '1' || \
-        status->groupTile[i].tile[0] == '9' || \
-        status->groupTile[i].tile[1] == 'z')) {
+        if (status->groupTile[i].type == Ankan &&
+            (
+                    status->groupTile[i].tile[0] == '1' ||
+                    status->groupTile[i].tile[0] == '9' ||
+                    status->groupTile[i].tile[1] == 'z')) {
             count++;
         }
     }

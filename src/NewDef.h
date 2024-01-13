@@ -23,12 +23,13 @@ struct situation {
     int Han;
     int Fu;
     int point;
+    ResultType result_type;
 };
 
 typedef struct situation Situation;
 
 struct possible {
-    Situation Situations[100];
+    Situation Situations[30];
     Hand HandTiles;
     Hand AllTiles;
     int HandGroupLen;  //手牌中的面子个数

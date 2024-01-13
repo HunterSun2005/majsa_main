@@ -121,7 +121,8 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
     }
     if (Possibles->AllTiles.matrix[0][1] == 0 && Possibles->AllTiles.matrix[0][9] == 0 &&
         Possibles->AllTiles.matrix[1][1] == 0 && Possibles->AllTiles.matrix[1][9] == 0 &&
-        Possibles->AllTiles.matrix[2][1] && Possibles->AllTiles.matrix[2][9] && Possibles->AllTiles.z_num == 0) {
+        Possibles->AllTiles.matrix[2][1] == 0 && Possibles->AllTiles.matrix[2][9] == 0 &&
+        Possibles->AllTiles.z_num == 0) {
         yaku[count] = Tanyao;
         count++;
     }
@@ -149,10 +150,23 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = Pinhu;
         count++;    //门前清限定
     }
-    if (isIipeikou(status) && isMenzenchin(status)) {
-        yaku[count] = Iipeikou;
-        count++;    //门前清限定
+
+    {
+        if (isRyanpeikou(status)) {
+            yaku[count] = Ryanpeikou;
+            count++;
+        } else {
+            if (isChiitoitsu(status)) {
+                yaku[count] = Chiitoitsu;
+                count++;
+            }
+            if (isIipeikou(status) && isMenzenchin(status)) {
+                yaku[count] = Iipeikou;
+                count++;    //门前清限定
+            }
+        }
     }
+
     if (status->isRinshan) {
         yaku[count] = Rinshankaihou;
         count++;
@@ -193,10 +207,7 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = Honroutou;
         count++;
     }
-    if (isChiitoitsu(status)) {
-        yaku[count] = Chiitoitsu;
-        count++;
-    }
+
 
     {
         if (isHonchantaiyaochuu(status)) {
@@ -226,11 +237,6 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
             yaku[count] = SanshokudoujunF;
             count++;
         }
-    }
-
-    if (isRyanpeikou(status)) {
-        yaku[count] = Ryanpeikou;
-        count++;
     }
 
     {
@@ -587,8 +593,8 @@ bool isHonchantaiyaochuu(Status *status) {
             for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
                 if (status->groupTile[i].type != Ankan) {
                     return false;
-                } else if (status->groupTile[i].tile[1] == 'm' || status->groupTile[i].tile[1] == 'p' || \
-                status->groupTile[i].tile[1] == 's') {
+                } else if (status->groupTile[i].tile[1] == 'm' || status->groupTile[i].tile[1] == 'p' ||
+                           status->groupTile[i].tile[1] == 's') {
                     if (status->groupTile[i].tile[0] != '1' && status->groupTile[i].tile[0] != '9') {
                         return false;
                     }
@@ -609,12 +615,12 @@ bool isHonchantaiyaochuuF(Status *status) {
         if (isToitoihou(status) == false) {
             for (int i = 0; i < Possibles->HandGroupLen; i++) {
                 if (Possibles->Situations[number].HandGroupTile[i].type == Shuntsu &&
-                    Possibles->Situations[number].HandGroupTile[i].tile[0] != '1' && \
+                    Possibles->Situations[number].HandGroupTile[i].tile[0] != '1' &&
                     Possibles->Situations[number].HandGroupTile[i].tile[0] != '7') {
                     return false;
                 } else if (Possibles->Situations[number].HandGroupTile[i].type == Koutsu) {
                     if (Possibles->Situations[number].HandGroupTile[i].tile[1] == 'm' ||
-                        Possibles->Situations[number].HandGroupTile[i].tile[1] == 'p' || \
+                        Possibles->Situations[number].HandGroupTile[i].tile[1] == 'p' ||
                         Possibles->Situations[number].HandGroupTile[i].tile[1] == 's') {
                         if (Possibles->Situations[number].HandGroupTile[i].tile[0] != '1' &&
                             Possibles->Situations[number].HandGroupTile[i].tile[0] != '9') {
@@ -624,11 +630,11 @@ bool isHonchantaiyaochuuF(Status *status) {
                 }
             }
             for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-                if (status->groupTile[i].type == Shuntsu && status->groupTile[i].tile[0] != '1' && \
+                if (status->groupTile[i].type == Shuntsu && status->groupTile[i].tile[0] != '1' &&
                     status->groupTile[i].tile[0] != '7') {
                     return false;
-                } else if (status->groupTile[i].type == Ankan || status->groupTile[i].type == Koutsu || \
-                status->groupTile[i].type == Kantsu) {
+                } else if (status->groupTile[i].type == Ankan || status->groupTile[i].type == Koutsu ||
+                           status->groupTile[i].type == Kantsu) {
                     if (status->groupTile[i].tile[1] == 'm' || status->groupTile[i].tile[1] == 'p' ||
                         status->groupTile[i].tile[1] == 's') {
                         if (status->groupTile[i].tile[0] != '1' && status->groupTile[i].tile[0] != '9') {
@@ -869,7 +875,7 @@ bool isJunchantaiyaochuu(Status *status) {
         if (isToitoihou(status) == false) {
             for (int i = 0; i < Possibles->HandGroupLen; i++) {
                 if (Possibles->Situations[number].HandGroupTile[i].type == Shuntsu &&
-                    Possibles->Situations[number].HandGroupTile[i].tile[0] != '1' && \
+                    Possibles->Situations[number].HandGroupTile[i].tile[0] != '1' &&
                     Possibles->Situations[number].HandGroupTile[i].tile[0] != '7') {
                     return false;
                 } else if (Possibles->Situations[number].HandGroupTile[i].type == Koutsu) {
@@ -906,7 +912,7 @@ bool isJunchantaiyaochuuF(Status *status) {
         if (isToitoihou(status) == false) {
             for (int i = 0; i < Possibles->HandGroupLen; i++) {
                 if (Possibles->Situations[number].HandGroupTile[i].type == Shuntsu &&
-                    Possibles->Situations[number].HandGroupTile[i].tile[0] != '1' && \
+                    Possibles->Situations[number].HandGroupTile[i].tile[0] != '1' &&
                     Possibles->Situations[number].HandGroupTile[i].tile[0] != '7') {
                     return false;
                 } else if (Possibles->Situations[number].HandGroupTile[i].type == Koutsu) {
@@ -919,11 +925,11 @@ bool isJunchantaiyaochuuF(Status *status) {
                 }
             }
             for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-                if (status->groupTile[i].type == Shuntsu && status->groupTile[i].tile[0] != '1' && \
+                if (status->groupTile[i].type == Shuntsu && status->groupTile[i].tile[0] != '1' &&
                     status->groupTile[i].tile[0] != '7') {
                     return false;
-                } else if (status->groupTile[i].type == Ankan || status->groupTile[i].type == Koutsu || \
-                status->groupTile[i].type == Kantsu) {
+                } else if (status->groupTile[i].type == Ankan || status->groupTile[i].type == Koutsu ||
+                           status->groupTile[i].type == Kantsu) {
                     if (status->groupTile[i].tile[1] == 'z') {
                         return false;
                     } else if (status->groupTile[i].tile[0] != '1' && status->groupTile[i].tile[0] != '9') {
@@ -1173,7 +1179,7 @@ bool isSuukantsu(Status *status) {
 
 bool isChuurenpoutou(Status *status) {
     for (int i = 0; i < 3; i++) {
-        if (isMenzenchin(status) && \
+        if (isMenzenchin(status) &&
             Possibles->AllTiles.matrix[i][1] >= 3 && Possibles->AllTiles.matrix[i][9] >= 3 &&
             Possibles->AllTiles.matrix[i][2] >= 1 && Possibles->AllTiles.matrix[i][3] >= 1 &&
             Possibles->AllTiles.matrix[i][4] >= 1 && Possibles->AllTiles.matrix[i][5] >= 1 &&
@@ -1187,7 +1193,7 @@ bool isChuurenpoutou(Status *status) {
 
 bool isChuurenkyuumenmachi(Status *status) {
     for (int i = 0; i < 3; i++) {
-        if (isMenzenchin(status) && \
+        if (isMenzenchin(status) &&
             Possibles->AllTiles.matrix[i][1] >= 3 && Possibles->AllTiles.matrix[i][9] >= 3 &&
             Possibles->AllTiles.matrix[i][2] >= 1 && Possibles->AllTiles.matrix[i][3] >= 1 &&
             Possibles->AllTiles.matrix[i][4] >= 1 && Possibles->AllTiles.matrix[i][5] >= 1 &&
