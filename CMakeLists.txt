@@ -8,4 +8,5 @@ add_executable(majsa_main
         src/majsa.c
         src/YakuChecker.c
         src/Calculator.c
-        src/AgariChecker.c)
+        src/AgariChecker.c
+        src/NewDef.h)

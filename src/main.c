@@ -33,9 +33,5 @@ int main() {
 //    assert(result->point[SHIMOCHA] == 32000);
 //    // assert(result->machi == 13);  // 已和牌，不考虑面听数
 //    // assert(result->shanten == 0);  // 已和牌，不考虑向听数
-    printf("%d\n", result->type);
-    for (int i = 0; i < 20 && result->yaku[i] != 0; i++) {
-        printf("%x ", result->yaku[i]);
-    }
     return 0;
 }

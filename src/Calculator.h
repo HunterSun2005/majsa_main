@@ -2,6 +2,8 @@
 
 #include <math.h>
 #include "main.h"
+#include "YakuChecker.h"
+#include "NewDef.h"
 
 int calHan(Status *status, Yaku *yaku, Possible *Possibles);  // 计算番数
 
@@ -11,7 +13,7 @@ int calPoint(Status *status, int Han, int Fu);  // 计算点数
 
 int calMachi(Status *status);  // 计算面听数
 
-bool isChi(Status *status, Possible *Possibles, int number);    //是否吃牌
+bool isChi(Status *status, Possible *Possibles);    //是否吃牌
 
 int MarkMK(Status *status, Possible *Possibles, int number);   //标记明刻(杠子)
 

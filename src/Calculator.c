@@ -63,7 +63,7 @@ int calFu(Status *status, int Han, Possible *Possibles, int number) {
     int Fu = 20;
     if (Han < 0 || Han >= 13) {
         return 0;
-    } else if (CheckChiitoitsu(status, Possibles->HandTiles)) {
+    } else if (CheckChiitoitsu(status, Possibles->HandTiles, Possibles)) {
         return 25;
     } else if (isPinhu(status) && status->currentPlayer == JICHA) {
         return 20;
@@ -107,7 +107,7 @@ int calFu(Status *status, int Han, Possible *Possibles, int number) {
             Fu += 2;
         }
 
-        if (isChi(status, Possibles, number) && Fu == 20) {
+        if (isChi(status, Possibles) && Fu == 20) {
             return 30;
         }
 
@@ -144,6 +144,7 @@ int calPoint(Status *status, int Han, int Fu) {
         } else if (Han > 12) {
             return 48000;
         }
+        return -1;
     } else {
         if (Han == -1) {
             return 32000;
@@ -166,10 +167,11 @@ int calPoint(Status *status, int Han, int Fu) {
         } else if (Han > 12) {
             return 32000;
         }
+        return -1;
     }
 }
 
-bool isChi(Status *status, Possible *Possibles, int number) {
+bool isChi(Status *status, Possible *Possibles) {
     for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
         if (status->groupTile[i].type == Shuntsu) {
             return true;
@@ -190,14 +192,17 @@ int MarkMK(Status *status, Possible *Possibles, int number) {
                         if (Possibles->HandTiles.matrix[0][status->currentTile[0] - 48] == 3) {
                             count++;
                         }
+                        break;
                     case 'p':
                         if (Possibles->HandTiles.matrix[1][status->currentTile[0] - 48] == 3) {
                             count++;
                         }
+                        break;
                     case 's':
                         if (Possibles->HandTiles.matrix[2][status->currentTile[0] - 48] == 3) {
                             count++;
                         }
+                        break;
                     default:;
                 }
             }

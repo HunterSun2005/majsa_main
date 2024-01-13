@@ -1,8 +1,12 @@
 #pragma once
 
+#include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "main.h"
 #include "YakuChecker.h"
+#include "NewDef.h"
+
 
 Possible *isAgari(Status *status);  // 判断是否为和牌形，且无舍牌振听
 
