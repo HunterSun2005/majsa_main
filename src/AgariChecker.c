@@ -10,17 +10,17 @@ Possible *isAgari(Status *status) {
     Possibles->HandTiles = Statistics(status);     //统计手中牌数
     Possibles->AllTiles = StatisticsAll(status);   //统计所有牌数
 
+    Possibles->HandGroupLen = ((int) strlen(status->handTile) / 2 - 1) / 3;
+
     if (CheckKokushimusou(Possibles->HandTiles)) {
         Possibles->Situations[CountSituation].Agari = true;
         return Possibles;
     }
 
-    if (CheckChiitoitsu(Possibles->HandTiles)) {
+    if (CheckChiitoitsu(status, Possibles->HandTiles, Possibles)) {
         Possibles->Situations[CountSituation].Agari = true;
         return Possibles;
     }
-
-    Possibles->HandGroupLen = ((int) strlen(status->handTile) / 2 - 1) / 3;
 
     for (int i = 0; i <= 3; i++) {
         for (int j = 1; j <= 9; j++) {
@@ -232,7 +232,7 @@ Hand StatisticsAll(Status *status) {
     }   //手牌
 
     for (int i = 0; i < 4 - HandGroupLen; i++) {
-        for (int j = 0; j <= 2 && status->groupTile[i].tile[2 * j + 1] != 0; j++) {
+        for (int j = 0; j <= 3 && status->groupTile[i].tile[2 * j + 1] != 0; j++) {
             switch (status->groupTile[i].tile[2 * j + 1]) {
                 case 'm':
                     Hands.matrix[0][status->groupTile[i].tile[2 * j] - 48]++;
@@ -271,12 +271,23 @@ bool CheckKokushimusou(Hand Hands) {
     } else return false;
 }
 
-bool CheckChiitoitsu(Hand Hands) {
-    for (int i = 0; i <= 3; i++) {
-        for (int j = 1; j <= 9; j++) {
-            if (Hands.matrix[i][j] != 0 && Hands.matrix[i][j] != 2) {
-                return false;
+bool CheckChiitoitsu(Status *status, Hand Hands, Possible *Possibles) {
+    if (isMenzenchinn(status, Possibles)) {
+        for (int i = 0; i <= 3; i++) {
+            for (int j = 1; j <= 9; j++) {
+                if (Hands.matrix[i][j] != 0 && Hands.matrix[i][j] != 2) {
+                    return false;
+                }
             }
+        }
+        return true;
+    } else return false;
+}
+
+bool isMenzenchinn(Status *status, Possible *Possibles) {
+    for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
+        if (status->groupTile[i].type != Ankan) {
+            return false;
         }
     }
     return true;

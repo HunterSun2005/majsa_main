@@ -145,13 +145,13 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = YakuhaiChun;
         count++;
     }
-    if (isPinhu(status)) {
+    if (isPinhu(status) && isMenzenchin(status)) {
         yaku[count] = Pinhu;
-        count++;
+        count++;    //门前清限定
     }
-    if (isIipeikou(status)) {
+    if (isIipeikou(status) && isMenzenchin(status)) {
         yaku[count] = Iipeikou;
-        count++;
+        count++;    //门前清限定
     }
     if (status->isRinshan) {
         yaku[count] = Rinshankaihou;
@@ -262,6 +262,15 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
     return yaku;
 }
 
+bool isMenzenchin(Status *status) {
+    for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
+        if (status->groupTile[i].type != Ankan) {
+            return false;
+        }
+    }
+    return true;
+}
+
 bool isMenzenchintsumo(Status *status) {
     for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
         if (status->groupTile[i].type != Ankan) {
@@ -275,19 +284,45 @@ bool isMenzenchintsumo(Status *status) {
 }
 
 bool isPinhu(Status *status) {
-    if (Possibles->Situations[number].Jyantou[1] != 'z') {
+    if (Possibles->Situations[number].Jyantou[1] != 'z' ||
+        (Possibles->Situations[number].Jyantou[1] == 'z' && Possibles->Situations[number].Jyantou[0] - 48 != 5 &&
+         Possibles->Situations[number].Jyantou[0] - 48 != 6 && Possibles->Situations[number].Jyantou[0] - 48 != 7 &&
+         Possibles->Situations[number].Jyantou[0] - 48 != status->jikaze + 1 &&
+         Possibles->Situations[number].Jyantou[0] - 48 != status->bakaze + 1)) {
         for (int i = 0; i < Possibles->HandGroupLen; i++) {
-            if (Possibles->Situations[number].HandGroupTile[i].type != Shuntsu ||
-                Possibles->Situations[number].HandGroupTile[i].tile[1] == 'z') {
+            if (Possibles->Situations[number].HandGroupTile[i].type != Shuntsu) {
                 return false;
             }
         }
         for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-            if (status->groupTile[i].type != Shuntsu || status->groupTile[i].tile[1] == 'z') {
+            if (status->groupTile[i].type != Shuntsu) {
                 return false;
             }
         }
-        return true;
+
+        if (status->currentTile[0] == Possibles->Situations[number].Jyantou[0] &&
+            status->currentTile[1] == Possibles->Situations[number].Jyantou[1]) {
+            return false;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            if (Possibles->Situations[number].HandGroupTile[i].tile[1] == status->currentTile[1]) {
+                if (Possibles->Situations[number].HandGroupTile[i].tile[0] == status->currentTile[0] ||
+                    Possibles->Situations[number].HandGroupTile[i].tile[0] == status->currentTile[0] - 2) {
+                    if (Possibles->Situations[number].HandGroupTile[i].tile[0] == '1') {
+                        if (status->currentTile[0] != '3') {
+                            return true;
+                        }
+                    } else if (Possibles->Situations[number].HandGroupTile[i].tile[0] == '7') {
+                        if (status->currentTile[0] != '7') {
+                            return true;
+                        }
+                    } else return true;
+                }
+            }
+        }       //只能两面听
+
+        return false;
     } else return false;
 }
 
@@ -904,9 +939,12 @@ bool isJunchantaiyaochuuF(Status *status) {
 }
 
 bool isHonitsu(Status *status) {
-    if ((Possibles->AllTiles.z_num + Possibles->AllTiles.m_num == 14) ||
-        (Possibles->AllTiles.z_num + Possibles->AllTiles.p_num == 14) ||
-        (Possibles->AllTiles.z_num + Possibles->AllTiles.s_num == 14)) {
+    if ((Possibles->AllTiles.z_num + Possibles->AllTiles.m_num >= 14 && Possibles->AllTiles.p_num == 0 &&
+         Possibles->AllTiles.s_num == 0) ||
+        (Possibles->AllTiles.z_num + Possibles->AllTiles.p_num >= 14 && Possibles->AllTiles.m_num == 0 &&
+         Possibles->AllTiles.s_num == 0) ||
+        (Possibles->AllTiles.z_num + Possibles->AllTiles.s_num >= 14 && Possibles->AllTiles.m_num == 0 &&
+         Possibles->AllTiles.p_num == 0)) {
         for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
             if (status->groupTile[i].type != Ankan) {
                 return false;
@@ -917,15 +955,23 @@ bool isHonitsu(Status *status) {
 }
 
 bool isHonitsuF(Status *status) {
-    if ((Possibles->AllTiles.z_num + Possibles->AllTiles.m_num == 14) ||
-        (Possibles->AllTiles.z_num + Possibles->AllTiles.p_num == 14) ||
-        (Possibles->AllTiles.z_num + Possibles->AllTiles.s_num == 14)) {
+    if ((Possibles->AllTiles.z_num + Possibles->AllTiles.m_num >= 14 && Possibles->AllTiles.p_num == 0 &&
+         Possibles->AllTiles.s_num == 0) ||
+        (Possibles->AllTiles.z_num + Possibles->AllTiles.p_num >= 14 && Possibles->AllTiles.m_num == 0 &&
+         Possibles->AllTiles.s_num == 0) ||
+        (Possibles->AllTiles.z_num + Possibles->AllTiles.s_num >= 14 && Possibles->AllTiles.m_num == 0 &&
+         Possibles->AllTiles.p_num == 0)) {
         return true;
     } else return false;
 }
 
 bool isChinitsu(Status *status) {
-    if (Possibles->AllTiles.m_num == 14 || Possibles->AllTiles.p_num == 14 || Possibles->AllTiles.s_num == 14) {
+    if ((Possibles->AllTiles.m_num >= 14 && Possibles->AllTiles.p_num == 0 && Possibles->AllTiles.s_num == 0 &&
+         Possibles->AllTiles.z_num == 0) ||
+        (Possibles->AllTiles.p_num >= 14 && Possibles->AllTiles.m_num == 0 && Possibles->AllTiles.s_num == 0 &&
+         Possibles->AllTiles.z_num == 0) ||
+        (Possibles->AllTiles.s_num >= 14 && Possibles->AllTiles.m_num == 0 && Possibles->AllTiles.p_num == 0 &&
+         Possibles->AllTiles.z_num == 0)) {
         for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
             if (status->groupTile[i].type != Ankan) {
                 return false;
@@ -936,7 +982,12 @@ bool isChinitsu(Status *status) {
 }
 
 bool isChinitsuF(Status *status) {
-    if (Possibles->AllTiles.m_num == 14 || Possibles->AllTiles.p_num == 14 || Possibles->AllTiles.s_num == 14) {
+    if ((Possibles->AllTiles.m_num >= 14 && Possibles->AllTiles.p_num == 0 && Possibles->AllTiles.s_num == 0 &&
+         Possibles->AllTiles.z_num == 0) ||
+        (Possibles->AllTiles.p_num >= 14 && Possibles->AllTiles.m_num == 0 && Possibles->AllTiles.s_num == 0 &&
+         Possibles->AllTiles.z_num == 0) ||
+        (Possibles->AllTiles.s_num >= 14 && Possibles->AllTiles.m_num == 0 && Possibles->AllTiles.p_num == 0 &&
+         Possibles->AllTiles.z_num == 0)) {
         return true;
     } else return false;
 }
@@ -1016,7 +1067,8 @@ bool isSuuankou(Status *status) {
 }
 
 bool isTsuuiisou(Status *status) {
-    if (Possibles->AllTiles.z_num == 14) {
+    if (Possibles->AllTiles.z_num >= 14 && Possibles->AllTiles.m_num == 0 && Possibles->AllTiles.p_num == 0 &&
+        Possibles->AllTiles.s_num == 0) {
         return true;
     } else return false;
 }
@@ -1024,7 +1076,8 @@ bool isTsuuiisou(Status *status) {
 bool isRyuuiisou(Status *status) {
     if (Possibles->AllTiles.matrix[2][2] + Possibles->AllTiles.matrix[2][3] + Possibles->AllTiles.matrix[2][4] +
         Possibles->AllTiles.matrix[2][6] + Possibles->AllTiles.matrix[2][8] +
-        Possibles->AllTiles.matrix[3][6] == 14) {
+        Possibles->AllTiles.matrix[3][6] ==
+        Possibles->AllTiles.m_num + Possibles->AllTiles.p_num + Possibles->AllTiles.s_num + Possibles->AllTiles.z_num) {
         return true;
     } else return false;
 }
@@ -1032,7 +1085,8 @@ bool isRyuuiisou(Status *status) {
 bool isChinroutou(Status *status) {
     if (Possibles->AllTiles.matrix[0][1] + Possibles->AllTiles.matrix[0][9] + Possibles->AllTiles.matrix[1][1] +
         Possibles->AllTiles.matrix[1][9] + Possibles->AllTiles.matrix[2][1] +
-        Possibles->AllTiles.matrix[2][9] == 14) {
+        Possibles->AllTiles.matrix[2][9] ==
+        Possibles->AllTiles.m_num + Possibles->AllTiles.p_num + Possibles->AllTiles.s_num + Possibles->AllTiles.z_num) {
         return true;
     } else return false;
 }
@@ -1079,15 +1133,29 @@ bool isKokushijuusanmenmachi(Status *status) {
 }
 
 bool isShousuushi(Status *status) {
-    if (Possibles->AllTiles.matrix[3][1] + Possibles->AllTiles.matrix[3][2] + Possibles->AllTiles.matrix[3][3] +
-        Possibles->AllTiles.matrix[3][4] >= 11) {
+    if (Possibles->AllTiles.matrix[3][1] >= 2 && Possibles->AllTiles.matrix[3][2] >= 3 &&
+        Possibles->AllTiles.matrix[3][3] >= 3 &&
+        Possibles->AllTiles.matrix[3][4] >= 3) {
+        return true;
+    } else if (Possibles->AllTiles.matrix[3][1] >= 3 && Possibles->AllTiles.matrix[3][2] >= 2 &&
+               Possibles->AllTiles.matrix[3][3] >= 3 &&
+               Possibles->AllTiles.matrix[3][4] >= 3) {
+        return true;
+    } else if (Possibles->AllTiles.matrix[3][1] >= 3 && Possibles->AllTiles.matrix[3][2] >= 3 &&
+               Possibles->AllTiles.matrix[3][3] >= 2 &&
+               Possibles->AllTiles.matrix[3][4] >= 3) {
+        return true;
+    } else if (Possibles->AllTiles.matrix[3][1] >= 3 && Possibles->AllTiles.matrix[3][2] >= 3 &&
+               Possibles->AllTiles.matrix[3][3] >= 3 &&
+               Possibles->AllTiles.matrix[3][4] >= 2) {
         return true;
     } else return false;
 }
 
 bool isDaisuushi(Status *status) {
-    if (Possibles->AllTiles.matrix[3][1] + Possibles->AllTiles.matrix[3][2] + Possibles->AllTiles.matrix[3][3] +
-        Possibles->AllTiles.matrix[3][4] >= 12) {
+    if (Possibles->AllTiles.matrix[3][1] >= 3 && Possibles->AllTiles.matrix[3][2] >= 3 &&
+        Possibles->AllTiles.matrix[3][3] >= 3 &&
+        Possibles->AllTiles.matrix[3][4] >= 3) {
         return true;
     } else return false;
 }
@@ -1105,7 +1173,8 @@ bool isSuukantsu(Status *status) {
 
 bool isChuurenpoutou(Status *status) {
     for (int i = 0; i < 3; i++) {
-        if (Possibles->AllTiles.matrix[i][1] >= 3 && Possibles->AllTiles.matrix[i][9] >= 3 &&
+        if (isMenzenchin(status) && \
+            Possibles->AllTiles.matrix[i][1] >= 3 && Possibles->AllTiles.matrix[i][9] >= 3 &&
             Possibles->AllTiles.matrix[i][2] >= 1 && Possibles->AllTiles.matrix[i][3] >= 1 &&
             Possibles->AllTiles.matrix[i][4] >= 1 && Possibles->AllTiles.matrix[i][5] >= 1 &&
             Possibles->AllTiles.matrix[i][6] >= 1 && Possibles->AllTiles.matrix[i][7] >= 1 &&
@@ -1118,7 +1187,8 @@ bool isChuurenpoutou(Status *status) {
 
 bool isChuurenkyuumenmachi(Status *status) {
     for (int i = 0; i < 3; i++) {
-        if (Possibles->AllTiles.matrix[i][1] >= 3 && Possibles->AllTiles.matrix[i][9] >= 3 &&
+        if (isMenzenchin(status) && \
+            Possibles->AllTiles.matrix[i][1] >= 3 && Possibles->AllTiles.matrix[i][9] >= 3 &&
             Possibles->AllTiles.matrix[i][2] >= 1 && Possibles->AllTiles.matrix[i][3] >= 1 &&
             Possibles->AllTiles.matrix[i][4] >= 1 && Possibles->AllTiles.matrix[i][5] >= 1 &&
             Possibles->AllTiles.matrix[i][6] >= 1 && Possibles->AllTiles.matrix[i][7] >= 1 &&
