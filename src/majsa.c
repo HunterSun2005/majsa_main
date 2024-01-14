@@ -69,15 +69,18 @@ Result *majsa(Status *status) {
         return result;
     }       //可以和牌
     else {
+        int count_tenpai = 0;
         for (int i = 0; i < 30; i++) {
             if (Possibles->Situations[i].result_type == FURITEN) {
                 result->type = FURITEN;
+                count_tenpai++;
             } else if (Possibles->Situations[i].result_type == TENPAI) {
                 result->type = TENPAI;
+                count_tenpai++;
             }
         }
 
-        if (result->type != TENPAI && result->type != FURITEN) {
+        if (count_tenpai <= 0) {
             int Machi = calMachi(status, Possibles->HandTiles);
             if (Machi >= 1) {
                 result->type = TENPAI;
@@ -88,7 +91,7 @@ Result *majsa(Status *status) {
                 return result;
             }
         } else {
-            int Machi = calMachi(status, Possibles->HandTiles);
+            int Machi = calMachi_Tenpai(status, Possibles->HandTiles, count_tenpai);
             result->machi = Machi;
         }
 

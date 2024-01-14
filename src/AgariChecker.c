@@ -114,7 +114,7 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles, in
     Hand temp;
     if (count > 5) {
         return;
-    } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) == 0) {
+    } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 0) {
         memcpy(&(Possibles->Situations[CountSituation + 1]), &(Possibles->Situations[CountSituation]), \
         sizeof(Situation));
         Possibles->Situations[CountSituation].Agari = true;
@@ -151,6 +151,7 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles, in
                     SeparateTile(temp, status, count, Possibles, a, b, a2, b2);  //判断剩下的牌
                 }
             }
+            b1 = 1;
         }   //刻子
 
         for (int a = a2; a <= 2; a++) {
@@ -181,6 +182,7 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles, in
                     SeparateTile(temp, status, count, Possibles, a1, b1, a, b);    //判断剩下的牌
                 }
             }
+            b2 = 0;
         }   //顺子
     }
 }

@@ -8,13 +8,11 @@ int main() {
             .honbaCount = 0,
             .dora="1m",
             .uradora="3s",
-            .handTile="2z1z1z1z",
-            .groupTile={{Ankan, "5m0m5m5m"},
-                        {Ankan, "5p0p5p5p"},
-                        {Ankan, "5s0s5s5s"}},
-            .discardTile="2m3m4m5m3p4p5p6p2s3s4s5s9m",
+            .handTile="2m3p3p3p4s4s4s5m5m5m6p6p6p",
+            .groupTile={},
+            .discardTile="1m2m3m4m5m3p4p5p6p2s3s4s5s",
             .currentPlayer=JICHA,
-            .currentTile="2z",
+            .currentTile="2m",
             .remainTileCount=18,
             .isRiichi=false,
             .isDoubleRiichi=false,
@@ -35,5 +33,5 @@ int main() {
 //    assert(result->point[SHIMOCHA] == 32000);
 //    // assert(result->machi == 13);  // 已和牌，不考虑面听数
 //    // assert(result->shanten == 0);  // 已和牌，不考虑向听数
-    return 0;
+    return 1;
 }
