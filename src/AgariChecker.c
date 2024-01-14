@@ -396,6 +396,14 @@ int getDistance(Status *status, Possible *Possibles) {
         }
     }
 
+    int qi_distance = Shanten_ChChiitoitsu(Possibles_D);
+
+    int guo_distance = Shanten_Guo(Possibles_D);
+
+    if (qi_distance < distance) distance = qi_distance;
+
+    if (guo_distance < distance) distance = guo_distance;
+
     free(Possibles_D);
     return distance;
 }
@@ -536,3 +544,39 @@ bool Stop(Possible_D *Possibles_D) {
 
     return true;
 }
+
+int Shanten_ChChiitoitsu(Possible_D *Possibles_D) {
+    int distance = 6;
+    for (int i = 0; i <= 3; i++) {
+        for (int j = 1; j <= 9; j++) {
+            if (i == 3 && j >= 8) break;
+
+            if (Possibles_D->HandTiles.matrix[i][j] >= 2) {
+                distance--;
+            }
+        }
+    }
+
+    return distance;
+}
+
+int Shanten_Guo(Possible_D *Possibles_D) {
+    int distance = 12;
+
+    if (Possibles_D->HandTiles.matrix[0][1] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[0][9] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[1][1] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[1][9] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[2][1] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[2][9] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[3][1] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[3][2] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[3][3] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[3][4] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[3][5] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[3][6] >= 1) distance--;
+    if (Possibles_D->HandTiles.matrix[3][7] >= 1) distance--;
+
+    return distance;
+}
+
