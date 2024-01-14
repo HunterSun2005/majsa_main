@@ -121,11 +121,8 @@ int calFu(Status *status, int Han, Possible *Possibles, int number) {
 int calPoint(Status *status, int Han, int Fu) {
     int point = 0;
     if (status->bakaze == status->jikaze) {
-        if (Han == -1) {
-            return 48000;
-        }
-        if (Han == -2) {
-            return 96000;
+        if (Han < 0) {
+            return 48000 * (-1 * Han);
         }
 
         point = 6 * Fu * (int) pow(2, Han + 2);
@@ -144,11 +141,8 @@ int calPoint(Status *status, int Han, int Fu) {
         }
         return -1;
     } else {
-        if (Han == -1) {
-            return 32000;
-        }
-        if (Han == -2) {
-            return 64000;
+        if (Han < 0) {
+            return 32000 * (-1 * Han);
         }
 
         point = 4 * Fu * (int) pow(2, Han + 2);
@@ -167,6 +161,31 @@ int calPoint(Status *status, int Han, int Fu) {
         }
         return -1;
     }
+}
+
+int calMachi(Status *status, Hand HandTiles) {
+    int Machi = 0;
+    Possible *Tenpai_Possibles;
+    Hand temp;
+    for (int a = 0; a <= 3; a++) {
+        for (int b = 1; b <= 9; b++) {
+            if (a == 3 && b >= 8) {
+                break;
+            }
+
+            temp = HandTiles;
+            temp.matrix[a][b]++;
+            Tenpai_Possibles = isTenpai(status, temp);
+            for (int i = 0; i < 30; i++) {
+                if (Tenpai_Possibles->Situations[i].Agari) {
+                    Machi++;
+                    break;
+                }
+            }
+            free(Tenpai_Possibles);     //回收内存
+        }
+    }
+    return Machi;
 }
 
 bool isChi(Status *status, Possible *Possibles) {

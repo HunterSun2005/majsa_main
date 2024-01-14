@@ -3,6 +3,7 @@
 int CountSituation = 0;     //记录分组情况数
 
 Possible *isAgari(Status *status) {
+    CountSituation = 0;
     Hand temp;
     Possible *Possibles = malloc(sizeof(Possible));
     memset(Possibles, 0, sizeof(*Possibles));
@@ -53,6 +54,59 @@ Possible *isAgari(Status *status) {
         }
     }
     return Possibles;
+}
+
+Possible *isTenpai(Status *status, Hand HandTiles) {
+    CountSituation = 0;
+    Hand temp;
+    Possible *Tenpai_Possibles = malloc(sizeof(Possible));
+    memset(Tenpai_Possibles, 0, sizeof(*Tenpai_Possibles));
+
+    Tenpai_Possibles->HandTiles = HandTiles;     //导入听牌牌数
+
+    Tenpai_Possibles->HandGroupLen = ((int) strlen(status->handTile) / 2 - 1) / 3;
+
+    if (CheckKokushimusou(Tenpai_Possibles->HandTiles)) {
+        Tenpai_Possibles->Situations[CountSituation].Agari = true;
+        return Tenpai_Possibles;
+    }
+
+    if (CheckChiitoitsu(status, Tenpai_Possibles->HandTiles, Tenpai_Possibles)) {
+        Tenpai_Possibles->Situations[CountSituation].Agari = true;
+        return Tenpai_Possibles;
+    }
+
+    for (int i = 0; i <= 3; i++) {
+        for (int j = 1; j <= 9; j++) {
+            if (Tenpai_Possibles->HandTiles.matrix[i][j] >= 2) {
+                temp = Tenpai_Possibles->HandTiles;
+                temp.matrix[i][j] -= 2; //雀头
+                Tenpai_Possibles->Situations[CountSituation].Jyantou[0] = (char) (j + 48);  //记录雀头
+                switch (i) {
+                    case 0:
+                        temp.m_num -= 2;
+                        Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 'm';
+                        break;
+                    case 1:
+                        temp.p_num -= 2;
+                        Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 'p';
+                        break;
+                    case 2:
+                        temp.s_num -= 2;
+                        Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 's';
+                        break;
+                    case 3:
+                        temp.z_num -= 2;
+                        Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 'z';
+                        break;
+                    default:;
+                }
+
+                SeparateTile(temp, status, 0, Tenpai_Possibles, 0, 1, 0, 1);
+            }
+        }
+    }
+    return Tenpai_Possibles;
 }
 
 void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles, int a1, int b1, int a2, int b2) {

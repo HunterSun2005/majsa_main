@@ -10,6 +10,6 @@
 #include "AgariChecker.h"
 #include "YakuChecker.h"
 #include "NewDef.h"
-
+#include "Sort.h"
 
 Result *majsa(Status *status);  // 主函数

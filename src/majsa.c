@@ -6,6 +6,8 @@ Result *majsa(Status *status) {
 
     Possible *Possibles = isAgari(status);
 
+    SortGroupTile(status, Possibles);  //排序副露牌
+
     for (int i = 0; i < 20; i++) {
         if (Possibles->Situations[i].Agari) {
             if (strstr(status->discardTile, status->currentTile) != NULL) {
@@ -68,28 +70,29 @@ Result *majsa(Status *status) {
     }       //可以和牌
     else {
         for (int i = 0; i < 30; i++) {
-            if (Possibles->Situations[i].result_type == TENPAI) {
-                result->type = TENPAI;
-            }
-        }
-        for (int i = 0; i < 30; i++) {
             if (Possibles->Situations[i].result_type == FURITEN) {
                 result->type = FURITEN;
+            } else if (Possibles->Situations[i].result_type == TENPAI) {
+                result->type = TENPAI;
             }
         }
 
         if (result->type != TENPAI && result->type != FURITEN) {
-            if (isTenpai(status)) {
+            int Machi = calMachi(status, Possibles->HandTiles);
+            if (Machi >= 1) {
                 result->type = TENPAI;
+                result->machi = Machi;
             } else {
                 result->type = NOTEN;
-                getDistance(status);    //计算向听数
+                //getDistance(status);    //计算向听数
                 return result;
             }
-        }   //检查是否听牌
+        } else {
+            int Machi = calMachi(status, Possibles->HandTiles);
+            result->machi = Machi;
+        }
 
 
-        calMachi(status);   //计算面听数
         return result;
     }
 }

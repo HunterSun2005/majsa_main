@@ -14,4 +14,6 @@ add_executable(majsa_main
         src/Calculator.h
         src/AgariChecker.c
         src/AgariChecker.h
-        src/NewDef.h)
+        src/NewDef.h
+        src/Sort.c
+        src/Sort.h)
