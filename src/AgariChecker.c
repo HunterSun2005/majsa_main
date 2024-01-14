@@ -350,6 +350,10 @@ bool isMenzenchinn(Status *status, Possible *Possibles) {
 }
 
 int getDistance(Status *status, Possible *Possibles) {
+    int m;
+    int d;
+    int c;
+    int q;
     int distance = 6;
     CountSituation = 0;
 
@@ -368,24 +372,21 @@ int getDistance(Status *status, Possible *Possibles) {
 
     for (int i = 0; i < 100; i++) {
         if (Possibles_D->Situations_D[i].valid) {
-            Possibles_D->Situations_D[i].m =
-                    Possibles_D->Situations_D[i].Count.Shunzi + Possibles_D->Situations_D[i].Count.Kezi;
-            Possibles_D->Situations_D[i].d =
-                    Possibles_D->Situations_D[i].Count.Lianda + Possibles_D->Situations_D[i].Count.Tiaoda +
-                    Possibles_D->Situations_D[i].Count.Duizi;
-            if (Possibles_D->Situations_D[i].m + Possibles_D->Situations_D[i].d <= 5) {
-                Possibles_D->Situations_D[i].c = 0;
-            } else Possibles_D->Situations_D[i].c = Possibles_D->Situations_D[i].m + Possibles_D->Situations_D[i].d - 5;
+            m = Possibles_D->Situations_D[i].Count.Shunzi + Possibles_D->Situations_D[i].Count.Kezi;
+            d = Possibles_D->Situations_D[i].Count.Lianda + Possibles_D->Situations_D[i].Count.Tiaoda +
+                Possibles_D->Situations_D[i].Count.Duizi;
+            if (m + d <= 5) {
+                c = 0;
+            } else c = m + d - 5;
 
-            if (Possibles_D->Situations_D[i].m + Possibles_D->Situations_D[i].d <= 4) {
-                Possibles_D->Situations_D[i].q = 1;
+            if (m + d <= 4) {
+                q = 1;
             } else {
-                if (Possibles_D->Situations_D[i].Count.Duizi >= 1) Possibles_D->Situations_D[i].q = 1;
-                else Possibles_D->Situations_D[i].q = 0;
+                if (Possibles_D->Situations_D[i].Count.Duizi >= 1) q = 1;
+                q = 0;
             }
 
-            Possibles_D->Situations_D[i].x = 9 - 2 * Possibles_D->Situations_D[i].m - Possibles_D->Situations_D[i].d + \
-                Possibles_D->Situations_D[i].c - Possibles_D->Situations_D[i].q;
+            Possibles_D->Situations_D[i].x = 9 - 2 * m - d + c - q;
         }
     }
 
@@ -395,6 +396,7 @@ int getDistance(Status *status, Possible *Possibles) {
         }
     }
 
+    free(Possibles_D);
     return distance;
 }
 

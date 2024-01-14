@@ -50,10 +50,6 @@ typedef struct count countnumber;
 struct situation_distance {
     bool valid;
     countnumber Count;
-    int m;
-    int d;
-    int c;
-    int q;
     int x;
 };
 
@@ -62,7 +58,6 @@ typedef struct situation_distance Situation_D;
 struct possible_distance {
     Situation_D Situations_D[100];
     Hand HandTiles;
-    int HandGroupLen;  //手牌中的面子个数
 };
 
 typedef struct possible_distance Possible_D;
