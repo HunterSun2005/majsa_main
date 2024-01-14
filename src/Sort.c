@@ -38,6 +38,16 @@ void SortTile(char *Sorted) {
 
 }
 
+void SortYaku(Yaku *yaku) {
+    for (int i = 18; i >= 0; i--) {
+        for (int j = 0; j <= i && yaku[j] != 0 && yaku[j + 1] != 0; j++) {
+            if (comp(yaku[j], yaku[j + 1]) > 0) {
+                SwapYaku(yaku, i);
+            }
+        }
+    }
+}
+
 void SwapTile(char *Sorted, int a) {
     char temp = 0;
 
@@ -48,6 +58,14 @@ void SwapTile(char *Sorted, int a) {
     temp = Sorted[a + 1];
     Sorted[a + 1] = Sorted[a + 3];
     Sorted[a + 3] = temp;
+}
+
+void SwapYaku(Yaku *yaku, int a) {
+    Yaku temp = 0;
+
+    temp = yaku[a];
+    yaku[a] = yaku[a + 1];
+    yaku[a + 1] = temp;
 }
 
 int comp(int a, int b) {

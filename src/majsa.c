@@ -47,6 +47,7 @@ Result *majsa(Status *status) {
             }
         }
         memcpy(result->yaku, Possibles->Situations[max].yaku, sizeof(result->yaku));
+        SortYaku(result->yaku);
         result->han = Possibles->Situations[max].Han;
         result->fu = Possibles->Situations[max].Fu;
         result->type = Possibles->Situations[max].result_type;

@@ -188,31 +188,6 @@ int calMachi(Status *status, Hand HandTiles) {
     return Machi;
 }
 
-int calMachi_Tenpai(Status *status, Hand HandTiles, int count_tenpai) {
-    int Machi = 0;
-    Possible *Tenpai_Possibles;
-    Hand temp;
-    for (int a = 0; a <= 3; a++) {
-        for (int b = 1; b <= 9; b++) {
-            if (a == 3 && b >= 8) {
-                break;
-            }
-
-            temp = HandTiles;
-            temp.matrix[a][b]++;
-            Tenpai_Possibles = isTenpai(status, temp);
-            for (int i = count_tenpai; i < 30; i++) {
-                if (Tenpai_Possibles->Situations[i].Agari) {
-                    Machi++;
-                    break;
-                }
-            }
-            free(Tenpai_Possibles);     //回收内存
-        }
-    }
-    return Machi;
-}
-
 bool isChi(Status *status, Possible *Possibles) {
     for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
         if (status->groupTile[i].type == Shuntsu) {
