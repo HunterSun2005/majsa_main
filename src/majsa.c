@@ -69,7 +69,9 @@ Result *majsa(Status *status) {
         return result;
     }       //可以和牌
     else {
+        DelCurrentTile(status, Possibles);  //去除当前牌
         int count_tenpai = 0;
+
         for (int i = 0; i < 30; i++) {
             if (Possibles->Situations[i].result_type == FURITEN) {
                 result->type = FURITEN;
@@ -87,15 +89,37 @@ Result *majsa(Status *status) {
                 result->machi = Machi;
             } else {
                 result->type = NOTEN;
-                //getDistance(status);    //计算向听数
+                result->shanten = getDistance(status, Possibles);    //计算向听数
                 return result;
             }
         } else {
-            int Machi = calMachi_Tenpai(status, Possibles->HandTiles, count_tenpai);
+            int Machi = calMachi(status, Possibles->HandTiles);
             result->machi = Machi;
         }
 
 
         return result;
+    }
+}
+
+void DelCurrentTile(Status *status, Possible *Possibles) {
+    switch (status->currentTile[1]) {
+        case 'm':
+            Possibles->HandTiles.matrix[0][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.m_num--;
+            break;
+        case 'p':
+            Possibles->HandTiles.matrix[1][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.p_num--;
+            break;
+        case 's':
+            Possibles->HandTiles.matrix[2][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.s_num--;
+            break;
+        case 'z':
+            Possibles->HandTiles.matrix[3][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.z_num--;
+            break;
+        default:;
     }
 }

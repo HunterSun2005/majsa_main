@@ -348,3 +348,189 @@ bool isMenzenchinn(Status *status, Possible *Possibles) {
     }
     return true;
 }
+
+int getDistance(Status *status, Possible *Possibles) {
+    int distance = 6;
+    CountSituation = 0;
+
+    Location index = {
+            0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+    };
+
+    countnumber counts = {};
+    memset(&counts, 0, sizeof(countnumber));
+    Possible_D *Possibles_D = malloc(sizeof(Possible_D));
+    memset(Possibles_D, 0, sizeof(*Possibles_D));
+
+    Possibles_D->HandTiles = Possibles->HandTiles;
+
+    Separate(Possibles_D, counts, index);  //递归
+
+    for (int i = 0; i < 100; i++) {
+        if (Possibles_D->Situations_D[i].valid) {
+            Possibles_D->Situations_D[i].m =
+                    Possibles_D->Situations_D[i].Count.Shunzi + Possibles_D->Situations_D[i].Count.Kezi;
+            Possibles_D->Situations_D[i].d =
+                    Possibles_D->Situations_D[i].Count.Lianda + Possibles_D->Situations_D[i].Count.Tiaoda +
+                    Possibles_D->Situations_D[i].Count.Duizi;
+            if (Possibles_D->Situations_D[i].m + Possibles_D->Situations_D[i].d <= 5) {
+                Possibles_D->Situations_D[i].c = 0;
+            } else Possibles_D->Situations_D[i].c = Possibles_D->Situations_D[i].m + Possibles_D->Situations_D[i].d - 5;
+
+            if (Possibles_D->Situations_D[i].m + Possibles_D->Situations_D[i].d <= 4) {
+                Possibles_D->Situations_D[i].q = 1;
+            } else {
+                if (Possibles_D->Situations_D[i].Count.Duizi >= 1) Possibles_D->Situations_D[i].q = 1;
+                else Possibles_D->Situations_D[i].q = 0;
+            }
+
+            Possibles_D->Situations_D[i].x = 9 - 2 * Possibles_D->Situations_D[i].m - Possibles_D->Situations_D[i].d + \
+                Possibles_D->Situations_D[i].c - Possibles_D->Situations_D[i].q;
+        }
+    }
+
+    for (int i = 0; i < 100; i++) {
+        if (Possibles_D->Situations_D[i].valid && Possibles_D->Situations_D[i].x < distance) {
+            distance = Possibles_D->Situations_D[i].x;
+        }
+    }
+
+    return distance;
+}
+
+void Separate(Possible_D *Possibles_D, countnumber counts, Location index) {
+    Location temp;
+    if (Stop(Possibles_D)) {
+        memcpy(&(Possibles_D->Situations_D[CountSituation].Count), &counts, sizeof(countnumber));
+        Possibles_D->Situations_D[CountSituation].valid = true;
+        CountSituation++;
+        return;
+    }
+
+    for (int a = index.a1; a <= 3; a++) {
+        for (int b = index.b1; b <= 9; b++) {
+            if (a == 3 && b >= 8) {
+                break;
+            }
+
+            if (Possibles_D->HandTiles.matrix[a][b] >= 3) {
+                Possibles_D->HandTiles.matrix[a][b] -= 3;
+                counts.Kezi++;
+                temp = index;
+                temp.a1 = a;
+                temp.b1 = b;
+                Separate(Possibles_D, counts, temp);
+                counts.Kezi--;
+                Possibles_D->HandTiles.matrix[a][b] += 3;
+            }
+        }
+        index.b1 = 1;
+    }   //刻子
+
+    for (int a = index.a2; a <= 2; a++) {
+        for (int b = index.b2; b <= 7; b++) {
+            if (Possibles_D->HandTiles.matrix[a][b] >= 1 && Possibles_D->HandTiles.matrix[a][b + 1] >= 1 &&
+                Possibles_D->HandTiles.matrix[a][b + 2] >= 1) {
+                Possibles_D->HandTiles.matrix[a][b] -= 1;
+                Possibles_D->HandTiles.matrix[a][b + 1] -= 1;
+                Possibles_D->HandTiles.matrix[a][b + 2] -= 1;
+                counts.Shunzi++;
+                temp = index;
+                temp.a2 = a;
+                temp.b2 = b;
+                Separate(Possibles_D, counts, temp);
+                counts.Shunzi--;
+                Possibles_D->HandTiles.matrix[a][b] += 1;
+                Possibles_D->HandTiles.matrix[a][b + 1] += 1;
+                Possibles_D->HandTiles.matrix[a][b + 2] += 1;
+            }
+        }
+        index.b2 = 0;
+    }   //顺子
+
+    for (int a = index.a3; a <= 2; a++) {
+        for (int b = index.b3; b <= 8; b++) {
+            if (Possibles_D->HandTiles.matrix[a][b] >= 1 && Possibles_D->HandTiles.matrix[a][b + 1] >= 1) {
+                Possibles_D->HandTiles.matrix[a][b] -= 1;
+                Possibles_D->HandTiles.matrix[a][b + 1] -= 1;
+                counts.Lianda++;
+                temp = index;
+                temp.a3 = a;
+                temp.b3 = b;
+                Separate(Possibles_D, counts, temp);
+                counts.Lianda--;
+                Possibles_D->HandTiles.matrix[a][b] += 1;
+                Possibles_D->HandTiles.matrix[a][b + 1] += 1;
+            }
+        }
+        index.b3 = 1;
+    }   //连搭
+
+    for (int a = index.a4; a <= 2; a++) {
+        for (int b = index.b4; b <= 7; b++) {
+            if (Possibles_D->HandTiles.matrix[a][b] >= 1 && Possibles_D->HandTiles.matrix[a][b + 2] >= 1) {
+                Possibles_D->HandTiles.matrix[a][b] -= 1;
+                Possibles_D->HandTiles.matrix[a][b + 2] -= 1;
+                counts.Tiaoda++;
+                temp = index;
+                temp.a4 = a;
+                temp.b4 = b;
+                Separate(Possibles_D, counts, temp);
+                counts.Tiaoda--;
+                Possibles_D->HandTiles.matrix[a][b] += 1;
+                Possibles_D->HandTiles.matrix[a][b + 2] += 1;
+            }
+        }
+        index.b4 = 1;
+    }   //跳搭
+
+    for (int a = index.a5; a <= 3; a++) {
+        for (int b = index.b5; b <= 9; b++) {
+            if (a == 3 && b >= 8) {
+                break;
+            }
+
+            if (Possibles_D->HandTiles.matrix[a][b] >= 2) {
+                Possibles_D->HandTiles.matrix[a][b] -= 2;
+                counts.Duizi++;
+                temp = index;
+                temp.a5 = a;
+                temp.b5 = b;
+                Separate(Possibles_D, counts, temp);
+                counts.Duizi--;
+                Possibles_D->HandTiles.matrix[a][b] += 2;
+            }
+        }
+        index.b5 = 1;
+    }   //对子
+}
+
+bool Stop(Possible_D *Possibles_D) {
+    for (int i = 0; i <= 3; i++) {
+        for (int j = 1; j <= 9; j++) {
+            if (i == 3 && j >= 8) {
+                break;
+            }
+
+            if (Possibles_D->HandTiles.matrix[i][j] > 1) {
+                return false;
+            }
+        }
+    }
+
+    for (int i = 0; i <= 2; i++) {
+        for (int j = 1; j <= 7; j++) {
+            if (Possibles_D->HandTiles.matrix[i][j] == 0) continue;
+            else if (Possibles_D->HandTiles.matrix[i][j] == 1) {
+                if (Possibles_D->HandTiles.matrix[i][j + 1] >= 1 || Possibles_D->HandTiles.matrix[i][j + 2] >= 1) {
+                    return false;
+                }
+            }
+        }
+        if (Possibles_D->HandTiles.matrix[i][8] >= 1 && Possibles_D->HandTiles.matrix[i][9] >= 1) {
+            return false;
+        }
+    }
+
+    return true;
+}

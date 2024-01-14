@@ -37,4 +37,40 @@ struct possible {
 
 typedef struct possible Possible;
 
+struct count {
+    int Shunzi;
+    int Kezi;
+    int Lianda;
+    int Tiaoda;
+    int Duizi;
+};
+
+typedef struct count countnumber;
+
+struct situation_distance {
+    bool valid;
+    countnumber Count;
+    int m;
+    int d;
+    int c;
+    int q;
+    int x;
+};
+
+typedef struct situation_distance Situation_D;
+
+struct possible_distance {
+    Situation_D Situations_D[100];
+    Hand HandTiles;
+    int HandGroupLen;  //手牌中的面子个数
+};
+
+typedef struct possible_distance Possible_D;
+
+struct location {
+    int a1, b1, a2, b2, a3, b3, a4, b4, a5, b5;
+};
+
+typedef struct location Location;
+
 #endif //MAJSA_MAIN_NEWDEF_H

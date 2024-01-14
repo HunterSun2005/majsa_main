@@ -13,3 +13,5 @@
 #include "Sort.h"
 
 Result *majsa(Status *status);  // 主函数
+
+void DelCurrentTile(Status *status, Possible *Possibles);   //去除当前牌
