@@ -59,9 +59,9 @@ int calHan(Status *status, Yaku *yaku, Possible *Possibles) {
     return Han;
 }
 
-int calFu(Status *status, int Han, Possible *Possibles, int number) {
+int calFu(Status *status, Possible *Possibles, int number) {
     int Fu = 20;
-    if (!isRyanpeikou(status) && CheckChiitoitsu(status, Possibles->HandTiles, Possibles)) {
+    if (!isRyanpeikou(status) && CheckChiitoitsu(status, Possibles->HandTiles)) {
         return 25;
     } else if (isPinhu(status) && status->currentPlayer == JICHA) {
         return 20;
@@ -163,16 +163,19 @@ int calPoint(Status *status, int Han, int Fu) {
     }
 }
 
-int calMachi(Status *status, Hand HandTiles) {
+int calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
     int Machi = 0;
     Possible *Tenpai_Possibles;
     Hand temp;
+
     for (int a = 0; a <= 3; a++) {
         for (int b = 1; b <= 9; b++) {
             if (a == 3 && b >= 8) {
                 break;
             }
-
+            if (AllTiles.matrix[a][b] >= 4) {
+                continue;
+            }   //虚听
             temp = HandTiles;
             temp.matrix[a][b]++;
             Tenpai_Possibles = isTenpai(status, temp);

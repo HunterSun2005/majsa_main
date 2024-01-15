@@ -333,42 +333,46 @@ bool isPinhu(Status *status) {
 }
 
 bool isIipeikou(Status *status) {
-    for (int i = 0; i < Possibles->HandGroupLen; i++) {
-        if (Possibles->Situations[number].HandGroupTile[i].type == Shuntsu) {
-            for (int j = i + 1; j < Possibles->HandGroupLen; j++) {
-                if (Possibles->Situations[number].HandGroupTile[j].type == Shuntsu &&
-                    Possibles->Situations[number].HandGroupTile[i].tile[0] ==
-                    Possibles->Situations[number].HandGroupTile[j].tile[0] &&
-                    Possibles->Situations[number].HandGroupTile[i].tile[1] ==
-                    Possibles->Situations[number].HandGroupTile[j].tile[1]) {
-                    return true;
-                }
-                for (int k = 0; k < 4 - Possibles->HandGroupLen; k++) {
-                    if (Possibles->Situations[number].HandGroupTile[k].type == Shuntsu &&
-                        Possibles->Situations[number].HandGroupTile[i].tile[0] ==
-                        Possibles->Situations[number].HandGroupTile[k].tile[0] &&
-                        Possibles->Situations[number].HandGroupTile[i].tile[1] ==
-                        Possibles->Situations[number].HandGroupTile[k].tile[1]) {
-                        return true;
-                    }
+    if (Possibles->HandGroupLen >= 2) {
+        int count = 0;
+        int matrix[4][10] = {0};
+
+        for (int i = 0; i < Possibles->HandGroupLen; i++) {
+            if (Possibles->Situations[number].HandGroupTile[i].type == Shuntsu) {
+                switch (Possibles->Situations[number].HandGroupTile[i].tile[1]) {
+                    case 'm':
+                        matrix[0][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 'p':
+                        matrix[1][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 's':
+                        matrix[2][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 'z':
+                        matrix[3][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    default:;
                 }
             }
         }
-    }
 
-    for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-        if (status->groupTile[i].type == Shuntsu) {
-            for (int j = i + 1; j < 4 - Possibles->HandGroupLen; j++) {
-                if (status->groupTile[j].type == Shuntsu &&
-                    status->groupTile[i].tile[0] == status->groupTile[j].tile[0] &&
-                    status->groupTile[i].tile[1] == status->groupTile[j].tile[1]) {
-                    return true;
+        for (int i = 0; i <= 2; i++) {
+            matrix[i][5] += matrix[i][0];
+        }  //转换赤宝牌
+
+        for (int i = 0; i <= 2; i++) {
+            for (int j = 1; j <= 7; j++) {
+                if (matrix[i][j] >= 2) {
+                    count++;
                 }
             }
         }
-    }
 
-    return false;
+        if (count >= 1) {
+            return true;
+        } else return false;
+    } else return false;
 }
 
 bool isSanshokudoukou(Status *status) {
@@ -420,7 +424,7 @@ bool isSanshokudoukou(Status *status) {
     }  //转换赤宝牌
 
     for (int i = 1; i <= 9; i++) {
-        if (matrix[0][i] == 1 && matrix[1][i] == 1 && matrix[2][i] == 1) {
+        if (matrix[0][i] >= 1 && matrix[1][i] >= 1 && matrix[2][i] >= 1) {
             return true;
         }
     }
@@ -535,12 +539,14 @@ bool isShousangen(Status *status) {
         matrix[i][5] += matrix[i][0];
     }  //转换赤宝牌
 
-    if (matrix[3][5] >= 2 && matrix[3][6] >= 3 && matrix[3][7] >= 3) {
-        return true;
-    } else if (matrix[3][5] >= 3 && matrix[3][6] >= 2 && matrix[3][7] >= 3) {
-        return true;
-    } else if (matrix[3][5] >= 3 && matrix[3][6] >= 3 && matrix[3][7] >= 2) {
-        return true;
+    if (Possibles->Situations[number].Jyantou[1] == 'z') {
+        if (Possibles->Situations[number].Jyantou[0] == '5' && matrix[3][6] >= 1 && matrix[3][7] >= 1) {
+            return true;
+        } else if (matrix[3][5] >= 1 && Possibles->Situations[number].Jyantou[0] == '6' && matrix[3][7] >= 1) {
+            return true;
+        } else if (matrix[3][5] >= 1 && matrix[3][6] >= 1 && Possibles->Situations[number].Jyantou[0] == '7') {
+            return true;
+        }
     }
 
     return false;
@@ -832,6 +838,7 @@ bool isSanshokudoujunF(Status *status) {
 
 bool isRyanpeikou(Status *status) {
     if (Possibles->HandGroupLen == 4) {
+        int count = 0;
         int matrix[4][10] = {0};
 
         for (int i = 0; i < Possibles->HandGroupLen; i++) {
@@ -858,13 +865,17 @@ bool isRyanpeikou(Status *status) {
             matrix[i][5] += matrix[i][0];
         }  //转换赤宝牌
 
-        for (int i = 1; i <= 7; i++) {
-            if (matrix[0][i] != 0 && matrix[0][i] != 2) {
-                return false;
+        for (int i = 0; i <= 2; i++) {
+            for (int j = 1; j <= 7; j++) {
+                if (matrix[i][j] >= 2) {
+                    count++;
+                }
             }
         }
 
-        return true;
+        if (count >= 2) {
+            return true;
+        } else return false;
     } else return false;
 }
 
@@ -1046,7 +1057,7 @@ bool isDaisangen(Status *status) {
         matrix[i][5] += matrix[i][0];
     }  //转换赤宝牌
 
-    if (matrix[3][5] >= 3 && matrix[3][6] >= 3 && matrix[3][7] >= 3) {
+    if (matrix[3][5] >= 1 && matrix[3][6] >= 1 && matrix[3][7] >= 1) {
         return true;
     }
     return false;

@@ -23,7 +23,7 @@ Result *majsa(Status *status) {
                         Possibles->Situations[i].result_type = RON;
                     }
                     Possibles->Situations[i].Han = calHan(status, Possibles->Situations[i].yaku, Possibles);
-                    Possibles->Situations[i].Fu = calFu(status, Possibles->Situations[i].Han, Possibles, i);
+                    Possibles->Situations[i].Fu = calFu(status, Possibles, i);
                     Possibles->Situations[i].point = calPoint(
                             status, Possibles->Situations[i].Han, Possibles->Situations[i].Fu);
                 }
@@ -51,21 +51,25 @@ Result *majsa(Status *status) {
         result->han = Possibles->Situations[max].Han;
         result->fu = Possibles->Situations[max].Fu;
         result->type = Possibles->Situations[max].result_type;
-        if (status->jikaze == status->bakaze) {
-            for (int i = 0; i < 3; i++) {
-                result->point[i] = Possibles->Situations[max].point / 3;
-            }
-        } else {
-            int d = (int) status->bakaze - (int) status->jikaze;
-            if (d < 0) {
-                d += 4;
-            }
-            result->point[3 - d] = Possibles->Situations[max].point / 2;
-            for (int i = 0; i < 3; i++) {
-                if (result->point[i] == 0) {
-                    result->point[i] = Possibles->Situations[max].point / 4;
+        if (result->type == TSUMO) {
+            if (status->jikaze == status->bakaze) {
+                for (int i = 0; i < 3; i++) {
+                    result->point[i] = Possibles->Situations[max].point / 3 + status->honbaCount * 100;
+                }
+            } else {
+                int d = (int) status->bakaze - (int) status->jikaze;
+                if (d < 0) {
+                    d += 4;
+                }
+                result->point[3 - d] = Possibles->Situations[max].point / 2 + status->honbaCount * 100;
+                for (int i = 0; i < 3; i++) {
+                    if (result->point[i] == 0) {
+                        result->point[i] = Possibles->Situations[max].point / 4 + status->honbaCount * 100;
+                    }
                 }
             }
+        } else if (result->type == RON) {
+            result->point[status->currentPlayer] = Possibles->Situations[max].point + status->honbaCount * 300;
         }
         return result;
     }       //可以和牌
@@ -84,7 +88,7 @@ Result *majsa(Status *status) {
         }
 
         if (count_tenpai <= 0) {
-            int Machi = calMachi(status, Possibles->HandTiles);
+            int Machi = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
             if (Machi >= 1) {
                 result->type = TENPAI;
                 result->machi = Machi;
@@ -94,7 +98,7 @@ Result *majsa(Status *status) {
                 return result;
             }
         } else {
-            int Machi = calMachi(status, Possibles->HandTiles);
+            int Machi = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
             result->machi = Machi;
         }
 
@@ -108,18 +112,22 @@ void DelCurrentTile(Status *status, Possible *Possibles) {
         case 'm':
             Possibles->HandTiles.matrix[0][status->currentTile[0] - 48]--;
             Possibles->HandTiles.m_num--;
+            Possibles->AllTiles.matrix[0][status->currentTile[0] - 48]--;
             break;
         case 'p':
             Possibles->HandTiles.matrix[1][status->currentTile[0] - 48]--;
             Possibles->HandTiles.p_num--;
+            Possibles->AllTiles.matrix[1][status->currentTile[0] - 48]--;
             break;
         case 's':
             Possibles->HandTiles.matrix[2][status->currentTile[0] - 48]--;
             Possibles->HandTiles.s_num--;
+            Possibles->AllTiles.matrix[2][status->currentTile[0] - 48]--;
             break;
         case 'z':
             Possibles->HandTiles.matrix[3][status->currentTile[0] - 48]--;
             Possibles->HandTiles.z_num--;
+            Possibles->AllTiles.matrix[3][status->currentTile[0] - 48]--;
             break;
         default:;
     }

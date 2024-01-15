@@ -18,11 +18,6 @@ Possible *isAgari(Status *status) {
         return Possibles;
     }
 
-    if (CheckChiitoitsu(status, Possibles->HandTiles, Possibles)) {
-        Possibles->Situations[CountSituation].Agari = true;
-        return Possibles;
-    }
-
     for (int i = 0; i <= 3; i++) {
         for (int j = 1; j <= 9; j++) {
             if (Possibles->HandTiles.matrix[i][j] >= 2) {
@@ -53,6 +48,12 @@ Possible *isAgari(Status *status) {
             }
         }
     }
+
+    if (CheckChiitoitsu(status, Possibles->HandTiles)) {
+        Possibles->Situations[CountSituation].Agari = true;
+        return Possibles;
+    }
+
     return Possibles;
 }
 
@@ -71,7 +72,7 @@ Possible *isTenpai(Status *status, Hand HandTiles) {
         return Tenpai_Possibles;
     }
 
-    if (CheckChiitoitsu(status, Tenpai_Possibles->HandTiles, Tenpai_Possibles)) {
+    if (CheckChiitoitsu(status, Tenpai_Possibles->HandTiles)) {
         Tenpai_Possibles->Situations[CountSituation].Agari = true;
         return Tenpai_Possibles;
     }
@@ -327,8 +328,8 @@ bool CheckKokushimusou(Hand Hands) {
     } else return false;
 }
 
-bool CheckChiitoitsu(Status *status, Hand Hands, Possible *Possibles) {
-    if (isMenzenchinn(status, Possibles)) {
+bool CheckChiitoitsu(Status *status, Hand Hands) {
+    if (strlen(status->handTile) == 26) {
         for (int i = 0; i <= 3; i++) {
             for (int j = 1; j <= 9; j++) {
                 if (Hands.matrix[i][j] != 0 && Hands.matrix[i][j] != 2) {
@@ -338,15 +339,6 @@ bool CheckChiitoitsu(Status *status, Hand Hands, Possible *Possibles) {
         }
         return true;
     } else return false;
-}
-
-bool isMenzenchinn(Status *status, Possible *Possibles) {
-    for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-        if (status->groupTile[i].type != Ankan) {
-            return false;
-        }
-    }
-    return true;
 }
 
 int getDistance(Status *status, Possible *Possibles) {

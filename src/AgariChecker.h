@@ -22,9 +22,7 @@ Hand StatisticsAll(Status *status);  //统计所有牌数
 
 bool CheckKokushimusou(Hand Hands);  //检查国士无双
 
-bool CheckChiitoitsu(Status *status, Hand Hands, Possible *Possibles);  //检查七对子
-
-bool isMenzenchinn(Status *status, Possible *Possibles);    //是否是门前清
+bool CheckChiitoitsu(Status *status, Hand Hands);  //检查七对子
 
 void Separate(Possible_D *Possibles_D, countnumber counts, Location index);     //递推
 

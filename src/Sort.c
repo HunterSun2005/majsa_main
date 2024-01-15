@@ -42,7 +42,7 @@ void SortYaku(Yaku *yaku) {
     for (int i = 18; i >= 0; i--) {
         for (int j = 0; j <= i && yaku[j] != 0 && yaku[j + 1] != 0; j++) {
             if (comp(yaku[j], yaku[j + 1]) > 0) {
-                SwapYaku(yaku, i);
+                SwapYaku(yaku, j);
             }
         }
     }
