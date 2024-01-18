@@ -101,7 +101,7 @@ Result *majsa(Status *status) {
             int Machi = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
             result->machi = Machi;
         }
-
+        
 
         return result;
     }

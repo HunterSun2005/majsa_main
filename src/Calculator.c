@@ -17,16 +17,42 @@ int calHan(Status *status, Yaku *yaku, Possible *Possibles) {
     for (int i = 0; i <= 5 && status->dora[2 * i + 1] != 0; i++) {
         switch (status->dora[2 * i + 1]) {
             case 'm':
-                Han += Possibles->AllTiles.matrix[0][status->dora[2 * i] - 48];
+                if (status->dora[2 * i] - 48 > 0 && status->dora[2 * i] - 48 < 9) {
+                    Han += Possibles->AllTiles.matrix[0][status->dora[2 * i] + 1 - 48];
+                } else if (status->dora[2 * i] - 48 == 0) {
+                    Han += Possibles->AllTiles.matrix[0][6];
+                } else if (status->dora[2 * i] - 48 == 9) {
+                    Han += Possibles->AllTiles.matrix[0][1];
+                }
                 break;
             case 'p':
-                Han += Possibles->AllTiles.matrix[1][status->dora[2 * i] - 48];
+                if (status->dora[2 * i] - 48 > 0 && status->dora[2 * i] - 48 < 9) {
+                    Han += Possibles->AllTiles.matrix[1][status->dora[2 * i] + 1 - 48];
+                } else if (status->dora[2 * i] - 48 == 0) {
+                    Han += Possibles->AllTiles.matrix[1][6];
+                } else if (status->dora[2 * i] - 48 == 9) {
+                    Han += Possibles->AllTiles.matrix[1][1];
+                }
                 break;
             case 's':
-                Han += Possibles->AllTiles.matrix[2][status->dora[2 * i] - 48];
+                if (status->dora[2 * i] - 48 > 0 && status->dora[2 * i] - 48 < 9) {
+                    Han += Possibles->AllTiles.matrix[2][status->dora[2 * i] + 1 - 48];
+                } else if (status->dora[2 * i] - 48 == 0) {
+                    Han += Possibles->AllTiles.matrix[2][6];
+                } else if (status->dora[2 * i] - 48 == 9) {
+                    Han += Possibles->AllTiles.matrix[2][1];
+                }
                 break;
             case 'z':
-                Han += Possibles->AllTiles.matrix[3][status->dora[2 * i] - 48];
+                if (status->dora[2 * i] - 48 < 4) {
+                    Han += Possibles->AllTiles.matrix[3][status->dora[2 * i] + 1 - 48];
+                } else if (status->dora[2 * i] - 48 == 4) {
+                    Han += Possibles->AllTiles.matrix[3][1];
+                } else if (status->dora[2 * i] - 48 > 4 && status->dora[2 * i] - 48 < 7) {
+                    Han += Possibles->AllTiles.matrix[3][status->dora[2 * i] + 1 - 48];
+                } else if (status->dora[2 * i] - 48 == 7) {
+                    Han += Possibles->AllTiles.matrix[3][5];
+                }
                 break;
             default:;
         }
@@ -36,16 +62,42 @@ int calHan(Status *status, Yaku *yaku, Possible *Possibles) {
         for (int i = 0; i <= 5 && status->uradora[2 * i + 1] != 0; i++) {
             switch (status->uradora[2 * i + 1]) {
                 case 'm':
-                    Han += Possibles->AllTiles.matrix[0][status->uradora[2 * i] - 48];
+                    if (status->uradora[2 * i] - 48 > 0 && status->uradora[2 * i] - 48 < 9) {
+                        Han += Possibles->AllTiles.matrix[0][status->uradora[2 * i] + 1 - 48];
+                    } else if (status->uradora[2 * i] - 48 == 0) {
+                        Han += Possibles->AllTiles.matrix[0][6];
+                    } else if (status->uradora[2 * i] - 48 == 9) {
+                        Han += Possibles->AllTiles.matrix[0][1];
+                    }
                     break;
                 case 'p':
-                    Han += Possibles->AllTiles.matrix[1][status->uradora[2 * i] - 48];
+                    if (status->uradora[2 * i] - 48 > 0 && status->uradora[2 * i] - 48 < 9) {
+                        Han += Possibles->AllTiles.matrix[1][status->uradora[2 * i] + 1 - 48];
+                    } else if (status->uradora[2 * i] - 48 == 0) {
+                        Han += Possibles->AllTiles.matrix[1][6];
+                    } else if (status->uradora[2 * i] - 48 == 9) {
+                        Han += Possibles->AllTiles.matrix[1][1];
+                    }
                     break;
                 case 's':
-                    Han += Possibles->AllTiles.matrix[2][status->uradora[2 * i] - 48];
+                    if (status->uradora[2 * i] - 48 > 0 && status->uradora[2 * i] - 48 < 9) {
+                        Han += Possibles->AllTiles.matrix[2][status->uradora[2 * i] + 1 - 48];
+                    } else if (status->uradora[2 * i] - 48 == 0) {
+                        Han += Possibles->AllTiles.matrix[2][6];
+                    } else if (status->uradora[2 * i] - 48 == 9) {
+                        Han += Possibles->AllTiles.matrix[2][1];
+                    }
                     break;
                 case 'z':
-                    Han += Possibles->AllTiles.matrix[3][status->uradora[2 * i] - 48];
+                    if (status->uradora[2 * i] - 48 < 4) {
+                        Han += Possibles->AllTiles.matrix[3][status->uradora[2 * i] + 1 - 48];
+                    } else if (status->uradora[2 * i] - 48 == 4) {
+                        Han += Possibles->AllTiles.matrix[3][1];
+                    } else if (status->uradora[2 * i] - 48 > 4 && status->uradora[2 * i] - 48 < 7) {
+                        Han += Possibles->AllTiles.matrix[3][status->uradora[2 * i] + 1 - 48];
+                    } else if (status->uradora[2 * i] - 48 == 7) {
+                        Han += Possibles->AllTiles.matrix[3][5];
+                    }
                     break;
                 default:;
             }
