@@ -38,7 +38,7 @@
 struct status {
   KazeType bakaze;       // 场风
   KazeType jikaze;       // 自风
-  int honbaCount;        // 本场棒数
+  int honbaCount;        // 本场棒数，不考虑遗留立直棒数
   char dora[12];         // 宝牌指示牌
   char uradora[12];      // 里宝牌指示牌
   char handTile[30];     // 自家手牌
@@ -76,7 +76,7 @@ OJ 会在评测时给定不同的初始台面状态，运行你所编写的代�
 
 评分时针对结果状态为分段评分，即对结果状态中每一个变量独立判断，以此分段构成本项目的分数。
 
-至于程序具体如何去实现，可以参考上述流程图，也可以自行设计，总体目标就是完成定义在 `main.h` 中的 `Result *majsa(Status*)` 函数。
+至于程序具体如何去实现，可以参考上述流程图，也可以自行设计，总体目标就是完成定义在 `majsa.h` 中的 `Result *majsa(Status*)` 函数。
 
 框架代码中根据上述流程图提供了部分函数接口，可以以此为基础实现，也可以自行重构，同时也可以自行创建你想要的数据结构，**但与 `Status`、`Result`、`majsa()` 相关的任何定义（包括如 `KazeType`、`Yaku` 等的定义）均不建议改动，否则后果自负。**
 
@@ -87,6 +87,7 @@ OJ 会在评测时给定不同的初始台面状态，运行你所编写的代�
 ```txt
 .
 ├── Makefile
+├── CMakeLists.txt
 ├── README.md
 ├── assets
 └── src
@@ -107,7 +108,7 @@ OJ 会在评测时给定不同的初始台面状态，运行你所编写的代�
 - 新增 `.c`、`.h` 文件。
 - 修改或删除 `AgariChecker.c/h `、`Calculator.c/h `、`YakuChecker.c/h `、`main.c`（可以自己造用例，因为 OJ 会替换掉它）。
 - 修改 `majsa.c/h` 中除 `Result *majsa(Status*)` 定义外的内容，当然，你需要去实现这个函数，如果更改了函数定义，测试就没法定位了，后果自负。
-- 修改 `Makefile` 中除 git 目标依赖的部分，我们在 Makefile 中确保了你的每一次编译运行都能够自动进行 git commit。这些自动的 commit 可以帮助你回滚到自己想要的任意版本，并且在未来查重工作中产生疑问时，良好的 commit 记录将成为重要的证明。
+- 修改 `Makefile` 或 `CMakeLists.txt` 中除 git 目标依赖的部分，我们在 Makefile 中确保了你的每一次编译运行都能够自动进行 git commit。这些自动的 commit 可以帮助你回滚到自己想要的任意版本，并且在未来查重工作中产生疑问时，良好的 commit 记录将成为重要的证明。
 
 > 与 `Status`、`Result`、`majsa()` 相关的任何定义（包括如 `KazeType`、`Yaku` 等的定义）均不建议改动，否则后果自负。
 
@@ -121,24 +122,25 @@ int main(){
       .bakaze = TON,
       .jikaze = TON,
       .honbaCount = 0,
-      .dora="1m",
-      .uradora="3s",
-      .handTile="1m9m1p9p1s9s1z2z3z4z5z6z7z",
-      .groupTile={},
-      .discardTile="2m3m4m5m3p4p5p6p2s3s4s5s",
-      .currentPlayer=JICHA,
-      .currentTile="1z",
-      .remainTileCount=18,
-      .isRiichi=false,
-      .isDoubleRiichi=false,
-      .isIppatsu=false,
-      .isRinshan=false,
+      .dora = "1m",
+      .uradora = "3s",
+      .handTile = "1m9m1p9p1s9s1z2z3z4z5z6z7z",
+      .groupTile = {},
+      .discardTile = "2m3m4m5m3p4p5p6p2s3s4s5s",
+      .currentPlayer = JICHA,
+      .currentTile = "1z",
+      .remainTileCount = 18,
+      .isRiichi = false,
+      .isDoubleRiichi = false,
+      .isIppatsu = false,
+      .isRinshan = false,
   };
   Result *result = majsa(&status);
   assert(result->type == TSUMO);
-  Yaku stdYaku[1] = {Kokushijuusanmenmachi};
+  Yaku stdYaku[20] = {0};
+  stdYaku[0] = Kokushijuusanmenmachi;
   assert(sizeof(result->yaku) == sizeof(stdYaku));
-  for (int i = 0; i < sizeof(result->yaku) / sizeof(result->yaku[0]); i++){
+  for (int i = 0; i < 20; i++){
     assert(result->yaku[i] == stdYaku[i]);
   }
   assert(result->han == -2);
@@ -154,7 +156,7 @@ int main(){
 
 ### 测试样例解释
 
-- 场风 `bakaze`与自风 `jikaze` 均为枚举类型，详见框架代码，注意到自风 `jikaze` 为 `TON` 时自家为庄家，其余自风时自家为客家，会影响点数计算。
+- 场风 `bakaze`与自风 `jikaze` 均为枚举类型，详见框架代码，注意到自风 `jikaze` 为 `TON` 时自家为庄家，其余自风时自家为客家，会影响点数计算。由于南风 `NAN` 与 `math.h` 中的 `NAN` 冲突，故将南风改为 `NANN`。
 - 本场棒数 `honbaCount` 为非负整数，若为 `1`，即为一本场，影响点数计算。
 - 宝牌指示牌 `dora`、里宝牌指示牌 `uradora`、手牌 `handTile`、副露区 `groupTile` 中的字符串、舍牌区的牌 `discardTile` 与当前控牌 `currentTile` 的字符串格式均为两个字符表示一张牌，对应关系如下：
 
