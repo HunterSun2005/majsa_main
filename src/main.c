@@ -4,20 +4,21 @@
 int main() {
     Status status = {
             .bakaze = TON,
-            .jikaze = TON,
-            .honbaCount = 0,
-            .dora = "1m",
-            .uradora = "3s",
-            .handTile = "1m9m1p9p1s9s1z2z3z4z5z6z7z",
+            .jikaze = NANN,
+            .honbaCount = 1,
+            .dora = "9p",
+            .uradora = "5m",
+            .handTile = "4m5m6m7m7m8m8m5s6s6s7s7s8s",
             .groupTile = {},
-            .discardTile = "2m3m4m5m3p4p5p6p2s3s4s5s",
-            .currentPlayer = JICHA,
-            .currentTile = "1z",
-            .remainTileCount = 18,
-            .isRiichi = false,
+            .discardTile = "3z5z1z2m3p2m3s7s",
+            .currentPlayer = KAMICHA,
+            .currentTile = "8m",
+            .remainTileCount = 37,
+            .isRiichi = true,
             .isDoubleRiichi = false,
-            .isIppatsu = false,
+            .isIppatsu = true,
             .isRinshan = false,
+
     };
     Result const *result = majsa(&status);
     if (result != NULL)
