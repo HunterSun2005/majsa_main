@@ -330,9 +330,7 @@ int CountZZMK(Status *status, Possible *Possibles, int number) {
         if (status->currentTile[0] != '1' &&
             status->currentTile[0] != '9' &&
             status->currentTile[1] != 'z') {
-            for (int i = 0; i < Possibles->HandGroupLen; i++) {
-                count += MarkMK(status, Possibles, number);
-            }
+            count += MarkMK(status, Possibles, number);
         }
     }       //荣和形成的明刻
 
@@ -362,9 +360,7 @@ int CountZZAK(Status *status, Possible *Possibles, int number) {
         if (status->currentTile[0] != '1' &&
             status->currentTile[0] != '9' &&
             status->currentTile[1] != 'z') {
-            for (int i = 0; i < Possibles->HandGroupLen; i++) {
-                count -= MarkMK(status, Possibles, number);
-            }
+            count -= MarkMK(status, Possibles, number);
         }
     }       //去除荣和形成的明刻
 
@@ -399,9 +395,7 @@ int Count19MK(Status *status, Possible *Possibles, int number) {
         if (status->currentTile[0] == '1' ||
             status->currentTile[0] == '9' ||
             status->currentTile[1] == 'z') {
-            for (int i = 0; i < Possibles->HandGroupLen; i++) {
-                count += MarkMK(status, Possibles, number);
-            }
+            count += MarkMK(status, Possibles, number);
         }
     }       //荣和形成的明刻
 
@@ -433,9 +427,7 @@ int Count19AK(Status *status, Possible *Possibles, int number) {
         if (status->currentTile[0] == '1' ||
             status->currentTile[0] == '9' ||
             status->currentTile[1] == 'z') {
-            for (int i = 0; i < Possibles->HandGroupLen; i++) {
-                count -= MarkMK(status, Possibles, number);
-            }
+            count -= MarkMK(status, Possibles, number);
         }
     }       //去除荣和形成的明刻
     return count;
