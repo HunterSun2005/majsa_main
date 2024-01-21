@@ -2,8 +2,7 @@
 // Created by HP on 2024/1/13.
 //
 
-#ifndef MAJSA_MAIN_NEWDEF_H
-#define MAJSA_MAIN_NEWDEF_H
+#pragma once
 
 struct Hands {
     int matrix[4][10];
@@ -67,5 +66,3 @@ struct location {
 };
 
 typedef struct location Location;
-
-#endif //MAJSA_MAIN_NEWDEF_H

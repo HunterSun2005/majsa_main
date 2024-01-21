@@ -2,8 +2,7 @@
 // Created by HP on 2024/1/14.
 //
 
-#ifndef MAJSA_MAIN_SORT_H
-#define MAJSA_MAIN_SORT_H
+#pragma once
 
 #include "main.h"
 #include "NewDef.h"
@@ -19,5 +18,3 @@ int comp(int a, int b);    //比较
 void SortYaku(Yaku *yaku);  //役种排序
 
 void SwapYaku(Yaku *yaku, int a);   //役种比较
-
-#endif //MAJSA_MAIN_SORT_H
