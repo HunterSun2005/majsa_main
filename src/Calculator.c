@@ -115,8 +115,6 @@ int calFu(Status *status, Possible *Possibles, int number) {
     int Fu = 20;
     if (!isRyanpeikou(status) && CheckChiitoitsu(status, Possibles->HandTiles)) {
         return 25;
-    } else if (isPinhu(status) && status->currentPlayer == JICHA) {
-        return 20;
     } else {
         if (isMenzenchin(status)) {
             Fu += 10;
@@ -159,6 +157,10 @@ int calFu(Status *status, Possible *Possibles, int number) {
 
         if (isChi(status, Possibles) && Fu == 20) {
             return 30;
+        }
+
+        if (isPinhu(status) && Fu == 22) {
+            return 20;
         }
 
         if (Fu % 10 != 0) {

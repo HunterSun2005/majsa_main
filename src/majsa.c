@@ -48,9 +48,7 @@ Result *majsa(Status *status) {
         }
         memcpy(result->yaku, Possibles->Situations[max].yaku, sizeof(result->yaku));
         SortYaku(result->yaku);
-        if (Possibles->Situations[max].Han < 0) {
-            result->han = Possibles->Situations[max].Han * (-13);
-        } else result->han = Possibles->Situations[max].Han;
+        result->han = Possibles->Situations[max].Han;
         result->fu = Possibles->Situations[max].Fu;
         result->type = Possibles->Situations[max].result_type;
         if (result->type == TSUMO) {
