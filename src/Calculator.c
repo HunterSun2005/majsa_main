@@ -58,7 +58,7 @@ int calHan(Status *status, Yaku *yaku, Possible *Possibles) {
         }
     }
 
-    if (status->isRiichi == true) {
+    if (status->isRiichi || status->isDoubleRiichi) {
         for (int i = 0; i <= 5 && status->uradora[2 * i + 1] != 0; i++) {
             switch (status->uradora[2 * i + 1]) {
                 case 'm':

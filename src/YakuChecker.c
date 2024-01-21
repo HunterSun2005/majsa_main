@@ -486,6 +486,32 @@ bool isSanankou(Status *status) {
         }
     }
 
+    if (status->currentPlayer != JICHA) {
+        switch (status->currentTile[1]) {
+            case 'm':
+                if (Possibles->AllTiles.matrix[0][status->currentTile[0] - 48] == 3) {
+                    K_num--;
+                }
+                break;
+            case 'p':
+                if (Possibles->AllTiles.matrix[1][status->currentTile[0] - 48] == 3) {
+                    K_num--;
+                }
+                break;
+            case 's':
+                if (Possibles->AllTiles.matrix[2][status->currentTile[0] - 48] == 3) {
+                    K_num--;
+                }
+                break;
+            case 'z':
+                if (Possibles->AllTiles.matrix[3][status->currentTile[0] - 48] == 3) {
+                    K_num--;
+                }
+                break;
+            default:;
+        }
+    }
+
     if (K_num == 3) {
         return true;
     } else return false;
