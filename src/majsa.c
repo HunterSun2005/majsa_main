@@ -57,7 +57,7 @@ Result *majsa(Status *status) {
                     result->point[i] = Possibles->Situations[max].point / 3 + status->honbaCount * 100;
                 }
             } else {
-                int d = (int) status->bakaze - (int) status->jikaze;
+                int d = 0 - (int) status->jikaze;
                 if (d < 0) {
                     d += 4;
                 }
