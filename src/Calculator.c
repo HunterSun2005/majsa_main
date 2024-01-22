@@ -241,7 +241,7 @@ int calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
             temp = HandTiles;
             temp.matrix[a][b]++;
             Tenpai_Possibles = isTenpai(status, temp);
-            for (int i = 0; i < 150; i++) {
+            for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
                 if (Tenpai_Possibles->Situations[i].Agari) {
                     Machi++;
                     break;

@@ -4,6 +4,9 @@
 
 #pragma once
 
+#define SIZEOFPOSSIBLE_D 500
+#define SIZEOFPOSSIBLE 500
+
 struct Hands {
     int matrix[4][10];
     int m_num;
@@ -28,7 +31,7 @@ struct situation {
 typedef struct situation Situation;
 
 struct possible {
-    Situation Situations[150];
+    Situation Situations[SIZEOFPOSSIBLE];
     Hand HandTiles;
     Hand AllTiles;
     int HandGroupLen;  //手牌中的面子个数
@@ -55,7 +58,7 @@ struct situation_distance {
 typedef struct situation_distance Situation_D;
 
 struct possible_distance {
-    Situation_D Situations_D[150];
+    Situation_D Situations_D[SIZEOFPOSSIBLE_D];
     Hand HandTiles;
 };
 

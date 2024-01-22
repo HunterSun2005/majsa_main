@@ -358,7 +358,7 @@ int getDistance(Status *status, Possible *Possibles) {
 
     Separate(Possibles_D, counts);  //递归
 
-    for (int i = 0; i < 150; i++) {
+    for (int i = 0; i < SIZEOFPOSSIBLE_D; i++) {
         if (Possibles_D->Situations_D[i].valid) {
             m = Possibles_D->Situations_D[i].Count.Shunzi + Possibles_D->Situations_D[i].Count.Kezi;
             d = Possibles_D->Situations_D[i].Count.Lianda + Possibles_D->Situations_D[i].Count.Tiaoda +
@@ -378,7 +378,7 @@ int getDistance(Status *status, Possible *Possibles) {
         }
     }
 
-    for (int i = 0; i < 150; i++) {
+    for (int i = 0; i < SIZEOFPOSSIBLE_D; i++) {
         if (Possibles_D->Situations_D[i].valid && Possibles_D->Situations_D[i].x < distance) {
             distance = Possibles_D->Situations_D[i].x;
         }
