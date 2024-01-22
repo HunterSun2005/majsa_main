@@ -60,9 +60,3 @@ struct possible_distance {
 };
 
 typedef struct possible_distance Possible_D;
-
-struct location {
-    int a1, b1, a2, b2, a3, b3, a4, b4, a5, b5;
-};
-
-typedef struct location Location;

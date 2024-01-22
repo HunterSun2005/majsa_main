@@ -24,7 +24,7 @@ bool CheckKokushimusou(Hand Hands);  //检查国士无双
 
 bool CheckChiitoitsu(Status *status, Hand Hands);  //检查七对子
 
-void Separate(Possible_D *Possibles_D, countnumber counts, Location index);     //递推
+void Separate(Possible_D *Possibles_D, countnumber counts);     //递推
 
 bool Stop(Possible_D *Possibles_D);     //退出递推
 

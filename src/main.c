@@ -18,7 +18,6 @@ int main() {
             .isDoubleRiichi = false,
             .isIppatsu = false,
             .isRinshan = false,
-
     };
     Result const *result = majsa(&status);
     if (result != NULL)
