@@ -14,7 +14,7 @@ Possible *isTenpai(Status *status, Hand HandTiles);  // 判断是否为听牌形
 
 int getDistance(Status *status, Possible *Possibles);  // 获取听牌距离，即向听数
 
-void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles, int a1, int b1, int a2, int b2);  //递归分组
+void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles);  //递归分组
 
 Hand Statistics(Status *status);  //统计牌数
 
