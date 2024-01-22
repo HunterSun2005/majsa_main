@@ -28,7 +28,7 @@ struct situation {
 typedef struct situation Situation;
 
 struct possible {
-    Situation Situations[30];
+    Situation Situations[150];
     Hand HandTiles;
     Hand AllTiles;
     int HandGroupLen;  //手牌中的面子个数
