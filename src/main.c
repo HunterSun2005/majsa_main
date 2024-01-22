@@ -3,20 +3,20 @@
 
 int main() {
     Status status = {
-            .bakaze = TON,
-            .jikaze = NANN,
-            .honbaCount = 1,
-            .dora = "9p",
-            .uradora = "5m",
-            .handTile = "4m5m6m7m7m8m8m5s6s6s7s7s8s",
+            .bakaze = NANN,
+            .jikaze = TON,
+            .honbaCount = 0,
+            .dora = "3p",
+            .uradora = "3m",
+            .handTile = "6m6m7m7m1p4p6p7p9p1s3s9s2z",
             .groupTile = {},
-            .discardTile = "3z5z1z2m3p2m3s7s",
-            .currentPlayer = KAMICHA,
-            .currentTile = "8m",
-            .remainTileCount = 37,
-            .isRiichi = true,
+            .discardTile = "3z7z6z",
+            .currentPlayer = JICHA,
+            .currentTile = "2m",
+            .remainTileCount = 57,
+            .isRiichi = false,
             .isDoubleRiichi = false,
-            .isIppatsu = true,
+            .isIppatsu = false,
             .isRinshan = false,
 
     };
