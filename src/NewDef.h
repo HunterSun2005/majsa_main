@@ -55,7 +55,7 @@ struct situation_distance {
 typedef struct situation_distance Situation_D;
 
 struct possible_distance {
-    Situation_D Situations_D[100];
+    Situation_D Situations_D[150];
     Hand HandTiles;
 };
 
