@@ -115,8 +115,12 @@ int calFu(Status *status, Possible *Possibles, int number) {
     int Fu = 20;
     if (!isRyanpeikou(status) && CheckChiitoitsu(status, Possibles->HandTiles)) {
         return 25;
+    } else if (isPinhu(status) && status->currentPlayer == JICHA) {
+        return 20;
+    } else if (isPinhu(status) && status->currentPlayer != JICHA) {
+        return 30;
     } else {
-        if (isMenzenchin(status)) {
+        if (isMenzenchin(status) && status->currentPlayer != JICHA) {
             Fu += 10;
         }
         if (status->currentPlayer == JICHA) {
@@ -159,10 +163,6 @@ int calFu(Status *status, Possible *Possibles, int number) {
             return 30;
         }
 
-        if (isPinhu(status) && Fu == 22) {
-            return 20;
-        }
-
         if (Fu % 10 != 0) {
             Fu -= Fu % 10;
             Fu += 10;
@@ -182,6 +182,10 @@ int calPoint(Status *status, int Han, int Fu) {
         point = 6 * Fu * (int) pow(2, Han + 2);
         if (Han < 6) {
             if (point <= 12000) {
+                if (point % 100 != 0) {
+                    point -= point % 100;
+                    point += 100;
+                }
                 return point;
             } else return 12000;
         } else if (Han == 6 || Han == 7) {
@@ -202,6 +206,10 @@ int calPoint(Status *status, int Han, int Fu) {
         point = 4 * Fu * (int) pow(2, Han + 2);
         if (Han < 6) {
             if (point <= 8000) {
+                if (point % 100 != 0) {
+                    point -= point % 100;
+                    point += 100;
+                }
                 return point;
             } else return 8000;
         } else if (Han == 6 || Han == 7) {
