@@ -225,17 +225,19 @@ int calPoint(Status *status, int Han, int Fu) {
     }
 }
 
-int calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
+int calMachi(Status *status, Hand HandTiles) {
     int Machi = 0;
     Possible *Tenpai_Possibles;
     Hand temp;
+
+    Hand *AllTiles = AllTilesOnDesk(status);
 
     for (int a = 0; a <= 3; a++) {
         for (int b = 1; b <= 9; b++) {
             if (a == 3 && b >= 8) {
                 break;
             }
-            if (AllTiles.matrix[a][b] >= 4) {
+            if (AllTiles->matrix[a][b] >= 4) {
                 continue;
             }   //虚听
             temp = HandTiles;
@@ -250,6 +252,7 @@ int calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
             free(Tenpai_Possibles);     //回收内存
         }
     }
+    free(AllTiles);
     return Machi;
 }
 
@@ -485,4 +488,126 @@ bool isLFQT(Status *status, Possible *Possibles, int number) {
         Possibles->Situations[number].Jyantou[0] - 48 == status->bakaze + 1) {
         return true;
     } else return false;
+}
+
+Hand *AllTilesOnDesk(Status *status) {
+    int HandGroupLen = ((int) strlen(status->handTile) / 2 - 1) / 3;
+    Hand *AllTilesOnDesk = (Hand *) malloc(sizeof(Hand));
+    memset(AllTilesOnDesk, 0, sizeof(Hand));
+
+    switch (status->currentTile[1]) {
+        case 'm':
+            AllTilesOnDesk->matrix[0][status->currentTile[0] - 48]++;
+            AllTilesOnDesk->m_num++;
+            break;
+        case 'p':
+            AllTilesOnDesk->matrix[1][status->currentTile[0] - 48]++;
+            AllTilesOnDesk->p_num++;
+            break;
+        case 's':
+            AllTilesOnDesk->matrix[2][status->currentTile[0] - 48]++;
+            AllTilesOnDesk->s_num++;
+            break;
+        case 'z':
+            AllTilesOnDesk->matrix[3][status->currentTile[0] - 48]++;
+            AllTilesOnDesk->z_num++;
+            break;
+        default:;
+    }   //当前控牌
+
+    for (int i = 0; i < strlen(status->handTile) / 2; i++) {
+        switch (status->handTile[2 * i + 1]) {
+            case 'm':
+                AllTilesOnDesk->matrix[0][status->handTile[2 * i] - 48]++;
+                AllTilesOnDesk->m_num++;
+                break;
+            case 'p':
+                AllTilesOnDesk->matrix[1][status->handTile[2 * i] - 48]++;
+                AllTilesOnDesk->p_num++;
+                break;
+            case 's':
+                AllTilesOnDesk->matrix[2][status->handTile[2 * i] - 48]++;
+                AllTilesOnDesk->s_num++;
+                break;
+            case 'z':
+                AllTilesOnDesk->matrix[3][status->handTile[2 * i] - 48]++;
+                AllTilesOnDesk->z_num++;
+                break;
+            default:;
+        }
+    } //手牌
+
+    for (int i = 0; i < strlen(status->dora) / 2; i++) {
+        switch (status->dora[2 * i + 1]) {
+            case 'm':
+                AllTilesOnDesk->matrix[0][status->dora[2 * i] - 48]++;
+                AllTilesOnDesk->m_num++;
+                break;
+            case 'p':
+                AllTilesOnDesk->matrix[1][status->dora[2 * i] - 48]++;
+                AllTilesOnDesk->p_num++;
+                break;
+            case 's':
+                AllTilesOnDesk->matrix[2][status->dora[2 * i] - 48]++;
+                AllTilesOnDesk->s_num++;
+                break;
+            case 'z':
+                AllTilesOnDesk->matrix[3][status->dora[2 * i] - 48]++;
+                AllTilesOnDesk->z_num++;
+                break;
+            default:;
+        }
+    } //宝牌
+
+    for (int i = 0; i < strlen(status->discardTile) / 2; i++) {
+        switch (status->discardTile[2 * i + 1]) {
+            case 'm':
+                AllTilesOnDesk->matrix[0][status->discardTile[2 * i] - 48]++;
+                AllTilesOnDesk->m_num++;
+                break;
+            case 'p':
+                AllTilesOnDesk->matrix[1][status->discardTile[2 * i] - 48]++;
+                AllTilesOnDesk->p_num++;
+                break;
+            case 's':
+                AllTilesOnDesk->matrix[2][status->discardTile[2 * i] - 48]++;
+                AllTilesOnDesk->s_num++;
+                break;
+            case 'z':
+                AllTilesOnDesk->matrix[3][status->discardTile[2 * i] - 48]++;
+                AllTilesOnDesk->z_num++;
+                break;
+            default:;
+        }
+    } //弃牌
+
+    for (int i = 0; i < 4 - HandGroupLen; i++) {
+        for (int j = 0; j <= 3 && status->groupTile[i].tile[2 * j + 1] != 0; j++) {
+            switch (status->groupTile[i].tile[2 * j + 1]) {
+                case 'm':
+                    AllTilesOnDesk->matrix[0][status->groupTile[i].tile[2 * j] - 48]++;
+                    AllTilesOnDesk->m_num++;
+                    break;
+                case 'p':
+                    AllTilesOnDesk->matrix[1][status->groupTile[i].tile[2 * j] - 48]++;
+                    AllTilesOnDesk->p_num++;
+                    break;
+                case 's':
+                    AllTilesOnDesk->matrix[2][status->groupTile[i].tile[2 * j] - 48]++;
+                    AllTilesOnDesk->s_num++;
+                    break;
+                case 'z':
+                    AllTilesOnDesk->matrix[3][status->groupTile[i].tile[2 * j] - 48]++;
+                    AllTilesOnDesk->z_num++;
+                    break;
+                default:;
+            }
+        }
+    }   //副露牌
+
+    for (int i = 0; i <= 2; i++) {
+        AllTilesOnDesk->matrix[i][5] += AllTilesOnDesk->matrix[i][0];
+    }  //转换赤宝牌
+
+    return AllTilesOnDesk;
 }

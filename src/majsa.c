@@ -32,7 +32,7 @@ Result *majsa(Status *status) {
     }
 
     int count_agari = 0;
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
         if (Possibles->Situations[i].Agari &&
             (Possibles->Situations[i].result_type == TSUMO || Possibles->Situations[i].result_type == RON)) {
             count_agari++;      //记录有效情况次数
@@ -41,7 +41,7 @@ Result *majsa(Status *status) {
 
     if (count_agari >= 1) {
         int max = 0;
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
             if (Possibles->Situations[i].point > Possibles->Situations[max].point) {
                 max = i;
             }
@@ -77,7 +77,7 @@ Result *majsa(Status *status) {
         DelCurrentTile(status, Possibles);  //去除当前牌
         int count_tenpai = 0;
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
             if (Possibles->Situations[i].result_type == FURITEN) {
                 result->type = FURITEN;
                 count_tenpai++;
@@ -88,7 +88,7 @@ Result *majsa(Status *status) {
         }
 
         if (count_tenpai <= 0) {
-            int Machi = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
+            int Machi = calMachi(status, Possibles->HandTiles);
             if (Machi >= 1) {
                 result->type = TENPAI;
                 result->machi = Machi;
@@ -98,7 +98,7 @@ Result *majsa(Status *status) {
                 return result;
             }
         } else {
-            int Machi = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
+            int Machi = calMachi(status, Possibles->HandTiles);
             result->machi = Machi;
         }
 
