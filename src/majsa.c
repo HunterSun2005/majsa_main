@@ -3,7 +3,7 @@
 Result *majsa(Status *status) {
     Result *result = malloc(sizeof(*result));  //初始化
     memset(result, 0, sizeof(*result));
-    result->machi = 3;
+    result->machi = 4;
 
     Possible *Possibles = isAgari(status);
 
