@@ -93,7 +93,7 @@ Result *majsa(Status *status) {
             result->shanten = getDistance(Possibles);    //计算向听数
             return result;
         } else {
-            result->type = TENPAI;
+            result->type = FURITEN;
             result->machi = tenpai.Machi;
 //            for (int i = 0; i < tenpai.Machi; i++) {
 //                if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
