@@ -63,3 +63,10 @@ struct possible_distance {
 };
 
 typedef struct possible_distance Possible_D;
+
+struct tenpai {
+    int Machi;
+    char *Tile[30];
+};
+
+typedef struct tenpai Tenpai;

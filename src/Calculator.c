@@ -225,8 +225,11 @@ int calPoint(Status *status, int Han, int Fu) {
     }
 }
 
-int calMachi(Status *status, Hand HandTiles) {
-    int Machi = 0;
+Tenpai calMachi(Status *status, Hand HandTiles) {
+    Tenpai tenpai = {
+            .Machi = 0,
+            .Tile = {0},
+    };
     Possible *Tenpai_Possibles;
 
     Hand *AllTiles = AllTilesOnDesk(status);
@@ -244,7 +247,24 @@ int calMachi(Status *status, Hand HandTiles) {
             HandTiles.matrix[a][b]--;
             for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
                 if (Tenpai_Possibles->Situations[i].Agari) {
-                    Machi++;
+                    tenpai.Tile[tenpai.Machi] = (char *) malloc(sizeof(char) * 3);
+                    tenpai.Tile[tenpai.Machi][0] = (char) (b + 48);
+                    switch (a) {
+                        case 0:
+                            tenpai.Tile[tenpai.Machi][1] = 'm';
+                            break;
+                        case 1:
+                            tenpai.Tile[tenpai.Machi][1] = 'p';
+                            break;
+                        case 2:
+                            tenpai.Tile[tenpai.Machi][1] = 's';
+                            break;
+                        case 3:
+                            tenpai.Tile[tenpai.Machi][1] = 'z';
+                            break;
+                        default:;
+                    }
+                    tenpai.Machi++;
                     break;
                 }
             }
@@ -252,7 +272,7 @@ int calMachi(Status *status, Hand HandTiles) {
         }
     }
     free(AllTiles);
-    return Machi;
+    return tenpai;
 }
 
 bool isChi(Status *status, Possible *Possibles) {
