@@ -95,11 +95,11 @@ Result *majsa(Status *status) {
         } else {
             result->type = TENPAI;
             result->machi = tenpai.Machi;
-            for (int i = 0; i < tenpai.Machi; i++) {
-                if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
-                    result->type = FURITEN;
-                }   //振听
-            }
+//            for (int i = 0; i < tenpai.Machi; i++) {
+//                if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
+//                    result->type = FURITEN;
+//                }   //振听
+//            }
             return result;
         }
     }

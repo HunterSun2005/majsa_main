@@ -294,13 +294,12 @@ bool isPinhu(Status *status) {
          Possibles->Situations[number].Jyantou[0] - 48 != 6 && Possibles->Situations[number].Jyantou[0] - 48 != 7 &&
          Possibles->Situations[number].Jyantou[0] - 48 != status->jikaze + 1 &&
          Possibles->Situations[number].Jyantou[0] - 48 != status->bakaze + 1)) {
-        for (int i = 0; i < Possibles->HandGroupLen; i++) {
-            if (Possibles->Situations[number].HandGroupTile[i].type != Shuntsu) {
-                return false;
-            }
+        if (Possibles->HandGroupLen != 4) {
+            return false;
         }
-        for (int i = 0; i < 4 - Possibles->HandGroupLen; i++) {
-            if (status->groupTile[i].type != Shuntsu) {
+
+        for (int i = 0; i < 4; i++) {
+            if (Possibles->Situations[number].HandGroupTile[i].type != Shuntsu) {
                 return false;
             }
         }
