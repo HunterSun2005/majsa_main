@@ -228,7 +228,6 @@ int calPoint(Status *status, int Han, int Fu) {
 int calMachi(Status *status, Hand HandTiles) {
     int Machi = 0;
     Possible *Tenpai_Possibles;
-    Hand temp;
 
     Hand *AllTiles = AllTilesOnDesk(status);
 
@@ -240,9 +239,9 @@ int calMachi(Status *status, Hand HandTiles) {
             if (AllTiles->matrix[a][b] >= 4) {
                 continue;
             }   //虚听
-            temp = HandTiles;
-            temp.matrix[a][b]++;
-            Tenpai_Possibles = isTenpai(status, temp);
+            HandTiles.matrix[a][b]++;
+            Tenpai_Possibles = isTenpai(status, HandTiles);
+            HandTiles.matrix[a][b]--;
             for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
                 if (Tenpai_Possibles->Situations[i].Agari) {
                     Machi++;

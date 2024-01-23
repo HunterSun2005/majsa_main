@@ -4,7 +4,6 @@ int CountSituation = 0;     //记录分组情况数
 
 Possible *isAgari(Status *status) {
     CountSituation = 0;
-    Hand temp;
     Possible *Possibles = malloc(sizeof(Possible));
     memset(Possibles, 0, sizeof(*Possibles));
 
@@ -21,30 +20,38 @@ Possible *isAgari(Status *status) {
     for (int i = 0; i <= 3; i++) {
         for (int j = 1; j <= 9; j++) {
             if (Possibles->HandTiles.matrix[i][j] >= 2) {
-                temp = Possibles->HandTiles;
-                temp.matrix[i][j] -= 2; //雀头
+                Possibles->HandTiles.matrix[i][j] -= 2; //雀头
+
                 Possibles->Situations[CountSituation].Jyantou[0] = (char) (j + 48);  //记录雀头
                 switch (i) {
                     case 0:
-                        temp.m_num -= 2;
+                        Possibles->HandTiles.m_num -= 2;
                         Possibles->Situations[CountSituation].Jyantou[1] = 'm';
+                        SeparateTile(Possibles->HandTiles, status, 0, Possibles);
+                        Possibles->HandTiles.m_num += 2;
                         break;
                     case 1:
-                        temp.p_num -= 2;
+                        Possibles->HandTiles.p_num -= 2;
                         Possibles->Situations[CountSituation].Jyantou[1] = 'p';
+                        SeparateTile(Possibles->HandTiles, status, 0, Possibles);
+                        Possibles->HandTiles.p_num += 2;
                         break;
                     case 2:
-                        temp.s_num -= 2;
+                        Possibles->HandTiles.s_num -= 2;
                         Possibles->Situations[CountSituation].Jyantou[1] = 's';
+                        SeparateTile(Possibles->HandTiles, status, 0, Possibles);
+                        Possibles->HandTiles.s_num += 2;
                         break;
                     case 3:
-                        temp.z_num -= 2;
+                        Possibles->HandTiles.z_num -= 2;
                         Possibles->Situations[CountSituation].Jyantou[1] = 'z';
+                        SeparateTile(Possibles->HandTiles, status, 0, Possibles);
+                        Possibles->HandTiles.z_num += 2;
                         break;
                     default:;
                 }
 
-                SeparateTile(temp, status, 0, Possibles);
+                Possibles->HandTiles.matrix[i][j] += 2;
             }
         }
     }
@@ -59,7 +66,6 @@ Possible *isAgari(Status *status) {
 
 Possible *isTenpai(Status *status, Hand HandTiles) {
     CountSituation = 0;
-    Hand temp;
     Possible *Tenpai_Possibles = malloc(sizeof(Possible));
     memset(Tenpai_Possibles, 0, sizeof(*Tenpai_Possibles));
 
@@ -80,30 +86,38 @@ Possible *isTenpai(Status *status, Hand HandTiles) {
     for (int i = 0; i <= 3; i++) {
         for (int j = 1; j <= 9; j++) {
             if (Tenpai_Possibles->HandTiles.matrix[i][j] >= 2) {
-                temp = Tenpai_Possibles->HandTiles;
-                temp.matrix[i][j] -= 2; //雀头
+                Tenpai_Possibles->HandTiles.matrix[i][j] -= 2; //雀头
+
                 Tenpai_Possibles->Situations[CountSituation].Jyantou[0] = (char) (j + 48);  //记录雀头
                 switch (i) {
                     case 0:
-                        temp.m_num -= 2;
+                        Tenpai_Possibles->HandTiles.m_num -= 2;
                         Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 'm';
+                        SeparateTile(Tenpai_Possibles->HandTiles, status, 0, Tenpai_Possibles);
+                        Tenpai_Possibles->HandTiles.m_num += 2;
                         break;
                     case 1:
-                        temp.p_num -= 2;
+                        Tenpai_Possibles->HandTiles.p_num -= 2;
                         Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 'p';
+                        SeparateTile(Tenpai_Possibles->HandTiles, status, 0, Tenpai_Possibles);
+                        Tenpai_Possibles->HandTiles.p_num += 2;
                         break;
                     case 2:
-                        temp.s_num -= 2;
+                        Tenpai_Possibles->HandTiles.s_num -= 2;
                         Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 's';
+                        SeparateTile(Tenpai_Possibles->HandTiles, status, 0, Tenpai_Possibles);
+                        Tenpai_Possibles->HandTiles.s_num += 2;
                         break;
                     case 3:
-                        temp.z_num -= 2;
+                        Tenpai_Possibles->HandTiles.z_num -= 2;
                         Tenpai_Possibles->Situations[CountSituation].Jyantou[1] = 'z';
+                        SeparateTile(Tenpai_Possibles->HandTiles, status, 0, Tenpai_Possibles);
+                        Tenpai_Possibles->HandTiles.z_num += 2;
                         break;
                     default:;
                 }
 
-                SeparateTile(temp, status, 0, Tenpai_Possibles);
+                Tenpai_Possibles->HandTiles.matrix[i][j] += 2;
             }
         }
     }
@@ -112,7 +126,6 @@ Possible *isTenpai(Status *status, Hand HandTiles) {
 
 void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
     count++;
-    Hand temp;
     if (count > 5) {
         return;
     } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 0) {
@@ -125,31 +138,39 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
         for (int a = 0; a <= 3; a++) {
             for (int b = 1; b <= 9; b++) {
                 if (Hands.matrix[a][b] >= 3) {
-                    temp = Hands;
                     Possibles->Situations[CountSituation].HandGroupTile[count - 1].type = Koutsu;
                     Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[0] = (char) (b + 48);
-                    temp.matrix[a][b] -= 3;
+                    Hands.matrix[a][b] -= 3;
+
                     switch (a) {
                         case 0:
-                            temp.m_num -= 3;
+                            Hands.m_num -= 3;
                             Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[1] = 'm';
+                            SeparateTile(Hands, status, count, Possibles);  //判断剩下的牌
+                            Hands.m_num += 3;
                             break;
                         case 1:
-                            temp.p_num -= 3;
+                            Hands.p_num -= 3;
                             Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[1] = 'p';
+                            SeparateTile(Hands, status, count, Possibles);  //判断剩下的牌
+                            Hands.p_num += 3;
                             break;
                         case 2:
-                            temp.s_num -= 3;
+                            Hands.s_num -= 3;
                             Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[1] = 's';
+                            SeparateTile(Hands, status, count, Possibles);  //判断剩下的牌
+                            Hands.s_num += 3;
                             break;
                         case 3:
-                            temp.z_num -= 3;
+                            Hands.z_num -= 3;
                             Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[1] = 'z';
+                            SeparateTile(Hands, status, count, Possibles);  //判断剩下的牌
+                            Hands.z_num += 3;
                             break;
                         default:;
                     }  //记录牌数
 
-                    SeparateTile(temp, status, count, Possibles);  //判断剩下的牌
+                    Hands.matrix[a][b] += 3;
                 }
             }
         }   //刻子
@@ -157,29 +178,37 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
         for (int a = 0; a <= 2; a++) {
             for (int b = 1; b <= 7; b++) {
                 if (Hands.matrix[a][b] >= 1 && Hands.matrix[a][b + 1] >= 1 && Hands.matrix[a][b + 2] >= 1) {
-                    temp = Hands;
-                    temp.matrix[a][b]--;
-                    temp.matrix[a][b + 1]--;
-                    temp.matrix[a][b + 2]--;
+                    Hands.matrix[a][b]--;
+                    Hands.matrix[a][b + 1]--;
+                    Hands.matrix[a][b + 2]--;
+
                     Possibles->Situations[CountSituation].HandGroupTile[count - 1].type = Shuntsu;
                     Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[0] = (char) (b + 48);
                     switch (a) {
                         case 0:
-                            temp.m_num -= 3;
+                            Hands.m_num -= 3;
                             Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[1] = 'm';
+                            SeparateTile(Hands, status, count, Possibles);    //判断剩下的牌
+                            Hands.m_num += 3;
                             break;
                         case 1:
-                            temp.p_num -= 3;
+                            Hands.p_num -= 3;
                             Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[1] = 'p';
+                            SeparateTile(Hands, status, count, Possibles);    //判断剩下的牌
+                            Hands.p_num += 3;
                             break;
                         case 2:
-                            temp.s_num -= 3;
+                            Hands.s_num -= 3;
                             Possibles->Situations[CountSituation].HandGroupTile[count - 1].tile[1] = 's';
+                            SeparateTile(Hands, status, count, Possibles);    //判断剩下的牌
+                            Hands.s_num += 3;
                             break;
                         default:;
                     }  //记录牌数
 
-                    SeparateTile(temp, status, count, Possibles);    //判断剩下的牌
+                    Hands.matrix[a][b]++;
+                    Hands.matrix[a][b + 1]++;
+                    Hands.matrix[a][b + 2]++;
                 }
             }
         }   //顺子
@@ -339,7 +368,7 @@ bool CheckChiitoitsu(Status *status, Hand Hands) {
     } else return false;
 }
 
-int getDistance(Status *status, Possible *Possibles) {
+int getDistance(Possible *Possibles) {
     int m;
     int d;
     int c;
