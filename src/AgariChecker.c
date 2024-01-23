@@ -12,11 +12,6 @@ Possible *isAgari(Status *status) {
 
     Possibles->HandGroupLen = ((int) strlen(status->handTile) / 2 - 1) / 3;
 
-    if (CheckKokushimusou(Possibles->HandTiles)) {
-        Possibles->Situations[CountSituation].Agari = true;
-        return Possibles;
-    }
-
     for (int i = 0; i <= 3; i++) {
         for (int j = 1; j <= 9; j++) {
             if (Possibles->HandTiles.matrix[i][j] >= 2) {
@@ -56,6 +51,11 @@ Possible *isAgari(Status *status) {
         }
     }
 
+    if (CheckKokushimusou(Possibles->HandTiles)) {
+        Possibles->Situations[CountSituation].Agari = true;
+        return Possibles;
+    }
+
     if (CheckChiitoitsu(status, Possibles->HandTiles)) {
         Possibles->Situations[CountSituation].Agari = true;
         return Possibles;
@@ -72,16 +72,6 @@ Possible *isTenpai(Status *status, Hand HandTiles) {
     Tenpai_Possibles->HandTiles = HandTiles;     //导入听牌牌数
 
     Tenpai_Possibles->HandGroupLen = ((int) strlen(status->handTile) / 2 - 1) / 3;
-
-    if (CheckKokushimusou(Tenpai_Possibles->HandTiles)) {
-        Tenpai_Possibles->Situations[CountSituation].Agari = true;
-        return Tenpai_Possibles;
-    }
-
-    if (CheckChiitoitsu(status, Tenpai_Possibles->HandTiles)) {
-        Tenpai_Possibles->Situations[CountSituation].Agari = true;
-        return Tenpai_Possibles;
-    }
 
     for (int i = 0; i <= 3; i++) {
         for (int j = 1; j <= 9; j++) {
@@ -121,6 +111,17 @@ Possible *isTenpai(Status *status, Hand HandTiles) {
             }
         }
     }
+
+    if (CheckKokushimusou(Tenpai_Possibles->HandTiles)) {
+        Tenpai_Possibles->Situations[CountSituation].Agari = true;
+        return Tenpai_Possibles;
+    }
+
+    if (CheckChiitoitsu(status, Tenpai_Possibles->HandTiles)) {
+        Tenpai_Possibles->Situations[CountSituation].Agari = true;
+        return Tenpai_Possibles;
+    }
+
     return Tenpai_Possibles;
 }
 
