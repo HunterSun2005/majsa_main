@@ -52,12 +52,12 @@ Possible *isAgari(Status *status) {
     }
 
     if (CheckKokushimusou(Possibles->HandTiles)) {
-        Possibles->Situations[CountSituation].Agari = true;
+        Possibles->Situations[0].Agari = true;
         return Possibles;
     }
 
     if (CheckChiitoitsu(status, Possibles->HandTiles)) {
-        Possibles->Situations[CountSituation].Agari = true;
+        Possibles->Situations[0].Agari = true;
         return Possibles;
     }
 
@@ -113,12 +113,12 @@ Possible *isTenpai(Status *status, Hand HandTiles) {
     }
 
     if (CheckKokushimusou(Tenpai_Possibles->HandTiles)) {
-        Tenpai_Possibles->Situations[CountSituation].Agari = true;
+        Tenpai_Possibles->Situations[0].Agari = true;
         return Tenpai_Possibles;
     }
 
     if (CheckChiitoitsu(status, Tenpai_Possibles->HandTiles)) {
-        Tenpai_Possibles->Situations[CountSituation].Agari = true;
+        Tenpai_Possibles->Situations[0].Agari = true;
         return Tenpai_Possibles;
     }
 
@@ -127,6 +127,9 @@ Possible *isTenpai(Status *status, Hand HandTiles) {
 
 void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
     count++;
+    if (CountSituation >= SIZEOFPOSSIBLE) {
+        return;
+    }
     if (count > 5) {
         return;
     } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 1) {
@@ -425,6 +428,9 @@ int getDistance(Possible *Possibles) {
 }
 
 void Separate(Possible_D *Possibles_D, countnumber counts) {
+    if (CountSituation >= SIZEOFPOSSIBLE_D) {
+        return;
+    }
     if (Stop(Possibles_D)) {
         memcpy(&(Possibles_D->Situations_D[CountSituation].Count), &counts, sizeof(countnumber));
         Possibles_D->Situations_D[CountSituation].valid = true;
