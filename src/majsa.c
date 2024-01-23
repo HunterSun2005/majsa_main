@@ -10,10 +10,8 @@ Result *majsa(Status *status) {
 
     for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
         if (Possibles->Situations[i].Agari) {
-            if (status->discardTile[0] != '\0') {
-                if (strstr(status->discardTile, status->currentTile) != NULL) {
-                    Possibles->Situations[i].result_type = FURITEN;
-                }
+            if (strstr(status->discardTile, status->currentTile) != NULL) {
+                Possibles->Situations[i].result_type = FURITEN;
             } else {
                 memcpy(Possibles->Situations[i].yaku, checkYaku(status, Possibles, i), sizeof(result->yaku));  //导入役种
                 if (Possibles->Situations[i].yaku[0] == 0) {
@@ -97,12 +95,10 @@ Result *majsa(Status *status) {
         } else {
             result->type = TENPAI;
             result->machi = tenpai.Machi;
-            if (status->discardTile[0] != '\0') {
-                for (int i = 0; i < tenpai.Machi; i++) {
-                    if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
-                        result->type = FURITEN;
-                    }   //振听
-                }
+            for (int i = 0; i < tenpai.Machi; i++) {
+                if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
+                    result->type = FURITEN;
+                }   //振听
             }
             return result;
         }
