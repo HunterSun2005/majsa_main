@@ -159,8 +159,7 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
             if (isChiitoitsu(status)) {
                 yaku[count] = Chiitoitsu;
                 count++;
-            }
-            if (isIipeikou(status) && isMenzenchin(status)) {
+            } else if (isIipeikou(status) && isMenzenchin(status)) {
                 yaku[count] = Iipeikou;
                 count++;    //门前清限定
             }

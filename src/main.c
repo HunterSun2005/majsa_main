@@ -8,7 +8,7 @@ int main() {
             .honbaCount = 1,
             .dora = "2m",
             .uradora = "6m",
-            .handTile = "1m1m2m2m3m3m4m4m5m5m6m6m7m",
+            .handTile = "1m1m2m2m4m4m5m5m7m8m8m2s2s",
             .groupTile = {},
             .discardTile = "8s9s9s2z3m",
             .currentPlayer = SHIMOCHA,
