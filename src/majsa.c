@@ -8,7 +8,7 @@ Result *majsa(Status *status) {
 
     SortGroupTile(status, Possibles);  //排序副露牌
 
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
         if (Possibles->Situations[i].Agari) {
             if (strstr(status->discardTile, status->currentTile) != NULL) {
                 Possibles->Situations[i].result_type = FURITEN;
@@ -79,10 +79,8 @@ Result *majsa(Status *status) {
 
         for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
             if (Possibles->Situations[i].result_type == FURITEN) {
-                result->type = FURITEN;
                 count_tenpai++;
             } else if (Possibles->Situations[i].result_type == TENPAI) {
-                result->type = TENPAI;
                 count_tenpai++;
             }
         }
@@ -98,10 +96,14 @@ Result *majsa(Status *status) {
                 return result;
             }
         } else {
+            if (strstr(status->discardTile, status->currentTile) != NULL) {
+                result->type = FURITEN;
+            } else {
+                result->type = TENPAI;
+            }
             int Machi = calMachi(status, Possibles->HandTiles);
             result->machi = Machi;
         }
-
 
         return result;
     }

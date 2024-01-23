@@ -129,7 +129,7 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
     count++;
     if (count > 5) {
         return;
-    } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 0) {
+    } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 1) {
         memcpy(&(Possibles->Situations[CountSituation + 1]), &(Possibles->Situations[CountSituation]), \
         sizeof(Situation));
         Possibles->Situations[CountSituation].Agari = true;
@@ -526,7 +526,7 @@ bool Stop(Possible_D *Possibles_D) {
     for (int i = 0; i <= 2; i++) {
         for (int j = 1; j <= 7; j++) {
             if (Possibles_D->HandTiles.matrix[i][j] == 0) continue;
-            else if (Possibles_D->HandTiles.matrix[i][j] == 1) {
+            else if (Possibles_D->HandTiles.matrix[i][j] >= 1) {
                 if (Possibles_D->HandTiles.matrix[i][j + 1] >= 1 || Possibles_D->HandTiles.matrix[i][j + 2] >= 1) {
                     return false;
                 }

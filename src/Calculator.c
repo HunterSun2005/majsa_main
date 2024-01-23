@@ -174,7 +174,7 @@ int calFu(Status *status, Possible *Possibles, int number) {
 
 int calPoint(Status *status, int Han, int Fu) {
     int point = 0;
-    if (status->bakaze == status->jikaze) {
+    if (status->jikaze == TON) {
         if (Han < 0) {
             return 48000 * (-1 * Han);
         }
