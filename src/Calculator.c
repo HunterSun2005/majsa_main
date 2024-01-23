@@ -236,9 +236,9 @@ int calMachi(Status *status, Hand HandTiles) {
             if (a == 3 && b >= 8) {
                 break;
             }
-//            if (AllTiles->matrix[a][b] >= 4) {
-//                continue;
-//            }   //虚听
+            if (AllTiles->matrix[a][b] >= 4) {
+                continue;
+            }   //虚听
             HandTiles.matrix[a][b]++;
             Tenpai_Possibles = isTenpai(status, HandTiles);
             HandTiles.matrix[a][b]--;
