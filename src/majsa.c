@@ -3,6 +3,7 @@
 Result *majsa(Status *status) {
     Result *result = malloc(sizeof(*result));  //初始化
     memset(result, 0, sizeof(*result));
+    result->machi = 1;
 
     Possible *Possibles = isAgari(status);
 
@@ -93,13 +94,13 @@ Result *majsa(Status *status) {
             result->shanten = getDistance(Possibles);    //计算向听数
             return result;
         } else {
-            result->type = FURITEN;
+            result->type = TENPAI;
             result->machi = tenpai.Machi;
-//            for (int i = 0; i < tenpai.Machi; i++) {
-//                if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
-//                    result->type = FURITEN;
-//                }   //振听
-//            }
+            for (int i = 0; i < tenpai.Machi; i++) {
+                if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
+                    result->type = FURITEN;
+                }   //振听
+            }
             return result;
         }
     }
