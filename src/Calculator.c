@@ -166,7 +166,7 @@ int calFu(Status *status, Possible *Possibles, int number) {
         if (Fu % 10 != 0) {
             Fu -= Fu % 10;
             Fu += 10;
-        }
+        }   //切上
 
         return Fu;
     }
@@ -185,7 +185,7 @@ int calPoint(Status *status, int Han, int Fu) {
                 if (point % 100 != 0) {
                     point -= point % 100;
                     point += 100;
-                }
+                }   //切上
                 return point;
             } else return 12000;
         } else if (Han == 6 || Han == 7) {

@@ -52,9 +52,13 @@ Result *majsa(Status *status) {
         result->fu = Possibles->Situations[max].Fu;
         result->type = Possibles->Situations[max].result_type;
         if (result->type == TSUMO) {
-            if (status->jikaze == status->bakaze) {
+            if (status->jikaze == TON) {
                 for (int i = 0; i < 3; i++) {
                     result->point[i] = Possibles->Situations[max].point / 3 + status->honbaCount * 100;
+                    if (result->point[i] % 100 != 0) {
+                        result->point[i] -= result->point[i] % 100;
+                        result->point[i] += 100;
+                    }   //切上
                 }
             } else {
                 int d = 0 - (int) status->jikaze;
@@ -62,9 +66,17 @@ Result *majsa(Status *status) {
                     d += 4;
                 }
                 result->point[3 - d] = Possibles->Situations[max].point / 2 + status->honbaCount * 100;
+                if (result->point[3 - d] % 100 != 0) {
+                    result->point[3 - d] -= result->point[3 - d] % 100;
+                    result->point[3 - d] += 100;
+                }   //切上
                 for (int i = 0; i < 3; i++) {
                     if (result->point[i] == 0) {
                         result->point[i] = Possibles->Situations[max].point / 4 + status->honbaCount * 100;
+                        if (result->point[i] % 100 != 0) {
+                            result->point[i] -= result->point[i] % 100;
+                            result->point[i] += 100;
+                        }   //切上
                     }
                 }
             }
