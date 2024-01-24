@@ -107,42 +107,42 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         return yaku;
     }   //若有役满则不计其他役种
 
-//    if (status->isRiichi) {
-//        yaku[count] = Riichi;
-//        count++;
-//    }   //立直
-//    if (status->isIppatsu) {
-//        yaku[count] = Ippatsu;
-//        count++;
-//    }   //一发
-//    if (isMenzenchintsumo(status)) {
-//        yaku[count] = Menzenchintsumo;
-//        count++;
-//    }
+    if (status->isRiichi) {
+        yaku[count] = Riichi;
+        count++;
+    }   //立直
+    if (status->isIppatsu) {
+        yaku[count] = Ippatsu;
+        count++;
+    }   //一发
+    if (isMenzenchintsumo(status)) {
+        yaku[count] = Menzenchintsumo;
+        count++;
+    }
     if (isTanyao(status)) {
         yaku[count] = Tanyao;
         count++;
     }
-    if (Possibles->AllTiles.matrix[3][status->jikaze + 1] >= 3) {
-        yaku[count] = YakuhaiJikaze;
-        count++;
-    }
-    if (Possibles->AllTiles.matrix[3][status->bakaze + 1] >= 3) {
-        yaku[count] = YakuhaiBakaze;
-        count++;
-    }
-    if (Possibles->AllTiles.matrix[3][5] >= 3) {
-        yaku[count] = YakuhaiHaku;
-        count++;
-    }
-    if (Possibles->AllTiles.matrix[3][6] >= 3) {
-        yaku[count] = YakuhaiHatsu;
-        count++;
-    }
-    if (Possibles->AllTiles.matrix[3][7] >= 3) {
-        yaku[count] = YakuhaiChun;
-        count++;
-    }
+//    if (Possibles->AllTiles.matrix[3][status->jikaze + 1] >= 3) {
+//        yaku[count] = YakuhaiJikaze;
+//        count++;
+//    }
+//    if (Possibles->AllTiles.matrix[3][status->bakaze + 1] >= 3) {
+//        yaku[count] = YakuhaiBakaze;
+//        count++;
+//    }
+//    if (Possibles->AllTiles.matrix[3][5] >= 3) {
+//        yaku[count] = YakuhaiHaku;
+//        count++;
+//    }
+//    if (Possibles->AllTiles.matrix[3][6] >= 3) {
+//        yaku[count] = YakuhaiHatsu;
+//        count++;
+//    }
+//    if (Possibles->AllTiles.matrix[3][7] >= 3) {
+//        yaku[count] = YakuhaiChun;
+//        count++;
+//    }
 
     {
         if (isPinhu(status) && isMenzenchin(status)) {
