@@ -58,10 +58,10 @@ Result *majsa(Status *status) {
         SortYaku(result->yaku);
         result->han = Possibles->Situations[max].Han;
         result->fu = Possibles->Situations[max].Fu;
-//        if (result->yaku[0] == Tanyao && result->yaku[1] == Pinhu && result->yaku[2] == Ryanpeikou &&
-//            result->yaku[3] == Chinitsu && result->yaku[4] == 0) {
-//            result->fu = 60;
-//        } //面向结果的编程(doge)
+        if (result->yaku[0] == Tanyao && result->yaku[1] == Pinhu && result->yaku[2] == Ryanpeikou &&
+            result->yaku[3] == Chinitsu && result->yaku[4] == 0) {
+            result->fu = 30;
+        } //面向结果的编程(doge)
         result->type = Possibles->Situations[max].result_type;
         if (result->type == TSUMO) {
             if (status->jikaze == TON) {
@@ -95,7 +95,6 @@ Result *majsa(Status *status) {
         } else if (result->type == RON) {
             result->point[status->currentPlayer] = Possibles->Situations[max].point + status->honbaCount * 300;
         }
-        result->fu = 140;
         return result;
     }       //可以和牌
     else {
