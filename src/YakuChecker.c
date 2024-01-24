@@ -13,95 +13,95 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
     int count = 0;
     int yakuman = 0;
 
-    if (status->bakaze == status->jikaze && status->discardTile[1] == 0) {
-        yaku[count] = Tenhou;
-        count++;
-        yakuman++;
-    }
-
-    if (status->bakaze != status->jikaze && status->discardTile[1] == 0) {
-        yaku[count] = Chihou;
-        count++;
-        yakuman++;
-    }
-
-    if (isDaisangen(status)) {
-        yaku[count] = Daisangen;
-        count++;
-        yakuman++;
-    }
-
-    {
-        if (isSuuankoutanki(status)) {
-            yaku[count] = Suuankoutanki;
-            count++;
-            yakuman++;
-        } else if (isSuuankou(status)) {
-            yaku[count] = Suuankou;
-            count++;
-            yakuman++;
-        }
-    }
-
-    if (isTsuuiisou(status)) {
-        yaku[count] = Tsuuiisou;
-        count++;
-        yakuman++;
-    }
-
-    if (isRyuuiisou(status)) {
-        yaku[count] = Ryuuiisou;
-        count++;
-        yakuman++;
-    }
-
-    if (isChinroutou(status)) {
-        yaku[count] = Chinroutou;
-        count++;
-        yakuman++;
-    }
-
-    {
-        if (isKokushijuusanmenmachi(status)) {
-            yaku[count] = Kokushijuusanmenmachi;
-            count++;
-            yakuman++;
-        } else if (isKokushimusou(status)) {
-            yaku[count] = Kokushimusou;
-            count++;
-            yakuman++;
-        }
-    }
-
-    {
-        if (isDaisuushi(status)) {
-            yaku[count] = Daisuushi;
-            count++;
-            yakuman++;
-        } else if (isShousuushi(status)) {
-            yaku[count] = Shousuushi;
-            count++;
-            yakuman++;
-        }
-    }
-
-    {
-        if (isChuurenkyuumenmachi(status)) {
-            yaku[count] = Chuurenkyuumenmachi;
-            count++;
-            yakuman++;
-        } else if (isChuurenpoutou(status)) {
-            yaku[count] = Chuurenpoutou;
-            count++;
-            yakuman++;
-        }
-    }
-
-    if (isSuukantsu(status)) {
-        yaku[count] = Suukantsu;
-        count++;
-        yakuman++;
-    }   //以上为役满及以上役种
+//    if (status->bakaze == status->jikaze && status->discardTile[1] == 0) {
+//        yaku[count] = Tenhou;
+//        count++;
+//        yakuman++;
+//    }
+//
+//    if (status->bakaze != status->jikaze && status->discardTile[1] == 0) {
+//        yaku[count] = Chihou;
+//        count++;
+//        yakuman++;
+//    }
+//
+//    if (isDaisangen(status)) {
+//        yaku[count] = Daisangen;
+//        count++;
+//        yakuman++;
+//    }
+//
+//    {
+//        if (isSuuankoutanki(status)) {
+//            yaku[count] = Suuankoutanki;
+//            count++;
+//            yakuman++;
+//        } else if (isSuuankou(status)) {
+//            yaku[count] = Suuankou;
+//            count++;
+//            yakuman++;
+//        }
+//    }
+//
+//    if (isTsuuiisou(status)) {
+//        yaku[count] = Tsuuiisou;
+//        count++;
+//        yakuman++;
+//    }
+//
+//    if (isRyuuiisou(status)) {
+//        yaku[count] = Ryuuiisou;
+//        count++;
+//        yakuman++;
+//    }
+//
+//    if (isChinroutou(status)) {
+//        yaku[count] = Chinroutou;
+//        count++;
+//        yakuman++;
+//    }
+//
+//    {
+//        if (isKokushijuusanmenmachi(status)) {
+//            yaku[count] = Kokushijuusanmenmachi;
+//            count++;
+//            yakuman++;
+//        } else if (isKokushimusou(status)) {
+//            yaku[count] = Kokushimusou;
+//            count++;
+//            yakuman++;
+//        }
+//    }
+//
+//    {
+//        if (isDaisuushi(status)) {
+//            yaku[count] = Daisuushi;
+//            count++;
+//            yakuman++;
+//        } else if (isShousuushi(status)) {
+//            yaku[count] = Shousuushi;
+//            count++;
+//            yakuman++;
+//        }
+//    }
+//
+//    {
+//        if (isChuurenkyuumenmachi(status)) {
+//            yaku[count] = Chuurenkyuumenmachi;
+//            count++;
+//            yakuman++;
+//        } else if (isChuurenpoutou(status)) {
+//            yaku[count] = Chuurenpoutou;
+//            count++;
+//            yakuman++;
+//        }
+//    }
+//
+//    if (isSuukantsu(status)) {
+//        yaku[count] = Suukantsu;
+//        count++;
+//        yakuman++;
+//    }   //以上为役满及以上役种
 
     if (yakuman >= 1) {
         return yaku;
@@ -119,10 +119,10 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = Menzenchintsumo;
         count++;
     }
-//    if (isTanyao(status)) {
-//        yaku[count] = Tanyao;
-//        count++;
-//    }
+    if (isTanyao(status)) {
+        yaku[count] = Tanyao;
+        count++;
+    }
     if (Possibles->AllTiles.matrix[3][status->jikaze + 1] >= 3) {
         yaku[count] = YakuhaiJikaze;
         count++;
@@ -143,10 +143,10 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = YakuhaiChun;
         count++;
     }
-//    if (isPinhu(status) && isMenzenchin(status)) {
-//        yaku[count] = Pinhu;
-//        count++;    //门前清限定
-//    }
+    if (isPinhu(status) && isMenzenchin(status)) {
+        yaku[count] = Pinhu;
+        count++;    //门前清限定
+    }
 
     {
         if (isRyanpeikou(status) && isMenzenchin(status)) {
@@ -382,8 +382,7 @@ bool isSanshokudoukou(Status *status) {
     int matrix[4][10] = {0};
 
     for (int i = 0; i < Possibles->HandGroupLen; i++) {
-        if (Possibles->Situations[number].HandGroupTile[i].type == Koutsu ||
-            Possibles->Situations[number].HandGroupTile[i].type == Kantsu) {
+        if (Possibles->Situations[number].HandGroupTile[i].type == Koutsu) {
             switch (Possibles->Situations[number].HandGroupTile[i].tile[1]) {
                 case 'm':
                     matrix[0][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
