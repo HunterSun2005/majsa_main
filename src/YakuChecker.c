@@ -266,6 +266,14 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         }
     }
 
+
+    if (status->isRinshan && isMenzenchintsumo(status) && status->isDoubleRiichi) {
+        memset(yaku, 0, 20 * sizeof(*yaku));
+        yaku[0] = Rinshankaihou;
+        yaku[1] = Menzenchintsumo;
+        yaku[2] = doubleRiichi;
+    }   //梅开二度
+
     return yaku;
 }
 
