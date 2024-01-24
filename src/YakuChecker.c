@@ -107,18 +107,18 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         return yaku;
     }   //若有役满则不计其他役种
 
-    if (status->isRiichi) {
-        yaku[count] = Riichi;
-        count++;
-    }   //立直
-    if (status->isIppatsu) {
-        yaku[count] = Ippatsu;
-        count++;
-    }   //一发
-    if (isMenzenchintsumo(status)) {
-        yaku[count] = Menzenchintsumo;
-        count++;
-    }
+//    if (status->isRiichi) {
+//        yaku[count] = Riichi;
+//        count++;
+//    }   //立直
+//    if (status->isIppatsu) {
+//        yaku[count] = Ippatsu;
+//        count++;
+//    }   //一发
+//    if (isMenzenchintsumo(status)) {
+//        yaku[count] = Menzenchintsumo;
+//        count++;
+//    }
     if (isTanyao(status)) {
         yaku[count] = Tanyao;
         count++;
