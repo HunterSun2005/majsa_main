@@ -5,7 +5,7 @@ int main() {
     Status status = {
             .bakaze = TON,
             .jikaze = NANN,
-            .honbaCount = 1,
+            .honbaCount = 0,
             .dora = "9p",
             .uradora = "5m",
             .handTile = "1m1m1m1m2m2m2m2m3m3m3m3m9m",
