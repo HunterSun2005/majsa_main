@@ -195,30 +195,30 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = Sanankou;
         count++;
     }
-    if (isShousangen(status)) {
-        yaku[count] = Shousangen;
-        count++;
-    }
-    if (isHonroutou(status)) {
-        yaku[count] = Honroutou;
-        count++;
-    }
-
-//    {
-//        if (isJunchantaiyaochuu(status)) {
-//            yaku[count] = Junchantaiyaochuu;
-//            count++;
-//        } else if (isJunchantaiyaochuuF(status)) {
-//            yaku[count] = JunchantaiyaochuuF;
-//            count++;
-//        } else if (isHonchantaiyaochuu(status)) {
-//            yaku[count] = Honchantaiyaochuu;
-//            count++;
-//        } else if (isHonchantaiyaochuuF(status)) {
-//            yaku[count] = HonchantaiyaochuuF;
-//            count++;
-//        }
+//    if (isShousangen(status)) {
+//        yaku[count] = Shousangen;
+//        count++;
 //    }
+//    if (isHonroutou(status)) {
+//        yaku[count] = Honroutou;
+//        count++;
+//    }
+
+    {
+        if (isJunchantaiyaochuu(status)) {
+            yaku[count] = Junchantaiyaochuu;
+            count++;
+        } else if (isJunchantaiyaochuuF(status)) {
+            yaku[count] = JunchantaiyaochuuF;
+            count++;
+        } else if (isHonchantaiyaochuu(status)) {
+            yaku[count] = Honchantaiyaochuu;
+            count++;
+        } else if (isHonchantaiyaochuuF(status)) {
+            yaku[count] = HonchantaiyaochuuF;
+            count++;
+        }
+    }
 
     {
         if (isIkkitsuukan(status)) {
