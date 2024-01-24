@@ -91,6 +91,7 @@ Result *majsa(Status *status) {
         } else if (result->type == RON) {
             result->point[status->currentPlayer] = Possibles->Situations[max].point + status->honbaCount * 300;
         }
+        result->fu = 60;
         return result;
     }       //可以和牌
     else {
