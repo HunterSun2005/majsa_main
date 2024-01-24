@@ -143,10 +143,12 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = YakuhaiChun;
         count++;
     }
-    if (isPinhu(status) && isMenzenchin(status)) {
-        yaku[count] = Pinhu;
-        count++;    //门前清限定
-    }
+//    if (isPinhu(status) && isMenzenchin(status)) {
+//        yaku[count] = Pinhu;
+//        count++;    //门前清限定
+//    }
+    yaku[count] = Pinhu;
+    count++;
 
     {
         if (isRyanpeikou(status) && isMenzenchin(status)) {
