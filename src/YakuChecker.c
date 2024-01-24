@@ -119,10 +119,10 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = Menzenchintsumo;
         count++;
     }
-    if (isTanyao(status)) {
-        yaku[count] = Tanyao;
-        count++;
-    }
+//    if (isTanyao(status)) {
+//        yaku[count] = Tanyao;
+//        count++;
+//    }
     if (Possibles->AllTiles.matrix[3][status->jikaze + 1] >= 3) {
         yaku[count] = YakuhaiJikaze;
         count++;
@@ -143,10 +143,10 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = YakuhaiChun;
         count++;
     }
-    if (isPinhu(status) && isMenzenchin(status)) {
-        yaku[count] = Pinhu;
-        count++;    //门前清限定
-    }
+//    if (isPinhu(status) && isMenzenchin(status)) {
+//        yaku[count] = Pinhu;
+//        count++;    //门前清限定
+//    }
 
     {
         if (isRyanpeikou(status) && isMenzenchin(status)) {
