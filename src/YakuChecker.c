@@ -204,31 +204,31 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         count++;
     }
 
-    {
-        if (isJunchantaiyaochuu(status)) {
-            yaku[count] = Junchantaiyaochuu;
-            count++;
-        } else if (isJunchantaiyaochuuF(status)) {
-            yaku[count] = JunchantaiyaochuuF;
-            count++;
-        } else if (isHonchantaiyaochuu(status)) {
-            yaku[count] = Honchantaiyaochuu;
-            count++;
-        } else if (isHonchantaiyaochuuF(status)) {
-            yaku[count] = HonchantaiyaochuuF;
-            count++;
-        }
-    }
-
 //    {
-//        if (isIkkitsuukan(status)) {
-//            yaku[count] = Ikkitsuukan;
+//        if (isJunchantaiyaochuu(status)) {
+//            yaku[count] = Junchantaiyaochuu;
 //            count++;
-//        } else if (isIkkitsuukanF(status)) {
-//            yaku[count] = IkkitsuukanF;
+//        } else if (isJunchantaiyaochuuF(status)) {
+//            yaku[count] = JunchantaiyaochuuF;
+//            count++;
+//        } else if (isHonchantaiyaochuu(status)) {
+//            yaku[count] = Honchantaiyaochuu;
+//            count++;
+//        } else if (isHonchantaiyaochuuF(status)) {
+//            yaku[count] = HonchantaiyaochuuF;
 //            count++;
 //        }
 //    }
+
+    {
+        if (isIkkitsuukan(status)) {
+            yaku[count] = Ikkitsuukan;
+            count++;
+        } else if (isIkkitsuukanF(status)) {
+            yaku[count] = IkkitsuukanF;
+            count++;
+        }
+    }
 
     {
         if (isSanshokudoujun(status)) {
