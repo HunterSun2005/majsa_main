@@ -303,6 +303,11 @@ int MarkMK(Status *status, Possible *Possibles, int number) {
                             count++;
                         }
                         break;
+                    case 'z':
+                        if (Possibles->HandTiles.matrix[3][status->currentTile[0] - 48] == 3) {
+                            count++;
+                        }
+                        break;
                     default:;
                 }
             }
