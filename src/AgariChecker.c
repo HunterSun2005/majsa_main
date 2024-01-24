@@ -438,39 +438,6 @@ void Separate(Possible_D *Possibles_D, countnumber counts) {
         return;
     }
 
-    for (int a = 0; a <= 3; a++) {
-        for (int b = 1; b <= 9; b++) {
-            if (a == 3 && b >= 8) {
-                break;
-            }
-
-            if (Possibles_D->HandTiles.matrix[a][b] >= 3) {
-                Possibles_D->HandTiles.matrix[a][b] -= 3;
-                counts.Kezi++;
-                Separate(Possibles_D, counts);
-                counts.Kezi--;
-                Possibles_D->HandTiles.matrix[a][b] += 3;
-            }
-        }
-    }   //刻子
-
-    for (int a = 0; a <= 2; a++) {
-        for (int b = 1; b <= 7; b++) {
-            if (Possibles_D->HandTiles.matrix[a][b] >= 1 && Possibles_D->HandTiles.matrix[a][b + 1] >= 1 &&
-                Possibles_D->HandTiles.matrix[a][b + 2] >= 1) {
-                Possibles_D->HandTiles.matrix[a][b] -= 1;
-                Possibles_D->HandTiles.matrix[a][b + 1] -= 1;
-                Possibles_D->HandTiles.matrix[a][b + 2] -= 1;
-                counts.Shunzi++;
-                Separate(Possibles_D, counts);
-                counts.Shunzi--;
-                Possibles_D->HandTiles.matrix[a][b] += 1;
-                Possibles_D->HandTiles.matrix[a][b + 1] += 1;
-                Possibles_D->HandTiles.matrix[a][b + 2] += 1;
-            }
-        }
-    }   //顺子
-
     for (int a = 0; a <= 2; a++) {
         for (int b = 1; b <= 8; b++) {
             if (Possibles_D->HandTiles.matrix[a][b] >= 1 && Possibles_D->HandTiles.matrix[a][b + 1] >= 1) {
@@ -514,6 +481,39 @@ void Separate(Possible_D *Possibles_D, countnumber counts) {
             }
         }
     }   //对子
+
+    for (int a = 0; a <= 3; a++) {
+        for (int b = 1; b <= 9; b++) {
+            if (a == 3 && b >= 8) {
+                break;
+            }
+
+            if (Possibles_D->HandTiles.matrix[a][b] >= 3) {
+                Possibles_D->HandTiles.matrix[a][b] -= 3;
+                counts.Kezi++;
+                Separate(Possibles_D, counts);
+                counts.Kezi--;
+                Possibles_D->HandTiles.matrix[a][b] += 3;
+            }
+        }
+    }   //刻子
+
+    for (int a = 0; a <= 2; a++) {
+        for (int b = 1; b <= 7; b++) {
+            if (Possibles_D->HandTiles.matrix[a][b] >= 1 && Possibles_D->HandTiles.matrix[a][b + 1] >= 1 &&
+                Possibles_D->HandTiles.matrix[a][b + 2] >= 1) {
+                Possibles_D->HandTiles.matrix[a][b] -= 1;
+                Possibles_D->HandTiles.matrix[a][b + 1] -= 1;
+                Possibles_D->HandTiles.matrix[a][b + 2] -= 1;
+                counts.Shunzi++;
+                Separate(Possibles_D, counts);
+                counts.Shunzi--;
+                Possibles_D->HandTiles.matrix[a][b] += 1;
+                Possibles_D->HandTiles.matrix[a][b + 1] += 1;
+                Possibles_D->HandTiles.matrix[a][b + 2] += 1;
+            }
+        }
+    }   //顺子
 }
 
 bool Stop(Possible_D *Possibles_D) {
