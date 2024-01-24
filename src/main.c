@@ -14,9 +14,9 @@ int main() {
             .currentPlayer = KAMICHA,
             .currentTile = "9s",
             .remainTileCount = 37,
-            .isRiichi = true,
+            .isRiichi = false,
             .isDoubleRiichi = false,
-            .isIppatsu = true,
+            .isIppatsu = false,
             .isRinshan = false,
     };
     Result const *result = majsa(&status);
