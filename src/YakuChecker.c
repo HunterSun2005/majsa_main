@@ -143,14 +143,17 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = YakuhaiChun;
         count++;
     }
-    if (isPinhu(status) && isMenzenchin(status)) {
-        yaku[count] = Pinhu;
-        count++;    //门前清限定
-    }
-    //面向对象编程/doge
-    if (isTanyao(status) && isRyanpeikou(status) && isChinitsu(status) && yaku[count - 1] != Pinhu) {
-        yaku[count] = Pinhu;
-        count++;
+
+    {
+        if (isPinhu(status) && isMenzenchin(status)) {
+            yaku[count] = Pinhu;
+            count++;    //门前清限定
+        }
+            //面向对象编程/doge
+        else if (isTanyao(status) && isRyanpeikou(status) && isChinitsu(status)) {
+            yaku[count] = Pinhu;
+            count++;
+        }
     }
 
     {
