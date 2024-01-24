@@ -299,6 +299,7 @@ bool isPinhu(Status *status) {
          Possibles->Situations[number].Jyantou[0] - 48 != 6 && Possibles->Situations[number].Jyantou[0] - 48 != 7 &&
          Possibles->Situations[number].Jyantou[0] - 48 != status->jikaze + 1 &&
          Possibles->Situations[number].Jyantou[0] - 48 != status->bakaze + 1)) {
+
         if (Possibles->HandGroupLen < 4) {
             return false;
         }
@@ -314,23 +315,180 @@ bool isPinhu(Status *status) {
 //            return false;
 //        }
 
-        for (int i = 0; i < 4; i++) {
-            if (Possibles->Situations[number].HandGroupTile[i].tile[1] == status->currentTile[1]) {
-                if (Possibles->Situations[number].HandGroupTile[i].tile[0] == status->currentTile[0] ||
-                    Possibles->Situations[number].HandGroupTile[i].tile[0] == status->currentTile[0] - 2) {
-                    if (Possibles->Situations[number].HandGroupTile[i].tile[0] == '1') {
-                        if (status->currentTile[0] != '3') {
-                            return true;
-                        }
-                    } else if (Possibles->Situations[number].HandGroupTile[i].tile[0] == '7') {
-                        if (status->currentTile[0] != '7') {
-                            return true;
-                        }
-                    } else return true;
+        int matrix[4][10] = {0};
+
+        for (int i = 0; i < Possibles->HandGroupLen; i++) {
+            if (Possibles->Situations[number].HandGroupTile[i].type == Shuntsu) {
+                switch (Possibles->Situations[number].HandGroupTile[i].tile[1]) {
+                    case 'm':
+                        matrix[0][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 'p':
+                        matrix[1][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 's':
+                        matrix[2][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    case 'z':
+                        matrix[3][Possibles->Situations[number].HandGroupTile[i].tile[0] - 48]++;
+                        break;
+                    default:;
                 }
             }
-        }       //只能两面听
+        }
 
+        switch (status->currentTile[1]) {
+            case 'm': {
+                switch (status->currentTile[0]) {
+                    case '1':
+                        if (matrix[0][1] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '2':
+                        if (matrix[0][2] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '3':
+                        if (matrix[0][3] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '4':
+                        if (matrix[0][4] >= 1 || matrix[0][2] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '5':
+                        if (matrix[0][5] >= 1 || matrix[0][3] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '6':
+                        if (matrix[0][6] >= 1 || matrix[0][4] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '7':
+                        if (matrix[0][5] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '8':
+                        if (matrix[0][6] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '9':
+                        if (matrix[0][7] >= 1) {
+                            return true;
+                        }
+                        break;
+                    default:;
+                }
+            }
+            case 'p': {
+                switch (status->currentTile[0]) {
+                    case '1':
+                        if (matrix[1][1] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '2':
+                        if (matrix[1][2] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '3':
+                        if (matrix[1][3] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '4':
+                        if (matrix[1][4] >= 1 || matrix[1][2] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '5':
+                        if (matrix[1][5] >= 1 || matrix[1][3] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '6':
+                        if (matrix[1][6] >= 1 || matrix[1][4] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '7':
+                        if (matrix[1][5] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '8':
+                        if (matrix[1][6] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '9':
+                        if (matrix[1][7] >= 1) {
+                            return true;
+                        }
+                        break;
+                    default:;
+                }
+            }
+            case 's': {
+                switch (status->currentTile[0]) {
+                    case '1':
+                        if (matrix[2][1] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '2':
+                        if (matrix[2][2] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '3':
+                        if (matrix[2][3] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '4':
+                        if (matrix[2][4] >= 1 || matrix[2][2] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '5':
+                        if (matrix[2][5] >= 1 || matrix[2][3] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '6':
+                        if (matrix[2][6] >= 1 || matrix[2][4] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '7':
+                        if (matrix[2][5] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '8':
+                        if (matrix[2][6] >= 1) {
+                            return true;
+                        }
+                        break;
+                    case '9':
+                        if (matrix[2][7] >= 1) {
+                            return true;
+                        }
+                        break;
+                    default:;
+                }
+            }
+        }
         return false;
     } else return false;
 }
