@@ -9,7 +9,7 @@ int main() {
             .dora = "1m",
             .uradora = "3s",
             .handTile = "1z1z1z6z6z6z7z7z7z5z",
-            .groupTile = {{Koutsu,"1s1s1s"}},
+            .groupTile = {{Koutsu, "1s1s1s"}},
             .discardTile = "2m3m4m5m3p4p5p6p2s3s4s5s",
             .currentPlayer = KAMICHA,
             .currentTile = "5z",
