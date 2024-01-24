@@ -11,12 +11,12 @@ int main() {
             .handTile = "2m3m4m2m3m4m5m6m7m5m6m7m8m",
             .groupTile = {},
             .discardTile = "2m3m4m5m3p4p5p6p2s3s4s5s",
-            .currentPlayer = KAMICHA,
+            .currentPlayer = JICHA,
             .currentTile = "8m",
             .remainTileCount = 18,
-            .isRiichi = true,
+            .isRiichi = false,
             .isDoubleRiichi = false,
-            .isIppatsu = true,
+            .isIppatsu = false,
             .isRinshan = false,
     };
     Result const *result = majsa(&status);
