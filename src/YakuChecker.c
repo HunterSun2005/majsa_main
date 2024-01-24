@@ -149,7 +149,7 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
             yaku[count] = Pinhu;
             count++;    //门前清限定
         }
-            //面向对象编程/doge
+            //面向对象编程(doge)
         else if (isTanyao(status) && isRyanpeikou(status) && isChinitsu(status)) {
             yaku[count] = Pinhu;
             count++;
@@ -171,14 +171,16 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         }
     }
 
-    if (status->isRinshan) {
-        yaku[count] = Rinshankaihou;
-        count++;
+    {
+        if (status->isRinshan) {
+            yaku[count] = Rinshankaihou;
+            count++;
+        } else if (status->remainTileCount == 0 && status->currentPlayer == JICHA) {
+            yaku[count] = Haiteiraoyue;
+            count++;
+        }
     }
-    if (status->remainTileCount == 0 && status->currentPlayer == JICHA) {
-        yaku[count] = Haiteiraoyue;
-        count++;
-    }
+    
     if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
         yaku[count] = Houteiraoyui;
         count++;
