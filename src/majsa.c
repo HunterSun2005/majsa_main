@@ -19,7 +19,6 @@ Result *majsa(Status *status) {
                     Possibles->Situations[i].result_type = FURITEN;
                 }   //振听
             }
-            free(tenpai);
 
             if (Possibles->Situations[i].result_type != FURITEN) {
                 memcpy(Possibles->Situations[i].yaku, checkYaku(status, Possibles, i), sizeof(result->yaku));  //导入役种
@@ -100,7 +99,6 @@ Result *majsa(Status *status) {
         if (tenpai->Machi <= 0) {
             result->type = NOTEN;
             result->shanten = getDistance(Possibles);    //计算向听数
-            free(tenpai);
             return result;
         } else {
             result->type = TENPAI;
@@ -110,7 +108,6 @@ Result *majsa(Status *status) {
                     result->type = FURITEN;
                 }   //振听
             }
-            free(tenpai);
             return result;
         }
     }
