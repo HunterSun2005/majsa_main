@@ -175,12 +175,9 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         if (status->isRinshan) {
             yaku[count] = Rinshankaihou;
             count++;
-        } else if (status->remainTileCount == 0 && status->currentPlayer == JICHA) {
-            yaku[count] = Haiteiraoyue;
-            count++;
         }
     }
-    
+
     if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
         yaku[count] = Houteiraoyui;
         count++;
