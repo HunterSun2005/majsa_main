@@ -372,7 +372,7 @@ bool CheckChiitoitsu(Status *status, Hand Hands) {
     } else return false;
 }
 
-int getDistance(Status *status, Possible *Possibles) {
+int getDistance(Possible *Possibles) {
     int m;
     int d;
     int c;
