@@ -99,6 +99,7 @@ Result *majsa(Status *status) {
         if (tenpai->Machi <= 0) {
             result->type = NOTEN;
             result->shanten = getDistance(Possibles);    //计算向听数
+            result->shanten++;
             return result;
         } else {
             result->type = TENPAI;
