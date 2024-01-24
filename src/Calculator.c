@@ -244,6 +244,7 @@ Tenpai *calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
             for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
                 if (Tenpai_Possibles->Situations[i].Agari) {
                     tenpai->Tile[tenpai->Machi] = (char *) malloc(sizeof(char) * 3);
+                    memset(tenpai->Tile[tenpai->Machi], 0, sizeof(char) * 3);
                     tenpai->Tile[tenpai->Machi][0] = (char) (b + 48);
                     switch (a) {
                         case 0:
