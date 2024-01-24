@@ -886,7 +886,9 @@ bool isRyanpeikou(Status *status) {
 
         for (int i = 0; i <= 2; i++) {
             for (int j = 1; j <= 7; j++) {
-                if (matrix[i][j] >= 2) {
+                if (matrix[i][j] >= 4) {
+                    count += 2;
+                } else if (matrix[i][j] >= 2) {
                     count++;
                 }
             }
