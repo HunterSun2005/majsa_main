@@ -181,10 +181,10 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         }
     }
 
-//    if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
-//        yaku[count] = Houteiraoyui;
-//        count++;
-//    }
+    if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
+        yaku[count] = Houteiraoyui;
+        count++;
+    }
     if (status->isDoubleRiichi) {
         yaku[count] = doubleRiichi;
         count++;
