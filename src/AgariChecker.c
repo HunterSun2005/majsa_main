@@ -132,7 +132,7 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
     }
     if (count > 5) {
         return;
-    } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 0) {
+    } else if (count == Possibles->HandGroupLen + 1) {
         memcpy(&(Possibles->Situations[CountSituation + 1]), &(Possibles->Situations[CountSituation]), \
         sizeof(Situation));
         Possibles->Situations[CountSituation].Agari = true;
