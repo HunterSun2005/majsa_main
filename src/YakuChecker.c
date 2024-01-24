@@ -163,30 +163,30 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         }
     }
 
-    if (status->isRinshan) {
-        yaku[count] = Rinshankaihou;
-        count++;
-    }
-    if (status->remainTileCount == 0 && status->currentPlayer == JICHA) {
-        yaku[count] = Haiteiraoyue;
-        count++;
-    }
-    if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
-        yaku[count] = Houteiraoyui;
-        count++;
-    }
-    if (status->isDoubleRiichi) {
-        yaku[count] = doubleRiichi;
-        count++;
-    }
-//    if (isSanshokudoukou(status)) {
-//        yaku[count] = Sanshokudoukou;
+//    if (status->isRinshan) {
+//        yaku[count] = Rinshankaihou;
 //        count++;
 //    }
-//    if (isSankantsu(status)) {
-//        yaku[count] = Sankantsu;
+//    if (status->remainTileCount == 0 && status->currentPlayer == JICHA) {
+//        yaku[count] = Haiteiraoyue;
 //        count++;
 //    }
+//    if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
+//        yaku[count] = Houteiraoyui;
+//        count++;
+//    }
+//    if (status->isDoubleRiichi) {
+//        yaku[count] = doubleRiichi;
+//        count++;
+//    }
+    if (isSanshokudoukou(status)) {
+        yaku[count] = Sanshokudoukou;
+        count++;
+    }
+    if (isSankantsu(status)) {
+        yaku[count] = Sankantsu;
+        count++;
+    }
     if (isToitoihou(status)) {
         yaku[count] = Toitoihou;
         count++;
