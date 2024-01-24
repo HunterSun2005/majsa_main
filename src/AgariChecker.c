@@ -396,7 +396,7 @@ int getDistance(Possible *Possibles) {
                 Possibles_D->Situations_D[i].Count.Duizi;
 
             if (m + d <= 5) {
-                c = 0;
+                c = 1;
             } else c = m + d - 5;
 
             if (m + d <= 4) {
