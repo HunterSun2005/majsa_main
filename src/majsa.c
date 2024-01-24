@@ -18,6 +18,7 @@ Result *majsa(Status *status) {
                     Possibles->Situations[i].result_type = FURITEN;
                 }   //振听
             }
+            
             if (Possibles->Situations[i].result_type != FURITEN) {
                 memcpy(Possibles->Situations[i].yaku, checkYaku(status, Possibles, i), sizeof(result->yaku));  //导入役种
                 if (Possibles->Situations[i].yaku[0] == 0) {
