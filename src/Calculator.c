@@ -167,6 +167,9 @@ int calFu(Status *status, Possible *Possibles, int number) {
             Fu -= Fu % 10;
             Fu += 10;
         }   //切上
+        if (Fu == 60) {
+            Fu += 10;
+        }
 
         return Fu;
     }
