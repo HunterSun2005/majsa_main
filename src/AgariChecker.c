@@ -51,15 +51,15 @@ Possible *isAgari(Status *status) {
         }
     }
 
-//    if (CheckKokushimusou(Possibles->HandTiles)) {
-//        Possibles->Situations[0].Agari = true;
-//        return Possibles;
-//    }
-//
-//    if (CheckChiitoitsu(status, Possibles->HandTiles)) {
-//        Possibles->Situations[0].Agari = true;
-//        return Possibles;
-//    }
+    if (CheckKokushimusou(Possibles->HandTiles)) {
+        Possibles->Situations[0].Agari = true;
+        return Possibles;
+    }
+
+    if (CheckChiitoitsu(status, Possibles->HandTiles)) {
+        Possibles->Situations[0].Agari = true;
+        return Possibles;
+    }
 
     return Possibles;
 }
@@ -132,7 +132,7 @@ void SeparateTile(Hand Hands, Status *status, int count, Possible *Possibles) {
     }
     if (count > 5) {
         return;
-    } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 1) {
+    } else if ((Hands.m_num + Hands.p_num + Hands.s_num + Hands.z_num) <= 0) {
         memcpy(&(Possibles->Situations[CountSituation + 1]), &(Possibles->Situations[CountSituation]), \
         sizeof(Situation));
         Possibles->Situations[CountSituation].Agari = true;
