@@ -148,37 +148,37 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         count++;    //门前清限定
     }
 
-    {
-        if (isRyanpeikou(status) && isMenzenchin(status)) {
-            yaku[count] = Ryanpeikou;
-            count++;
-        } else {
-            if (isChiitoitsu(status) && isMenzenchin(status)) {
-                yaku[count] = Chiitoitsu;
-                count++;
-            } else if (isIipeikou(status) && isMenzenchin(status)) {
-                yaku[count] = Iipeikou;
-                count++;    //门前清限定
-            }
-        }
-    }
+//    {
+//        if (isRyanpeikou(status) && isMenzenchin(status)) {
+//            yaku[count] = Ryanpeikou;
+//            count++;
+//        } else {
+//            if (isChiitoitsu(status) && isMenzenchin(status)) {
+//                yaku[count] = Chiitoitsu;
+//                count++;
+//            } else if (isIipeikou(status) && isMenzenchin(status)) {
+//                yaku[count] = Iipeikou;
+//                count++;    //门前清限定
+//            }
+//        }
+//    }
 
-//    if (status->isRinshan) {
-//        yaku[count] = Rinshankaihou;
-//        count++;
-//    }
-//    if (status->remainTileCount == 0 && status->currentPlayer == JICHA) {
-//        yaku[count] = Haiteiraoyue;
-//        count++;
-//    }
-//    if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
-//        yaku[count] = Houteiraoyui;
-//        count++;
-//    }
-//    if (status->isDoubleRiichi) {
-//        yaku[count] = doubleRiichi;
-//        count++;
-//    }
+    if (status->isRinshan) {
+        yaku[count] = Rinshankaihou;
+        count++;
+    }
+    if (status->remainTileCount == 0 && status->currentPlayer == JICHA) {
+        yaku[count] = Haiteiraoyue;
+        count++;
+    }
+    if (status->remainTileCount == 0 && status->currentPlayer != JICHA) {
+        yaku[count] = Houteiraoyui;
+        count++;
+    }
+    if (status->isDoubleRiichi) {
+        yaku[count] = doubleRiichi;
+        count++;
+    }
     if (isSanshokudoukou(status)) {
         yaku[count] = Sanshokudoukou;
         count++;
