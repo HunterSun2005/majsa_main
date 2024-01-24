@@ -11,7 +11,7 @@ int main() {
             .handTile = "1s1s1z1z1z6z6z6z7z7z7z5z5z",
             .groupTile = {},
             .discardTile = "2m3m4m5m3p4p5p6p2s3s4s5s",
-            .currentPlayer = JICHA,
+            .currentPlayer = KAMICHA,
             .currentTile = "1s",
             .remainTileCount = 18,
             .isRiichi = true,
