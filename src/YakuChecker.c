@@ -179,22 +179,22 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = doubleRiichi;
         count++;
     }
-    if (isSanshokudoukou(status)) {
-        yaku[count] = Sanshokudoukou;
-        count++;
-    }
-    if (isSankantsu(status)) {
-        yaku[count] = Sankantsu;
-        count++;
-    }
-//    if (isToitoihou(status)) {
-//        yaku[count] = Toitoihou;
+//    if (isSanshokudoukou(status)) {
+//        yaku[count] = Sanshokudoukou;
 //        count++;
 //    }
-//    if (isSanankou(status)) {
-//        yaku[count] = Sanankou;
+//    if (isSankantsu(status)) {
+//        yaku[count] = Sankantsu;
 //        count++;
 //    }
+    if (isToitoihou(status)) {
+        yaku[count] = Toitoihou;
+        count++;
+    }
+    if (isSanankou(status)) {
+        yaku[count] = Sanankou;
+        count++;
+    }
     if (isShousangen(status)) {
         yaku[count] = Shousangen;
         count++;
