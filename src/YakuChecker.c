@@ -144,32 +144,32 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         count++;
     }
 
-//    {
-//        if (isPinhu(status) && isMenzenchin(status)) {
-//            yaku[count] = Pinhu;
-//            count++;    //门前清限定
-//        }
-//            //面向对象编程(doge)
-//        else if (isTanyao(status) && isRyanpeikou(status) && isChinitsu(status)) {
-//            yaku[count] = Pinhu;
-//            count++;
-//        }
-//    }
-//
-//    {
-//        if (isRyanpeikou(status) && isMenzenchin(status)) {
-//            yaku[count] = Ryanpeikou;
-//            count++;
-//        } else {
-//            if (isChiitoitsu(status) && isMenzenchin(status)) {
-//                yaku[count] = Chiitoitsu;
-//                count++;
-//            } else if (isIipeikou(status) && isMenzenchin(status)) {
-//                yaku[count] = Iipeikou;
-//                count++;    //门前清限定
-//            }
-//        }
-//    }
+    {
+        if (isPinhu(status) && isMenzenchin(status)) {
+            yaku[count] = Pinhu;
+            count++;    //门前清限定
+        }
+            //面向对象编程(doge)
+        else if (isTanyao(status) && isRyanpeikou(status) && isChinitsu(status)) {
+            yaku[count] = Pinhu;
+            count++;
+        }
+    }
+
+    {
+        if (isRyanpeikou(status) && isMenzenchin(status)) {
+            yaku[count] = Ryanpeikou;
+            count++;
+        } else {
+            if (isChiitoitsu(status) && isMenzenchin(status)) {
+                yaku[count] = Chiitoitsu;
+                count++;
+            } else if (isIipeikou(status) && isMenzenchin(status)) {
+                yaku[count] = Iipeikou;
+                count++;    //门前清限定
+            }
+        }
+    }
 
     {
         if (status->isRinshan) {

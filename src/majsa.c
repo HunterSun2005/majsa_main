@@ -58,6 +58,10 @@ Result *majsa(Status *status) {
         SortYaku(result->yaku);
         result->han = Possibles->Situations[max].Han;
         result->fu = Possibles->Situations[max].Fu;
+        if (result->yaku[0] == Tanyao && result->yaku[1] == Pinhu && result->yaku[2] == Ryanpeikou &&
+            result->yaku[3] == Chinitsu && result->yaku[4] == 0) {
+            result->fu = 60;
+        }
         result->type = Possibles->Situations[max].result_type;
         if (result->type == TSUMO) {
             if (status->jikaze == TON) {
