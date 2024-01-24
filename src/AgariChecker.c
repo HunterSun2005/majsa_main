@@ -397,7 +397,7 @@ int getDistance(Possible *Possibles) {
 
             if (m + d <= 5) {
                 c = 0;
-            } else c = m + d - 6;
+            } else c = m + d - 5;
 
             if (m + d <= 4) {
                 q = 1;
