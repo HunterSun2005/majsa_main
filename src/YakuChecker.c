@@ -299,7 +299,7 @@ bool isPinhu(Status *status) {
          Possibles->Situations[number].Jyantou[0] - 48 != 6 && Possibles->Situations[number].Jyantou[0] - 48 != 7 &&
          Possibles->Situations[number].Jyantou[0] - 48 != status->jikaze + 1 &&
          Possibles->Situations[number].Jyantou[0] - 48 != status->bakaze + 1)) {
-        if (Possibles->HandGroupLen != 4) {
+        if (Possibles->HandGroupLen < 4) {
             return false;
         }
 
@@ -309,10 +309,10 @@ bool isPinhu(Status *status) {
             }
         }
 
-        if (status->currentTile[0] == Possibles->Situations[number].Jyantou[0] &&
-            status->currentTile[1] == Possibles->Situations[number].Jyantou[1]) {
-            return false;
-        }
+//        if (status->currentTile[0] == Possibles->Situations[number].Jyantou[0] &&
+//            status->currentTile[1] == Possibles->Situations[number].Jyantou[1]) {
+//            return false;
+//        }
 
         for (int i = 0; i < 4; i++) {
             if (Possibles->Situations[number].HandGroupTile[i].tile[1] == status->currentTile[1]) {
