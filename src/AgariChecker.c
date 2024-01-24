@@ -394,6 +394,7 @@ int getDistance(Possible *Possibles) {
             m = Possibles_D->Situations_D[i].Count.Shunzi + Possibles_D->Situations_D[i].Count.Kezi;
             d = Possibles_D->Situations_D[i].Count.Lianda + Possibles_D->Situations_D[i].Count.Tiaoda +
                 Possibles_D->Situations_D[i].Count.Duizi;
+            
             if (m + d <= 5) {
                 c = 0;
             } else c = m + d - 5;
