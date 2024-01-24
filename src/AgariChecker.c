@@ -372,7 +372,7 @@ bool CheckChiitoitsu(Status *status, Hand Hands) {
     } else return false;
 }
 
-int getDistance(Possible *Possibles) {
+int getDistance(Status *status, Possible *Possibles) {
     int m;
     int d;
     int c;
@@ -383,7 +383,7 @@ int getDistance(Possible *Possibles) {
     countnumber counts = {};
     memset(&counts, 0, sizeof(countnumber));
     Possible_D *Possibles_D = malloc(sizeof(Possible_D));
-    memset(Possibles_D, 0, sizeof(*Possibles_D));
+    memset(Possibles_D, 0, sizeof(Possible_D));
 
     Possibles_D->HandTiles = Possibles->HandTiles;
 
@@ -391,7 +391,8 @@ int getDistance(Possible *Possibles) {
 
     for (int i = 0; i < SIZEOFPOSSIBLE_D; i++) {
         if (Possibles_D->Situations_D[i].valid) {
-            m = Possibles_D->Situations_D[i].Count.Shunzi + Possibles_D->Situations_D[i].Count.Kezi;
+            m = Possibles_D->Situations_D[i].Count.Shunzi + Possibles_D->Situations_D[i].Count.Kezi +
+                (4 - Possibles->HandGroupLen);
             d = Possibles_D->Situations_D[i].Count.Lianda + Possibles_D->Situations_D[i].Count.Tiaoda +
                 Possibles_D->Situations_D[i].Count.Duizi;
 

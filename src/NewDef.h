@@ -4,8 +4,8 @@
 
 #pragma once
 
-#define SIZEOFPOSSIBLE_D 10000
-#define SIZEOFPOSSIBLE 10000
+#define SIZEOFPOSSIBLE_D 5000
+#define SIZEOFPOSSIBLE 5000
 
 struct Hands {
     int matrix[4][10];

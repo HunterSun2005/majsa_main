@@ -102,7 +102,7 @@ Result *majsa(Status *status) {
         tenpai = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
         if (tenpai->Machi <= 0) {
             result->type = NOTEN;
-            result->shanten = getDistance(Possibles);    //计算向听数
+            result->shanten = getDistance(status, Possibles);    //计算向听数
             return result;
         } else {
             result->type = TENPAI;
