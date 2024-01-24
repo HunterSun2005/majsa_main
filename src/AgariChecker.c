@@ -400,7 +400,7 @@ int getDistance(Possible *Possibles) {
             } else c = m + d - 5;
 
             if (m + d <= 4) {
-                q = 2;
+                q = 0;
             } else if (Possibles_D->Situations_D[i].Count.Duizi >= 1) {
                 q = 1;
             } else q = 0;
