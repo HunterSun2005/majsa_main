@@ -420,9 +420,9 @@ int getDistance(Possible *Possibles) {
 
     int guo_distance = Shanten_Guo(Possibles_D);
 
-    //if (qi_distance < distance) distance = qi_distance;
+    if (qi_distance < distance) distance = qi_distance;
 
-    //if (guo_distance < distance) distance = guo_distance;
+    if (guo_distance < distance) distance = guo_distance;
 
     free(Possibles_D);
     return distance;
