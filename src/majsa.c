@@ -7,18 +7,20 @@ Result *majsa(Status *status) {
     Possible *Possibles = isAgari(status);
 
     SortGroupTile(status, Possibles);  //排序副露牌
+    Tenpai *tenpai = NULL;
 
     for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
         if (Possibles->Situations[i].Agari) {
             DelCurrentTile(status, Possibles);  //去除当前牌
-            const Tenpai tenpai_test = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
+            tenpai = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
             AddCurrentTile(status, Possibles);  //加上当前牌
-            for (int g = 0; g < tenpai_test.Machi; g++) {
-                if (status->currentPlayer != JICHA && strstr(status->discardTile, tenpai_test.Tile[g]) != NULL) {
+            for (int g = 0; g < tenpai->Machi; g++) {
+                if (status->currentPlayer != JICHA && strstr(status->discardTile, tenpai->Tile[g]) != NULL) {
                     Possibles->Situations[i].result_type = FURITEN;
                 }   //振听
             }
-            
+            free(tenpai);
+
             if (Possibles->Situations[i].result_type != FURITEN) {
                 memcpy(Possibles->Situations[i].yaku, checkYaku(status, Possibles, i), sizeof(result->yaku));  //导入役种
                 if (Possibles->Situations[i].yaku[0] == 0) {
@@ -94,19 +96,21 @@ Result *majsa(Status *status) {
     }       //可以和牌
     else {
         DelCurrentTile(status, Possibles);  //去除当前牌
-        Tenpai tenpai = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
-        if (tenpai.Machi <= 0) {
+        tenpai = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
+        if (tenpai->Machi <= 0) {
             result->type = NOTEN;
             result->shanten = getDistance(Possibles);    //计算向听数
+            free(tenpai);
             return result;
         } else {
             result->type = TENPAI;
-            result->machi = tenpai.Machi;
-            for (int i = 0; i < tenpai.Machi; i++) {
-                if (strstr(status->discardTile, tenpai.Tile[i]) != NULL) {
+            result->machi = tenpai->Machi;
+            for (int i = 0; i < tenpai->Machi; i++) {
+                if (strstr(status->discardTile, tenpai->Tile[i]) != NULL) {
                     result->type = FURITEN;
                 }   //振听
             }
+            free(tenpai);
             return result;
         }
     }

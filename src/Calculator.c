@@ -225,11 +225,9 @@ int calPoint(Status *status, int Han, int Fu) {
     }
 }
 
-Tenpai calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
-    Tenpai tenpai = {
-            .Machi = 0,
-            .Tile = {0},
-    };
+Tenpai *calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
+    Tenpai *tenpai = malloc(sizeof(Tenpai));
+    memset(tenpai, 0, sizeof(Tenpai));
     Possible *Tenpai_Possibles;
 
     for (int a = 0; a <= 3; a++) {
@@ -245,24 +243,24 @@ Tenpai calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
             HandTiles.matrix[a][b]--;
             for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
                 if (Tenpai_Possibles->Situations[i].Agari) {
-                    tenpai.Tile[tenpai.Machi] = (char *) malloc(sizeof(char) * 3);
-                    tenpai.Tile[tenpai.Machi][0] = (char) (b + 48);
+                    tenpai->Tile[tenpai->Machi] = (char *) malloc(sizeof(char) * 3);
+                    tenpai->Tile[tenpai->Machi][0] = (char) (b + 48);
                     switch (a) {
                         case 0:
-                            tenpai.Tile[tenpai.Machi][1] = 'm';
+                            tenpai->Tile[tenpai->Machi][1] = 'm';
                             break;
                         case 1:
-                            tenpai.Tile[tenpai.Machi][1] = 'p';
+                            tenpai->Tile[tenpai->Machi][1] = 'p';
                             break;
                         case 2:
-                            tenpai.Tile[tenpai.Machi][1] = 's';
+                            tenpai->Tile[tenpai->Machi][1] = 's';
                             break;
                         case 3:
-                            tenpai.Tile[tenpai.Machi][1] = 'z';
+                            tenpai->Tile[tenpai->Machi][1] = 'z';
                             break;
                         default:;
                     }
-                    tenpai.Machi++;
+                    tenpai->Machi++;
                     break;
                 }
             }
