@@ -51,15 +51,15 @@ Possible *isAgari(Status *status) {
         }
     }
 
-    if (CheckKokushimusou(Possibles->HandTiles)) {
-        Possibles->Situations[0].Agari = true;
-        return Possibles;
-    }
-
-    if (CheckChiitoitsu(status, Possibles->HandTiles)) {
-        Possibles->Situations[0].Agari = true;
-        return Possibles;
-    }
+//    if (CheckKokushimusou(Possibles->HandTiles)) {
+//        Possibles->Situations[0].Agari = true;
+//        return Possibles;
+//    }
+//
+//    if (CheckChiitoitsu(status, Possibles->HandTiles)) {
+//        Possibles->Situations[0].Agari = true;
+//        return Possibles;
+//    }
 
     return Possibles;
 }

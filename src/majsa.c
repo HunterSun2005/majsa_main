@@ -11,7 +11,7 @@ Result *majsa(Status *status) {
 
     for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
         if (Possibles->Situations[i].Agari) {
-            if (strstr(status->discardTile, status->currentTile) != NULL) {
+            if (status->currentPlayer != JICHA && strstr(status->discardTile, status->currentTile) != NULL) {
                 Possibles->Situations[i].result_type = FURITEN;
             } else {
                 memcpy(Possibles->Situations[i].yaku, checkYaku(status, Possibles, i), sizeof(result->yaku));  //导入役种
@@ -84,7 +84,6 @@ Result *majsa(Status *status) {
         } else if (result->type == RON) {
             result->point[status->currentPlayer] = Possibles->Situations[max].point + status->honbaCount * 300;
         }
-        result->type = FURITEN;
         return result;
     }       //可以和牌
     else {
