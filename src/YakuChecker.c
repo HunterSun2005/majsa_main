@@ -123,26 +123,26 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = Tanyao;
         count++;
     }
-//    if (Possibles->AllTiles.matrix[3][status->jikaze + 1] >= 3) {
-//        yaku[count] = YakuhaiJikaze;
-//        count++;
-//    }
-//    if (Possibles->AllTiles.matrix[3][status->bakaze + 1] >= 3) {
-//        yaku[count] = YakuhaiBakaze;
-//        count++;
-//    }
-//    if (Possibles->AllTiles.matrix[3][5] >= 3) {
-//        yaku[count] = YakuhaiHaku;
-//        count++;
-//    }
-//    if (Possibles->AllTiles.matrix[3][6] >= 3) {
-//        yaku[count] = YakuhaiHatsu;
-//        count++;
-//    }
-//    if (Possibles->AllTiles.matrix[3][7] >= 3) {
-//        yaku[count] = YakuhaiChun;
-//        count++;
-//    }
+    if (Possibles->AllTiles.matrix[3][status->jikaze + 1] >= 3) {
+        yaku[count] = YakuhaiJikaze;
+        count++;
+    }
+    if (Possibles->AllTiles.matrix[3][status->bakaze + 1] >= 3) {
+        yaku[count] = YakuhaiBakaze;
+        count++;
+    }
+    if (Possibles->AllTiles.matrix[3][5] >= 3) {
+        yaku[count] = YakuhaiHaku;
+        count++;
+    }
+    if (Possibles->AllTiles.matrix[3][6] >= 3) {
+        yaku[count] = YakuhaiHatsu;
+        count++;
+    }
+    if (Possibles->AllTiles.matrix[3][7] >= 3) {
+        yaku[count] = YakuhaiChun;
+        count++;
+    }
     if (isPinhu(status) && isMenzenchin(status)) {
         yaku[count] = Pinhu;
         count++;    //门前清限定
@@ -240,21 +240,21 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         }
     }
 
-    {
-        if (isChinitsu(status)) {
-            yaku[count] = Chinitsu;
-            count++;
-        } else if (isChinitsuF(status)) {
-            yaku[count] = ChinitsuF;
-            count++;
-        } else if (isHonitsu(status)) {
-            yaku[count] = Honitsu;
-            count++;
-        } else if (isHonitsuF(status)) {
-            yaku[count] = HonitsuF;
-            count++;
-        }
-    }
+//    {
+//        if (isChinitsu(status)) {
+//            yaku[count] = Chinitsu;
+//            count++;
+//        } else if (isChinitsuF(status)) {
+//            yaku[count] = ChinitsuF;
+//            count++;
+//        } else if (isHonitsu(status)) {
+//            yaku[count] = Honitsu;
+//            count++;
+//        } else if (isHonitsuF(status)) {
+//            yaku[count] = HonitsuF;
+//            count++;
+//        }
+//    }
 
     return yaku;
 }
