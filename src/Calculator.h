@@ -46,3 +46,5 @@ int Count19AG(Status *status, Possible *Possibles, int number);      //是否是
 Hand *AllTilesOnDesk(Status *status);   //计算牌桌上所有牌
 
 void DelCurrentTile(Status *status, Possible *Possibles);   //去除当前牌
+
+void AddCurrentTile(Status *status, Possible *Possibles);   //加上当前牌

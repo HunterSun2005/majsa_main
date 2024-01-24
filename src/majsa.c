@@ -10,9 +10,15 @@ Result *majsa(Status *status) {
 
     for (int i = 0; i < SIZEOFPOSSIBLE; i++) {
         if (Possibles->Situations[i].Agari) {
-            if (status->currentPlayer != JICHA && strstr(status->discardTile, status->currentTile) != NULL) {
-                Possibles->Situations[i].result_type = FURITEN;
-            } else {
+            DelCurrentTile(status, Possibles);  //去除当前牌
+            const Tenpai tenpai_test = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
+            AddCurrentTile(status, Possibles);  //加上当前牌
+            for (int g = 0; g < tenpai_test.Machi; g++) {
+                if (status->currentPlayer != JICHA && strstr(status->discardTile, tenpai_test.Tile[g]) != NULL) {
+                    Possibles->Situations[i].result_type = FURITEN;
+                }   //振听
+            }
+            if (Possibles->Situations[i].result_type != FURITEN) {
                 memcpy(Possibles->Situations[i].yaku, checkYaku(status, Possibles, i), sizeof(result->yaku));  //导入役种
                 if (Possibles->Situations[i].yaku[0] == 0) {
                     Possibles->Situations[i].result_type = TENPAI;

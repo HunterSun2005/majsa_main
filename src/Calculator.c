@@ -653,3 +653,29 @@ void DelCurrentTile(Status *status, Possible *Possibles) {
         default:;
     }
 }
+
+void AddCurrentTile(Status *status, Possible *Possibles) {
+    switch (status->currentTile[1]) {
+        case 'm':
+            Possibles->HandTiles.matrix[0][status->currentTile[0] - 48]++;
+            Possibles->HandTiles.m_num++;
+            Possibles->AllTiles.matrix[0][status->currentTile[0] - 48]++;
+            break;
+        case 'p':
+            Possibles->HandTiles.matrix[1][status->currentTile[0] - 48]++;
+            Possibles->HandTiles.p_num++;
+            Possibles->AllTiles.matrix[1][status->currentTile[0] - 48]++;
+            break;
+        case 's':
+            Possibles->HandTiles.matrix[2][status->currentTile[0] - 48]++;
+            Possibles->HandTiles.s_num++;
+            Possibles->AllTiles.matrix[2][status->currentTile[0] - 48]++;
+            break;
+        case 'z':
+            Possibles->HandTiles.matrix[3][status->currentTile[0] - 48]++;
+            Possibles->HandTiles.z_num++;
+            Possibles->AllTiles.matrix[3][status->currentTile[0] - 48]++;
+            break;
+        default:;
+    }
+}
