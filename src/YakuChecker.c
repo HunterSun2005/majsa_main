@@ -294,7 +294,11 @@ bool isMenzenchintsumo(Status *status) {
 }
 
 bool isPinhu(Status *status) {
-    if (true) {
+    if (Possibles->Situations[number].Jyantou[1] != 'z' ||
+        (Possibles->Situations[number].Jyantou[1] == 'z' && Possibles->Situations[number].Jyantou[0] - 48 != 5 &&
+         Possibles->Situations[number].Jyantou[0] - 48 != 6 && Possibles->Situations[number].Jyantou[0] - 48 != 7 &&
+         Possibles->Situations[number].Jyantou[0] - 48 != status->jikaze + 1 &&
+         Possibles->Situations[number].Jyantou[0] - 48 != status->bakaze + 1)) {
 
         if (Possibles->HandGroupLen < 4) {
             return false;
