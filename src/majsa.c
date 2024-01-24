@@ -88,7 +88,7 @@ Result *majsa(Status *status) {
     }       //可以和牌
     else {
         DelCurrentTile(status, Possibles);  //去除当前牌
-        Tenpai tenpai = calMachi(status, Possibles->HandTiles);
+        Tenpai tenpai = calMachi(status, Possibles->HandTiles, Possibles->AllTiles);
         if (tenpai.Machi <= 0) {
             result->type = NOTEN;
             result->shanten = getDistance(Possibles);    //计算向听数
@@ -103,31 +103,5 @@ Result *majsa(Status *status) {
             }
             return result;
         }
-    }
-}
-
-void DelCurrentTile(Status *status, Possible *Possibles) {
-    switch (status->currentTile[1]) {
-        case 'm':
-            Possibles->HandTiles.matrix[0][status->currentTile[0] - 48]--;
-            Possibles->HandTiles.m_num--;
-            Possibles->AllTiles.matrix[0][status->currentTile[0] - 48]--;
-            break;
-        case 'p':
-            Possibles->HandTiles.matrix[1][status->currentTile[0] - 48]--;
-            Possibles->HandTiles.p_num--;
-            Possibles->AllTiles.matrix[1][status->currentTile[0] - 48]--;
-            break;
-        case 's':
-            Possibles->HandTiles.matrix[2][status->currentTile[0] - 48]--;
-            Possibles->HandTiles.s_num--;
-            Possibles->AllTiles.matrix[2][status->currentTile[0] - 48]--;
-            break;
-        case 'z':
-            Possibles->HandTiles.matrix[3][status->currentTile[0] - 48]--;
-            Possibles->HandTiles.z_num--;
-            Possibles->AllTiles.matrix[3][status->currentTile[0] - 48]--;
-            break;
-        default:;
     }
 }

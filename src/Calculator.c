@@ -225,21 +225,19 @@ int calPoint(Status *status, int Han, int Fu) {
     }
 }
 
-Tenpai calMachi(Status *status, Hand HandTiles) {
+Tenpai calMachi(Status *status, Hand HandTiles, Hand AllTiles) {
     Tenpai tenpai = {
             .Machi = 0,
             .Tile = {0},
     };
     Possible *Tenpai_Possibles;
 
-    Hand *AllTiles = AllTilesOnDesk(status);
-
     for (int a = 0; a <= 3; a++) {
         for (int b = 1; b <= 9; b++) {
             if (a == 3 && b >= 8) {
                 break;
             }
-            if (AllTiles->matrix[a][b] >= 4) {
+            if (AllTiles.matrix[a][b] >= 4) {
                 continue;
             }   //虚听
             HandTiles.matrix[a][b]++;
@@ -271,7 +269,6 @@ Tenpai calMachi(Status *status, Hand HandTiles) {
             free(Tenpai_Possibles);     //回收内存
         }
     }
-    free(AllTiles);
     return tenpai;
 }
 
@@ -629,4 +626,30 @@ Hand *AllTilesOnDesk(Status *status) {
     }  //转换赤宝牌
 
     return AllTilesOnDesk;
+}
+
+void DelCurrentTile(Status *status, Possible *Possibles) {
+    switch (status->currentTile[1]) {
+        case 'm':
+            Possibles->HandTiles.matrix[0][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.m_num--;
+            Possibles->AllTiles.matrix[0][status->currentTile[0] - 48]--;
+            break;
+        case 'p':
+            Possibles->HandTiles.matrix[1][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.p_num--;
+            Possibles->AllTiles.matrix[1][status->currentTile[0] - 48]--;
+            break;
+        case 's':
+            Possibles->HandTiles.matrix[2][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.s_num--;
+            Possibles->AllTiles.matrix[2][status->currentTile[0] - 48]--;
+            break;
+        case 'z':
+            Possibles->HandTiles.matrix[3][status->currentTile[0] - 48]--;
+            Possibles->HandTiles.z_num--;
+            Possibles->AllTiles.matrix[3][status->currentTile[0] - 48]--;
+            break;
+        default:;
+    }
 }
