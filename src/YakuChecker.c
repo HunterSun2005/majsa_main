@@ -119,10 +119,7 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
         yaku[count] = Menzenchintsumo;
         count++;
     }
-    if (Possibles->AllTiles.matrix[0][1] == 0 && Possibles->AllTiles.matrix[0][9] == 0 &&
-        Possibles->AllTiles.matrix[1][1] == 0 && Possibles->AllTiles.matrix[1][9] == 0 &&
-        Possibles->AllTiles.matrix[2][1] == 0 && Possibles->AllTiles.matrix[2][9] == 0 &&
-        Possibles->AllTiles.z_num == 0) {
+    if (isTanyao(status)) {
         yaku[count] = Tanyao;
         count++;
     }
@@ -152,11 +149,11 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
     }
 
     {
-        if (isRyanpeikou(status)) {
+        if (isRyanpeikou(status) && isMenzenchin(status)) {
             yaku[count] = Ryanpeikou;
             count++;
         } else {
-            if (isChiitoitsu(status)) {
+            if (isChiitoitsu(status) && isMenzenchin(status)) {
                 yaku[count] = Chiitoitsu;
                 count++;
             } else if (isIipeikou(status) && isMenzenchin(status)) {
@@ -260,6 +257,19 @@ Yaku *checkYaku(Status *status, Possible *possibles, int num) {
     }
 
     return yaku;
+}
+
+bool isTanyao(Status *status) {
+    if (Possibles->AllTiles.matrix[0][1] == 0 && Possibles->AllTiles.matrix[0][9] == 0 &&
+        Possibles->AllTiles.matrix[1][1] == 0 && Possibles->AllTiles.matrix[1][9] == 0 &&
+        Possibles->AllTiles.matrix[2][1] == 0 && Possibles->AllTiles.matrix[2][9] == 0 &&
+        Possibles->AllTiles.matrix[3][1] == 0 && Possibles->AllTiles.matrix[3][2] == 0 &&
+        Possibles->AllTiles.matrix[3][3] == 0 && Possibles->AllTiles.matrix[3][4] == 0 &&
+        Possibles->AllTiles.matrix[3][5] == 0 && Possibles->AllTiles.matrix[3][6] == 0 &&
+        Possibles->AllTiles.matrix[3][7] == 0) {
+        return true;
+    } else return false;
+
 }
 
 bool isMenzenchin(Status *status) {
