@@ -543,6 +543,12 @@ bool Stop(Possible_D *Possibles_D) {
         }
     }
 
+    for (int i = 0; i <= 2; i++) {
+        if (Possibles_D->HandTiles.matrix[i][8] >= 1 && Possibles_D->HandTiles.matrix[i][9] >= 1) {
+            return false;
+        }
+    }
+
     return true;
 }
 

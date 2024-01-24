@@ -331,7 +331,7 @@ bool isPinhu(Status *status) {
 //        if (status->currentTile[0] == Possibles->Situations[number].Jyantou[0] &&
 //            status->currentTile[1] == Possibles->Situations[number].Jyantou[1]) {
 //            return false;
-//        }
+//        }  //wrong
 
         int matrix[4][10] = {0};
 
